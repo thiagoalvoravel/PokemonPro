@@ -31,7 +31,7 @@ public class Actor {
         this.worldX = x;
         this.worldY = y;
         this.animations = animations;
-        map.getTile(x, y).setActor(this);
+        map.getTerrenos(x, y).setActor(this);
         this.state = ACTOR_STATE.STANDING;
         this.facing = DIRECTION.SOUTH;
     }
@@ -89,15 +89,15 @@ public class Actor {
        if(x+dir.getDX() >= map.getWidth() || x+dir.getDX() < 0 || y+dir.getDY() >= map.getHeight() || y+dir.getDY() < 0) {
           return false;
        }
-       if(map.getTile(x+dir.getDX(), y+dir.getDY()).getActor() != null){
+       if(map.getTerrenos(x+dir.getDX(), y+dir.getDY()).getActor() != null){
           return false;
        }
        initializeMove(dir);
        
-       map.getTile(x, y).setActor(null);
+       map.getTerrenos(x, y).setActor(null);
        x += dir.getDX();
        y += dir.getDY();
-       map.getTile(x, y).setActor(this);
+       map.getTerrenos(x, y).setActor(this);
        return true;
     }
     

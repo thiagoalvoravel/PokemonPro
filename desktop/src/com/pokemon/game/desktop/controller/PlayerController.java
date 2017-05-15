@@ -1,6 +1,5 @@
 package com.pokemon.game.desktop.controller;
 
-//Teste
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.pokemon.game.desktop.model.Actor;
