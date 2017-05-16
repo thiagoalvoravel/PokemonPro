@@ -79,7 +79,7 @@ public class GameScreen extends AbstractScreen {
         );
 
         map = new TileMap(42, 42);
-        player = new Actor(map, 0, 0, animations);
+        player = new Actor(map, 24, 22, animations);
         camera = new Camera();
 
         controller = new PlayerController(player);
