@@ -14,11 +14,13 @@ import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.TERRAIN;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
+import com.pokemon.game.desktop.model.Treinador;
 import com.pokemon.game.desktop.util.AnimationSet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameScreen extends AbstractScreen {
@@ -26,6 +28,7 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
     private Camera camera;
     private Actor player;
+    private Treinador treinador;
     private TileMap map;
     private SpriteBatch batch;
     private Texture redStandingSouth;
@@ -36,12 +39,13 @@ public class GameScreen extends AbstractScreen {
     private Texture agua;
     private Texture vulcao;
     public int[][] terrenos = new int[42][42];
-    Texture render; 
+    private Texture render; 
+    private Texture sprite_treinador;
+    private int direcao_mapa_x;
+    private int direcao_mapa_y;
+    private List<Treinador> sprites_treinador = new ArrayList<Treinador>();
+    private int ant_pos=0;
     
-
-    //Array para guardar os valores do arquivo Construtor_Mapa.txt
-    //private int[] valores_arquivo = new int[1764];
-
     List<Integer> list = new ArrayList<Integer>();
 
     /*Constantes para indicar que os valores numéricos no array: valores_arquivo 
@@ -80,8 +84,22 @@ public class GameScreen extends AbstractScreen {
 
         map = new TileMap(42, 42);
         player = new Actor(map, 24, 22, animations);
+        
+        
+       //Gera treinadores aleatórios e guarda as instâncias deles   
+       for(int x=0;x<50;x++){
+          int direcao_face = (int )(Math.random() * 4 + 1);
+          int tipo_treinador = (int )(Math.random() * 6 + 1);
+          direcao_mapa_x = (int )(Math.random() * 41 + 0);
+          direcao_mapa_y = (int )(Math.random() * 41 + 0);            
+          treinador = new Treinador(map,direcao_mapa_x,direcao_mapa_y,direcao_face, tipo_treinador);
+          
+          sprites_treinador.add(treinador);
+       } 
+       
+       
         camera = new Camera();
-
+        
         controller = new PlayerController(player);
     }
 
@@ -141,6 +159,19 @@ public class GameScreen extends AbstractScreen {
                 worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE * 1.5f);
+        
+       //Desenha os treinadores na tela 
+       for(Treinador trainer: sprites_treinador)  
+       {
+              batch.draw(trainer.getSprite(),
+              worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
+              worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE * 1.5f);
+       }
+         
+       
+       
         batch.end();
     }
 
