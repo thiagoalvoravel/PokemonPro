@@ -11,6 +11,8 @@ import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.controller.PlayerController;
 import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.Camera;
+import com.pokemon.game.desktop.model.CentroPokemon;
+import com.pokemon.game.desktop.model.LojaPokemon;
 import com.pokemon.game.desktop.model.TERRAIN;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
@@ -29,6 +31,8 @@ public class GameScreen extends AbstractScreen {
     private Camera camera;
     private Actor player;
     private Treinador treinador;
+    private CentroPokemon centropokemon;
+    private LojaPokemon lojaPokemon;
     private TileMap map;
     private SpriteBatch batch;
     private Texture redStandingSouth;
@@ -41,11 +45,15 @@ public class GameScreen extends AbstractScreen {
     public int[][] terrenos = new int[42][42];
     private Texture render; 
     private Texture sprite_treinador;
+    private int em_usoX;
+    private int em_usoY;
+    private int[][] posicoes_usadasPC = new int[42][42];
     private int direcao_mapa_x;
     private int direcao_mapa_y;
     private List<Treinador> sprites_treinador = new ArrayList<Treinador>();
-    private int ant_pos=0;
-    
+    private List<CentroPokemon> sprites_pokecenter = new ArrayList<CentroPokemon>();
+    private List<LojaPokemon> sprites_pokemart = new ArrayList<LojaPokemon>();
+     
     List<Integer> list = new ArrayList<Integer>();
 
     /*Constantes para indicar que os valores numéricos no array: valores_arquivo 
@@ -97,7 +105,62 @@ public class GameScreen extends AbstractScreen {
           sprites_treinador.add(treinador);
        } 
        
+       //Gera as instâncias dos centros pokemon
+       for(int x=0; x < 20;x++)
+       {
+          direcao_mapa_x = (int )(Math.random() * 41 + 0);
+          direcao_mapa_y = (int )(Math.random() * 41 + 0);
+          
+          if(x==0){
+            em_usoX = direcao_mapa_x;
+            em_usoY = direcao_mapa_y;
+          }
+          
+          if(x==0) posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] = 1;
+          
+          if(x > 0)
+          {         
+            do{
+              direcao_mapa_x = (int )(Math.random() * 41 + 0);
+              direcao_mapa_y = (int )(Math.random() * 41 + 0);
+            }while(direcao_mapa_x == em_usoX && direcao_mapa_y == em_usoY); 
+          }
+          em_usoX = direcao_mapa_x;
+          em_usoY = direcao_mapa_y;
+          posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] = 1;
+          centropokemon = new CentroPokemon(map,direcao_mapa_x,direcao_mapa_y);
+          sprites_pokecenter.add(centropokemon);
+       }   
        
+       //Gera as instâncias das Lojas Pokemon
+       for(int x=0;x <15;x++)
+       {       
+            direcao_mapa_x = (int )(Math.random() * 41 + 0);
+            direcao_mapa_y = (int )(Math.random() * 41 + 0);
+             
+            if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1)
+            {
+               em_usoX = direcao_mapa_x;
+               em_usoY = direcao_mapa_y;
+                    
+               if(x > 0)
+               {           
+                  do{
+                    direcao_mapa_x = (int )(Math.random() * 41 + 0);
+                    direcao_mapa_y = (int )(Math.random() * 41 + 0);                
+                  }while(direcao_mapa_x == em_usoX && direcao_mapa_y == em_usoY); 
+               }
+               if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1)
+               {
+                  em_usoX = direcao_mapa_x;
+                  em_usoY = direcao_mapa_y;
+                  lojaPokemon = new LojaPokemon(map,direcao_mapa_x,direcao_mapa_y);
+                  sprites_pokemart.add(lojaPokemon);
+               }
+           }
+        
+       } 
+         
         camera = new Camera();
         
         controller = new PlayerController(player);
@@ -169,6 +232,25 @@ public class GameScreen extends AbstractScreen {
               Settings.SCALED_TILE_SIZE,
               Settings.SCALED_TILE_SIZE * 1.5f);
        }
+       
+       //Desenha os centros pokemon na tela 
+       for(CentroPokemon pokecenter: sprites_pokecenter)  
+       {
+              batch.draw(pokecenter.getSprite(),
+              worldStartX + pokecenter.getWorldX() * Settings.SCALED_TILE_SIZE,
+              worldStartY + pokecenter.getWorldY() * Settings.SCALED_TILE_SIZE
+              );
+       }
+       
+       
+       //Desenha as Lojas Pokemon na tela 
+       for(LojaPokemon pokemart: sprites_pokemart)  
+       {
+              batch.draw(pokemart.getSprite(),
+              worldStartX + pokemart.getWorldX() * Settings.SCALED_TILE_SIZE,
+              worldStartY + pokemart.getWorldY() * Settings.SCALED_TILE_SIZE
+              );
+       }  
          
        
        
