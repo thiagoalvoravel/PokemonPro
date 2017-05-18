@@ -1,6 +1,7 @@
 package com.pokemon.game.desktop.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -9,8 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.pokemon.game.desktop.Iniciar;
 import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.controller.PlayerController;
@@ -52,9 +61,12 @@ public class GameScreen extends AbstractScreen {
     private Texture caverna;
     private Texture agua;
     private Texture vulcao;
+    private Texture backgroud_image;
+    private Label textLabel;
     public int[][] terrenos = new int[42][42];
     private Texture render;
     private Texture sprite_treinador;
+    private Texture backgrounDisplay;
     private int em_usoX;
     private int em_usoY;
     private int[][] posicoes_usadasPC = new int[42][42];
@@ -80,6 +92,9 @@ public class GameScreen extends AbstractScreen {
     private String pontuacao_total;
     BitmapFont fonte;
     BitmapFont fonte2;
+    Group grp=new Group();
+    private Stage stage;
+    private Image img;
 
     /*Constantes para indicar que os valores numéricos no array: valores_arquivo 
     correspondem aos nomes dos 5 tipos de terrenos.
@@ -89,6 +104,12 @@ public class GameScreen extends AbstractScreen {
     public static final int CAVERNA = 3;
     public static final int AGUA = 4;
     public static final int VULCAO = 5;
+    
+    private BitmapFont font; 
+    private TextureAtlas buttonsAtlas; //** image of buttons **//
+    private Skin buttonSkin; //** images are used as skins of the button **//
+    private TextButton button;
+    private TextButtonStyle textButtonStyle;
 
     public GameScreen(Iniciar app) {
         super(app);
@@ -101,6 +122,10 @@ public class GameScreen extends AbstractScreen {
         vulcao = new Texture("volcano.png");
 
         batch = new SpriteBatch();
+        
+        stage = new Stage(new StretchViewport(800, 800));
+        font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
+                Gdx.files.internal("fontes/small_letters_font.png"), false);
 
         TextureAtlas atlas = app.getAssetManager().get("packed/textures.atlas", TextureAtlas.class);
 
@@ -142,23 +167,51 @@ public class GameScreen extends AbstractScreen {
         //Gera Pokémons aleatórios e guarda as instâncias deles
         gerar_pokemons();
 
-        //Atualizar a pontuacao com base nas ações
+        
+        //Atualizar a pontuacao com base nas ações 
+       //Recebe objeto Pontuacao para mostrar o valor da Pontuacao
         pontuacao.ganharBatalha();
         pontuacao.recuprarPokemons();
-        fonte = new BitmapFont();
-        pontuacao_atual = "Pontuacao Atual: " + pontuacao.getPontuacaoTotal();
-
-        score2 = 40;
-        pontuacao_total = "Pontuacao Total: 0";
-        fonte2 = new BitmapFont();
-        score2++;
-        pontuacao_total = "Pontuacao Total: " + score2;
-
+        mostrar_Pontuacao_Atual(pontuacao);
+        mostrar_Pontuacao_Total(pontuacao);
+        
+        grp.setPosition(612,
+            700);
+    
         camera = new Camera();
 
         controller = new PlayerController(player);
     }
-
+    public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual){
+        
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Pontuacao Atual " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
+        button.setPosition(612, 700);
+        stage.addActor(button);
+        
+    }
+    
+    public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao)
+    {
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
+        button.setPosition(612, 600);
+        stage.addActor(button);
+        
+    }
+   
     public void gerar_pokemons() {
 
         for (int x = 0; x < 150; x++) {
@@ -442,6 +495,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(controller);
+             
     }
 
     @Override
@@ -449,7 +503,7 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
 
         player.update(delta);
-
+      
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
         batch.begin();
@@ -534,13 +588,21 @@ public class GameScreen extends AbstractScreen {
             );
         }
 
-        fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        /*fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         fonte.draw(batch, pontuacao_atual, 800, 700);
 
         fonte2.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        fonte2.draw(batch, pontuacao_total, 800, 650);
+        fonte2.draw(batch, pontuacao_total, 800, 650);*/
+        
+        
+        
+        
 
         batch.end();
+          
+       //stage.act(Gdx.graphics.getDeltaTime());
+       stage.draw();
+                 
     }
 
     @Override
