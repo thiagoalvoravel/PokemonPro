@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
                 config.title = "Pokemon Game";
-                config.height = 680;
-                config.width = 680;
+                config.height = 980;
+                config.width = 980;
                 config.vSyncEnabled = true;
                 
                 new LwjglApplication(new Iniciar(), config);

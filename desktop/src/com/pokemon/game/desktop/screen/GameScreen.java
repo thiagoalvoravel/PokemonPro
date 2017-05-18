@@ -4,8 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.pokemon.game.desktop.Iniciar;
 import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.controller.PlayerController;
@@ -64,6 +69,7 @@ public class GameScreen extends AbstractScreen {
     private List<String> nomes_pokemons = new ArrayList<String>();
      
     List<Integer> list = new ArrayList<Integer>();
+    private  TextField txtDisplay;
 
     /*Constantes para indicar que os valores numéricos no array: valores_arquivo 
     correspondem aos nomes dos 5 tipos de terrenos.
@@ -125,6 +131,8 @@ public class GameScreen extends AbstractScreen {
        
        //Gera Pokémons aleatórios e guarda as instâncias deles
        gerar_pokemons();
+       
+      
        
        
        camera = new Camera();
@@ -430,7 +438,7 @@ public class GameScreen extends AbstractScreen {
     }
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(controller);
+        Gdx.input.setInputProcessor(controller);     
     }
 
     @Override
@@ -519,7 +527,9 @@ public class GameScreen extends AbstractScreen {
        {
               batch.draw(pokemon.getSprite(),
               worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE
+              worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE * 1.5f
               );
        }
          
@@ -528,25 +538,9 @@ public class GameScreen extends AbstractScreen {
         batch.end();
     }
 
-    public Texture getGrass2() {
-        return grass2;
-    }
+    
 
-    public Texture getMontanha() {
-        return montanha;
-    }
-
-    public Texture getCaverna() {
-        return caverna;
-    }
-
-    public Texture getAgua() {
-        return agua;
-    }
-
-    public Texture getVulcao() {
-        return vulcao;
-    }
+   
     
     @Override
     public void resize(int width, int height) {
