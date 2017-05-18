@@ -508,7 +508,9 @@ public class GameScreen extends AbstractScreen {
        {
               batch.draw(pokecenter.getSprite(),
               worldStartX + pokecenter.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokecenter.getWorldY() * Settings.SCALED_TILE_SIZE
+              worldStartY + pokecenter.getWorldY() * Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE * 1.5f
               );
        }
        
@@ -518,7 +520,9 @@ public class GameScreen extends AbstractScreen {
        {
               batch.draw(pokemart.getSprite(),
               worldStartX + pokemart.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokemart.getWorldY() * Settings.SCALED_TILE_SIZE
+              worldStartY + pokemart.getWorldY() * Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE,
+              Settings.SCALED_TILE_SIZE * 1.5f
               );
        }
        
