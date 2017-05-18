@@ -70,6 +70,13 @@ public class GameScreen extends AbstractScreen {
      
     List<Integer> list = new ArrayList<Integer>();
     private  TextField txtDisplay;
+    
+    private int score;
+    private int score2;
+    private String pontuacao_atual;
+    private String pontuacao_total;
+    BitmapFont fonte;
+    BitmapFont fonte2;
 
     /*Constantes para indicar que os valores numéricos no array: valores_arquivo 
     correspondem aos nomes dos 5 tipos de terrenos.
@@ -131,8 +138,20 @@ public class GameScreen extends AbstractScreen {
        
        //Gera Pokémons aleatórios e guarda as instâncias deles
        gerar_pokemons();
+              
+       score = 0;
+       pontuacao_atual = "Pontuacao Atual: 0";
+       fonte = new BitmapFont();
        
+       score2 = 40;
+       pontuacao_total = "Pontuacao Total: 0";
+       fonte2 = new BitmapFont();
       
+       score++;
+       pontuacao_atual = "Pontuacao Atual: " + score; 
+       
+       score2++;
+       pontuacao_total = "Pontuacao Total: " + score2;
        
        
        camera = new Camera();
@@ -536,15 +555,18 @@ public class GameScreen extends AbstractScreen {
               Settings.SCALED_TILE_SIZE * 1.5f
               );
        }
-         
+       
+       
+       fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+       fonte.draw(batch, pontuacao_atual, 800, 700); 
+       
+       fonte2.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+       fonte2.draw(batch, pontuacao_total, 800, 650);
        
        
         batch.end();
     }
-
     
-
-   
     
     @Override
     public void resize(int width, int height) {
