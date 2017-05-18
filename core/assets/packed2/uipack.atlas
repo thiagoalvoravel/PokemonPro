@@ -1,0 +1,13 @@
+
+uipack.png
+size: 256,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dialoguebox
+  rotate: false
+  xy: 2, 2
+  size: 180, 47
+  orig: 180, 47
+  offset: 0, 0
+  index: -1
