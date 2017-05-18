@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.pokemon.game.desktop.screen.GameScreen;
 
-public class Pokemon extends Game{
+public class Iniciar extends Game{
     
     private GameScreen screen;
     private AssetManager assetManager;

@@ -13,6 +13,6 @@ public class DesktopLauncher {
                 config.width = 680;
                 config.vSyncEnabled = true;
                 
-                new LwjglApplication(new Pokemon(), config);
+                new LwjglApplication(new Iniciar(), config);
 	}
 }

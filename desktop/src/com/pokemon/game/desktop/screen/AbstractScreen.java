@@ -1,12 +1,12 @@
 package com.pokemon.game.desktop.screen;
 
 import com.badlogic.gdx.Screen;
-import com.pokemon.game.desktop.Pokemon;
+import com.pokemon.game.desktop.Iniciar;
 
 public abstract class AbstractScreen implements Screen {
-    private Pokemon app;
+    private Iniciar app;
      
-    public AbstractScreen(Pokemon app){
+    public AbstractScreen(Iniciar app){
       this.app = app;
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public abstract void dispose();
     
-    public Pokemon getApp() {
+    public Iniciar getApp() {
         return app;
     }
     

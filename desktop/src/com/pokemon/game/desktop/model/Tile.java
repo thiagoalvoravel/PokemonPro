@@ -7,6 +7,15 @@ public class Tile {
     private Treinador  treinador;
     private CentroPokemon centro_pokemon;
     private LojaPokemon lojaPokemon;
+    private Pokemon pokemon;
+
+    public Pokemon getPokemon() {
+        return pokemon;
+    }
+
+    public void setPokemon(Pokemon pokemon) {
+        this.pokemon = pokemon;
+    }
 
     public LojaPokemon getLojaPokemon() {
         return lojaPokemon;
