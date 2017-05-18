@@ -18,7 +18,9 @@ import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.CentroPokemon;
 import com.pokemon.game.desktop.model.LojaPokemon;
+import com.pokemon.game.desktop.model.PONTOSACAO;
 import com.pokemon.game.desktop.model.Pokemon;
+import com.pokemon.game.desktop.model.Pontuacao;
 import com.pokemon.game.desktop.model.TERRAIN;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
@@ -36,6 +38,7 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
     private Camera camera;
     private Actor player;
+    private Pontuacao pontuacao;
     private Treinador treinador;
     private CentroPokemon centropokemon;
     private LojaPokemon lojaPokemon;
@@ -50,7 +53,7 @@ public class GameScreen extends AbstractScreen {
     private Texture agua;
     private Texture vulcao;
     public int[][] terrenos = new int[42][42];
-    private Texture render; 
+    private Texture render;
     private Texture sprite_treinador;
     private int em_usoX;
     private int em_usoY;
@@ -59,7 +62,7 @@ public class GameScreen extends AbstractScreen {
     private int[][] posicoes_ocupadas_pokemons = new int[42][42];
     private int[][] posicoes_ocupadas_PM = new int[42][42];
     private int[][] posicoes_ocupadas_PC = new int[42][42];
-    
+
     private int direcao_mapa_x;
     private int direcao_mapa_y;
     private List<Treinador> sprites_treinador = new ArrayList<Treinador>();
@@ -67,10 +70,10 @@ public class GameScreen extends AbstractScreen {
     private List<LojaPokemon> sprites_pokemart = new ArrayList<LojaPokemon>();
     private List<Pokemon> sprites_pokemons = new ArrayList<Pokemon>();
     private List<String> nomes_pokemons = new ArrayList<String>();
-     
+
     List<Integer> list = new ArrayList<Integer>();
-    private  TextField txtDisplay;
-    
+    private TextField txtDisplay;
+
     private int score;
     private int score2;
     private String pontuacao_atual;
@@ -96,7 +99,7 @@ public class GameScreen extends AbstractScreen {
         caverna = new Texture("cave.png");
         agua = new Texture("water.png");
         vulcao = new Texture("volcano.png");
-          
+
         batch = new SpriteBatch();
 
         TextureAtlas atlas = app.getAssetManager().get("packed/textures.atlas", TextureAtlas.class);
@@ -114,195 +117,175 @@ public class GameScreen extends AbstractScreen {
 
         map = new TileMap(42, 42);
         player = new Actor(map, 24, 22, animations);
-        
-        
-       //Gera treinadores aleatórios e guarda as instâncias deles   
-       for(int x=0;x<50;x++){
-          int direcao_face = (int )(Math.random() * 4 + 1);
-          int tipo_treinador = (int )(Math.random() * 6 + 1);
-          direcao_mapa_x = (int )(Math.random() * 41 + 0);
-          direcao_mapa_y = (int )(Math.random() * 41 + 0);            
-          treinador = new Treinador(map,direcao_mapa_x,direcao_mapa_y,direcao_face, tipo_treinador);
-          
-          sprites_treinador.add(treinador);
-       } 
-        
-       //Gera as instâncias dos centros pokemon
-       gerar_centros_pokemon();
-       
-       //Gera as instâncias das Lojas Pokemon   
-       gerar_lojas_pokemon();
-       
-       //Define a lista de nomes de pokemons e seus tipos
-       adicionar_nomes_pokemon();
-       
-       //Gera Pokémons aleatórios e guarda as instâncias deles
-       gerar_pokemons();
-              
-       score = 0;
-       pontuacao_atual = "Pontuacao Atual: 0";
-       fonte = new BitmapFont();
-       
-       score2 = 40;
-       pontuacao_total = "Pontuacao Total: 0";
-       fonte2 = new BitmapFont();
-      
-       score++;
-       pontuacao_atual = "Pontuacao Atual: " + score; 
-       
-       score2++;
-       pontuacao_total = "Pontuacao Total: " + score2;
-       
-       
-       camera = new Camera();
-        
-       controller = new PlayerController(player);
+        pontuacao = new Pontuacao(0);
+
+        //Gera treinadores aleatórios e guarda as instâncias deles   
+        for (int x = 0; x < 50; x++) {
+            int direcao_face = (int) (Math.random() * 4 + 1);
+            int tipo_treinador = (int) (Math.random() * 6 + 1);
+            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+            treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
+
+            sprites_treinador.add(treinador);
+        }
+
+        //Gera as instâncias dos centros pokemon
+        gerar_centros_pokemon();
+
+        //Gera as instâncias das Lojas Pokemon   
+        gerar_lojas_pokemon();
+
+        //Define a lista de nomes de pokemons e seus tipos
+        adicionar_nomes_pokemon();
+
+        //Gera Pokémons aleatórios e guarda as instâncias deles
+        gerar_pokemons();
+
+        //Atualizar a pontuacao com base nas ações
+        pontuacao.ganharBatalha();
+        pontuacao.recuprarPokemons();
+        fonte = new BitmapFont();
+        pontuacao_atual = "Pontuacao Atual: " + pontuacao.getPontuacaoTotal();
+
+        score2 = 40;
+        pontuacao_total = "Pontuacao Total: 0";
+        fonte2 = new BitmapFont();
+        score2++;
+        pontuacao_total = "Pontuacao Total: " + score2;
+
+        camera = new Camera();
+
+        controller = new PlayerController(player);
     }
-    
+
     public void gerar_pokemons() {
-        
-       for(int x=0; x < 150 ;x++)
-       {
-          direcao_mapa_x = (int )(Math.random() * 41 + 0);
-          direcao_mapa_y = (int )(Math.random() * 41 + 0);
-          
-          if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1 && 
-                  posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1)
-          {
-                
-                if(x==0)
-                  posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y]=1;
-                         
-                if(x > 0)
-                {  
-                   while(!getposicao_pokemon_ocupada(direcao_mapa_x,direcao_mapa_y))
-                   {
-                     direcao_mapa_x = (int )(Math.random() * 41 + 0);
-                     direcao_mapa_y = (int )(Math.random() * 41 + 0);
-                   }
-                   posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y]=1;
+
+        for (int x = 0; x < 150; x++) {
+            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+
+            if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
+                    && posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
+
+                if (x == 0) {
+                    posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] = 1;
                 }
-              
-               if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1 && 
-                  posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) 
-               {                                            
-                   pokemon = new Pokemon(map,direcao_mapa_x,direcao_mapa_y,
-                                        nomes_pokemons.get(x));
-                   sprites_pokemons.add(pokemon);
-               }
-               else
-               {
-                 posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y]=0;
-                 x--;  
-               }    
-           }
-          else
-          {
-             x--;      
-          }
-       }
+
+                if (x > 0) {
+                    while (!getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                        direcao_mapa_x = (int) (Math.random() * 41 + 0);
+                        direcao_mapa_y = (int) (Math.random() * 41 + 0);
+                    }
+                    posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] = 1;
+                }
+
+                if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
+                        && posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
+                    pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
+                            nomes_pokemons.get(x));
+                    sprites_pokemons.add(pokemon);
+                } else {
+                    posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] = 0;
+                    x--;
+                }
+            } else {
+                x--;
+            }
+        }
     }
+
     public void gerar_lojas_pokemon() {
-        
-       for(int x=0;x <15;x++)
-       {       
-            direcao_mapa_x = (int )(Math.random() * 41 + 0);
-            direcao_mapa_y = (int )(Math.random() * 41 + 0);
-             
-            if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1)
-            {                         
-               if(x==0)posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y]=1;     
-               
-               if(x > 0)
-               {           
-                  while(!getposicao_PM_ocupada(direcao_mapa_x,direcao_mapa_y))
-                  {
-                    direcao_mapa_x = (int )(Math.random() * 41 + 0);
-                    direcao_mapa_y = (int )(Math.random() * 41 + 0);                
-                  }
-                 posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y]=1;
-               }
-               if(posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1)
-               {            
-                  lojaPokemon = new LojaPokemon(map,direcao_mapa_x,direcao_mapa_y);
-                  sprites_pokemart.add(lojaPokemon);
-               }
-               else
-               {
-                 posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y]=0;
-                 x--;  
-               } 
-           }
-           else
-           {
-             x--;      
-           }     
-       } 
+
+        for (int x = 0; x < 15; x++) {
+            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+
+            if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1) {
+                if (x == 0) {
+                    posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y] = 1;
+                }
+
+                if (x > 0) {
+                    while (!getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                        direcao_mapa_x = (int) (Math.random() * 41 + 0);
+                        direcao_mapa_y = (int) (Math.random() * 41 + 0);
+                    }
+                    posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y] = 1;
+                }
+                if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1) {
+                    lojaPokemon = new LojaPokemon(map, direcao_mapa_x, direcao_mapa_y);
+                    sprites_pokemart.add(lojaPokemon);
+                } else {
+                    posicoes_ocupadas_PM[direcao_mapa_x][direcao_mapa_y] = 0;
+                    x--;
+                }
+            } else {
+                x--;
+            }
+        }
     }
-    
+
     public void gerar_centros_pokemon() {
-        
-       for(int x=0; x < 20;x++)
-       {
-          direcao_mapa_x = (int )(Math.random() * 41 + 0);
-          direcao_mapa_y = (int )(Math.random() * 41 + 0);
-          
-          if(x==0)
-            posicoes_ocupadas_PC[direcao_mapa_x][direcao_mapa_y]=1;
-                            
-          if(x > 0)
-          {         
-            while(!getposicao_PC_ocupada(direcao_mapa_x,direcao_mapa_y))
-            {
-              direcao_mapa_x = (int )(Math.random() * 41 + 0);
-              direcao_mapa_y = (int )(Math.random() * 41 + 0);
+
+        for (int x = 0; x < 20; x++) {
+            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+
+            if (x == 0) {
+                posicoes_ocupadas_PC[direcao_mapa_x][direcao_mapa_y] = 1;
             }
-            posicoes_ocupadas_PC[direcao_mapa_x][direcao_mapa_y]=1;
-          }
-          
-          centropokemon = new CentroPokemon(map,direcao_mapa_x,direcao_mapa_y);
-          sprites_pokecenter.add(centropokemon);
-       } 
+
+            if (x > 0) {
+                while (!getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                    direcao_mapa_x = (int) (Math.random() * 41 + 0);
+                    direcao_mapa_y = (int) (Math.random() * 41 + 0);
+                }
+                posicoes_ocupadas_PC[direcao_mapa_x][direcao_mapa_y] = 1;
+            }
+
+            centropokemon = new CentroPokemon(map, direcao_mapa_x, direcao_mapa_y);
+            sprites_pokecenter.add(centropokemon);
+        }
     }
-    
-    public boolean getposicao_PC_ocupada(int x,int y)
-    {
-        for(int l=0; l<42;l++){
-            for(int c=0;c<42;c++)
-            {
-               if(posicoes_ocupadas_PC[x][y] == 1) return false;
+
+    public boolean getposicao_PC_ocupada(int x, int y) {
+        for (int l = 0; l < 42; l++) {
+            for (int c = 0; c < 42; c++) {
+                if (posicoes_ocupadas_PC[x][y] == 1) {
+                    return false;
+                }
             }
         }
-        
+
         return true;
     }
-    
-    public boolean getposicao_PM_ocupada(int x,int y)
-    {
-        for(int l=0; l<42;l++){
-            for(int c=0;c<42;c++)
-            {
-               if(posicoes_ocupadas_PM[x][y] == 1) return false;
+
+    public boolean getposicao_PM_ocupada(int x, int y) {
+        for (int l = 0; l < 42; l++) {
+            for (int c = 0; c < 42; c++) {
+                if (posicoes_ocupadas_PM[x][y] == 1) {
+                    return false;
+                }
             }
         }
-        
+
         return true;
     }
-    
-    public boolean getposicao_pokemon_ocupada(int x,int y)
-    {
-        for(int l=0; l<42;l++){
-            for(int c=0;c<42;c++)
-            {
-               if(posicoes_ocupadas_pokemons[x][y] == 1) return false;
+
+    public boolean getposicao_pokemon_ocupada(int x, int y) {
+        for (int l = 0; l < 42; l++) {
+            for (int c = 0; c < 42; c++) {
+                if (posicoes_ocupadas_pokemons[x][y] == 1) {
+                    return false;
+                }
             }
         }
-        
+
         return true;
     }
-    
-    public void adicionar_nomes_pokemon()
-    {
+
+    public void adicionar_nomes_pokemon() {
         nomes_pokemons.add("abra-psiquico;N");
         nomes_pokemons.add("alakazam-psiquico;N");
         nomes_pokemons.add("aerodactyl-pedra;voador");
@@ -453,11 +436,12 @@ public class GameScreen extends AbstractScreen {
         nomes_pokemons.add("wigglytuff-normal;fada");
         nomes_pokemons.add("zapdos-eletrico;voador");
         nomes_pokemons.add("zubat-venenoso;voador");
-       
+
     }
+
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(controller);     
+        Gdx.input.setInputProcessor(controller);
     }
 
     @Override
@@ -465,18 +449,17 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
 
         player.update(delta);
-        
+
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
-
         batch.begin();
-        
+
         float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
         float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
 
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                            
+
                 switch (map.getTerrenos(x, y).getTerrain()) {
                     case GRASS_2:
                         render = grass2;
@@ -496,7 +479,7 @@ public class GameScreen extends AbstractScreen {
                     default:
                         break;
                 }
-                            
+
                 batch.draw(render,
                         worldStartX + x * Settings.SCALED_TILE_SIZE,
                         worldStartY + y * Settings.SCALED_TILE_SIZE,
@@ -511,63 +494,55 @@ public class GameScreen extends AbstractScreen {
                 worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE * 1.5f);
-        
-       //Desenha os treinadores na tela 
-       for(Treinador trainer: sprites_treinador)  
-       {
-              batch.draw(trainer.getSprite(),
-              worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE * 1.5f);
-       }
-       
-       //Desenha os centros pokemon na tela 
-       for(CentroPokemon pokecenter: sprites_pokecenter)  
-       {
-              batch.draw(pokecenter.getSprite(),
-              worldStartX + pokecenter.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokecenter.getWorldY() * Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE * 1.5f
-              );
-       }
-       
-       
-       //Desenha as Lojas Pokemon na tela 
-       for(LojaPokemon pokemart: sprites_pokemart)  
-       {
-              batch.draw(pokemart.getSprite(),
-              worldStartX + pokemart.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokemart.getWorldY() * Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE * 1.5f
-              );
-       }
-       
-       //Desenha os Pokemons na tela 
-       for(Pokemon pokemon: sprites_pokemons)  
-       {
-              batch.draw(pokemon.getSprite(),
-              worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
-              worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE,
-              Settings.SCALED_TILE_SIZE * 1.5f
-              );
-       }
-       
-       
-       fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-       fonte.draw(batch, pontuacao_atual, 800, 700); 
-       
-       fonte2.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-       fonte2.draw(batch, pontuacao_total, 800, 650);
-       
-       
+
+        //Desenha os treinadores na tela 
+        for (Treinador trainer : sprites_treinador) {
+            batch.draw(trainer.getSprite(),
+                    worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
+                    worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE * 1.5f);
+        }
+
+        //Desenha os centros pokemon na tela 
+        for (CentroPokemon pokecenter : sprites_pokecenter) {
+            batch.draw(pokecenter.getSprite(),
+                    worldStartX + pokecenter.getWorldX() * Settings.SCALED_TILE_SIZE,
+                    worldStartY + pokecenter.getWorldY() * Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE * 1.5f
+            );
+        }
+
+        //Desenha as Lojas Pokemon na tela 
+        for (LojaPokemon pokemart : sprites_pokemart) {
+            batch.draw(pokemart.getSprite(),
+                    worldStartX + pokemart.getWorldX() * Settings.SCALED_TILE_SIZE,
+                    worldStartY + pokemart.getWorldY() * Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE * 1.5f
+            );
+        }
+
+        //Desenha os Pokemons na tela 
+        for (Pokemon pokemon : sprites_pokemons) {
+            batch.draw(pokemon.getSprite(),
+                    worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
+                    worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE,
+                    Settings.SCALED_TILE_SIZE * 1.5f
+            );
+        }
+
+        fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        fonte.draw(batch, pontuacao_atual, 800, 700);
+
+        fonte2.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        fonte2.draw(batch, pontuacao_total, 800, 650);
+
         batch.end();
     }
-    
-    
+
     @Override
     public void resize(int width, int height) {
 
