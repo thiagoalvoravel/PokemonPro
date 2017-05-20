@@ -6,6 +6,16 @@ public class Pontuacao {
     private int pontuacaoTotal;
     private int pontuacaoAtual;
     private PONTOSACAO pontosAcao;
+    private int pokemons_capturados;
+
+    
+    public int getPokemons_capturados() {
+        return pokemons_capturados;
+    }
+
+    public void setPokemons_capturados(int pokemons_capturados) {
+        this.pokemons_capturados = pokemons_capturados;
+    }
 
     public Pontuacao() {
     }

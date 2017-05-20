@@ -175,13 +175,31 @@ public class GameScreen extends AbstractScreen {
         mostrar_Pontuacao_Atual(pontuacao);
         mostrar_Pontuacao_Total(pontuacao);
         
-        grp.setPosition(612,
-            700);
-    
+        //Mostrar Pokémons Capturados!
+        pontuacao.setPokemons_capturados(15);
+        mostrar_Qtd_Pokemons(pontuacao);
+        
+        
         camera = new Camera();
 
         controller = new PlayerController(player);
     }
+    
+    public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke){
+        
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Capturados " + pontuacao_poke.getPokemons_capturados(), textButtonStyle);
+        button.setPosition(612, 500);
+        stage.addActor(button);
+        
+    }
+    
     public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual){
         
         font.getData().setScale(1.5f);
