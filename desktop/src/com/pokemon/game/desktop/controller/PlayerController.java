@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.DIRECTION;
+import com.pokemon.game.desktop.model.Tile;
+import com.pokemon.game.desktop.model.TileMap;
 
 public class PlayerController extends InputAdapter {
 
@@ -53,18 +55,23 @@ public class PlayerController extends InputAdapter {
 
     public void update(float delta) {
         if (up) {
-            if (this.player.getFacing() == DIRECTION.NORTH) {
+            if (this.player.getFacing() == DIRECTION.NORTH) {        
                 player.move(DIRECTION.NORTH);
             }else{
                 this.player.setState(Actor.ACTOR_STATE.STANDING);
                 this.player.setFacing(DIRECTION.NORTH);
                 this.up = false;
+                //int posicaoX = player.getX();
+                //int posicaoY = player.getY();
+                //String objeto_mapa = player.getMap().getTile(posicaoX, posicaoY).getTipo_Objeto();
+                
                 //Calcualr custo da ação
             }
             return;
         }
         if (down) {
-            if (this.player.getFacing() == DIRECTION.SOUTH) {
+            if (this.player.getFacing() == DIRECTION.SOUTH) {    
+                
                 player.move(DIRECTION.SOUTH);
             }else{
                 this.player.setState(Actor.ACTOR_STATE.STANDING);
@@ -75,7 +82,7 @@ public class PlayerController extends InputAdapter {
             return;
         }
         if (left) {
-            if (this.player.getFacing() == DIRECTION.WEST) {
+            if (this.player.getFacing() == DIRECTION.WEST) {                 
                 player.move(DIRECTION.WEST);
             }else{
                 this.player.setState(Actor.ACTOR_STATE.STANDING);
@@ -86,7 +93,7 @@ public class PlayerController extends InputAdapter {
             return;
         }
         if (right) {
-            if (this.player.getFacing() == DIRECTION.EAST) {
+            if (this.player.getFacing() == DIRECTION.EAST) {                                  
                 player.move(DIRECTION.EAST);
             }else{
                 this.player.setState(Actor.ACTOR_STATE.STANDING);
@@ -97,5 +104,5 @@ public class PlayerController extends InputAdapter {
             return;
         }
     }
-
+    
 }

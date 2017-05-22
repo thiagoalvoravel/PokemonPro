@@ -40,8 +40,12 @@ public class Actor {
         WALKING,
         STANDING,;
     }
+    
+    public ACTOR_STATE getState() {
+        return state;
+    }
 
-    public void update(float delta) {
+    public void update(float delta) {   
         if (state == ACTOR_STATE.WALKING) {
             animTimer += delta;
             walkTimer += delta;
@@ -189,6 +193,10 @@ public class Actor {
 
     public void setMoveRequestThisFrame(boolean moveRequestThisFrame) {
         this.moveRequestThisFrame = moveRequestThisFrame;
+    }
+    
+     public TileMap getMap() {
+        return map;
     }
 
 }

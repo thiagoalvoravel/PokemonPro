@@ -521,7 +521,12 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
 
         player.update(delta);
-      
+             
+        //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
+        System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
+        System.out.println(map.getTerrenos(player.getX(), player.getY()+1).getTipo_Objeto()); 
+        
+        
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
         batch.begin();
@@ -606,21 +611,10 @@ public class GameScreen extends AbstractScreen {
             );
         }
 
-        /*fonte.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        fonte.draw(batch, pontuacao_atual, 800, 700);
-
-        fonte2.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        fonte2.draw(batch, pontuacao_total, 800, 650);*/
-        
-        
-        
-        
-
+      
         batch.end();
-          
-       //stage.act(Gdx.graphics.getDeltaTime());
-       stage.draw();
-                 
+         
+        stage.draw();                
     }
 
     @Override

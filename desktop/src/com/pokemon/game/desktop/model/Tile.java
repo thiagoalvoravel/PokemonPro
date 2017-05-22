@@ -8,6 +8,12 @@ public class Tile {
     private CentroPokemon centro_pokemon;
     private LojaPokemon lojaPokemon;
     private Pokemon pokemon;
+    private String tipo_objeto;
+    
+    public String getTipo_Objeto()
+    {
+        return tipo_objeto;
+    }
 
     public Pokemon getPokemon() {
         return pokemon;
@@ -15,6 +21,7 @@ public class Tile {
 
     public void setPokemon(Pokemon pokemon) {
         this.pokemon = pokemon;
+        tipo_objeto = "pokemon";
     }
 
     public LojaPokemon getLojaPokemon() {
@@ -23,6 +30,7 @@ public class Tile {
 
     public void setLoja(LojaPokemon lojaPokemon) {
         this.lojaPokemon = lojaPokemon;
+        tipo_objeto = "loja";
     }
 
     public CentroPokemon getCentro_pokemon() {
@@ -31,15 +39,16 @@ public class Tile {
 
     public void setCentroPokemon(CentroPokemon centro_pokemon) {
         this.centro_pokemon = centro_pokemon;
+        tipo_objeto = "centroP";
     }
-    
-    
+       
     public Treinador getTreinador() {
         return treinador;
     }
 
     public void setTreinador(Treinador treinador) {
         this.treinador = treinador;
+        tipo_objeto = "treinador";
     }
 
     public Actor getActor() {
