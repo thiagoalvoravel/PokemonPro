@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class GameScreen extends AbstractScreen {
 
@@ -93,7 +94,7 @@ public class GameScreen extends AbstractScreen {
     private String pontuacao_total;
     BitmapFont fonte;
     BitmapFont fonte2;
-    Group grp=new Group();
+    Group grp = new Group();
     private Stage stage;
     private Image img;
 
@@ -105,8 +106,8 @@ public class GameScreen extends AbstractScreen {
     public static final int CAVERNA = 3;
     public static final int AGUA = 4;
     public static final int VULCAO = 5;
-    
-    private BitmapFont font; 
+
+    private BitmapFont font;
     private TextureAtlas buttonsAtlas; //** image of buttons **//
     private Skin buttonSkin; //** images are used as skins of the button **//
     private TextButton button;
@@ -123,7 +124,7 @@ public class GameScreen extends AbstractScreen {
         vulcao = new Texture("volcano.png");
 
         batch = new SpriteBatch();
-        
+
         stage = new Stage(new StretchViewport(800, 800));
         font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
                 Gdx.files.internal("fontes/small_letters_font.png"), false);
@@ -145,7 +146,6 @@ public class GameScreen extends AbstractScreen {
         player = new Actor(map, 24, 22, animations);
         pontuacao = new Pontuacao(0);
 
-        
         //Gera as instâncias dos centros pokemon
         gerar_centros_pokemon();
 
@@ -162,24 +162,23 @@ public class GameScreen extends AbstractScreen {
         gerar_Treinador();
         
         //Atualizar a pontuacao com base nas ações 
-       //Recebe objeto Pontuacao para mostrar o valor da Pontuacao
+        //Recebe objeto Pontuacao para mostrar o valor da Pontuacao
         pontuacao.ganharBatalha();
         pontuacao.recuprarPokemons();
         mostrar_Pontuacao_Atual(pontuacao);
         mostrar_Pontuacao_Total(pontuacao);
-        
+
         //Mostrar Pokémons Capturados!
         pontuacao.setPokemons_capturados(15);
         mostrar_Qtd_Pokemons(pontuacao);
-        
-        
+
         camera = new Camera();
 
         controller = new PlayerController(player);
     }
-    
-    public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke){
-        
+
+    public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke) {
+
         font.getData().setScale(1.5f);
         buttonSkin = new Skin();
         buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
@@ -190,11 +189,11 @@ public class GameScreen extends AbstractScreen {
         button = new TextButton("Capturados " + pontuacao_poke.getPokemons_capturados(), textButtonStyle);
         button.setPosition(612, 500);
         stage.addActor(button);
-        
+
     }
-    
-    public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual){
-        
+
+    public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual) {
+
         font.getData().setScale(1.5f);
         buttonSkin = new Skin();
         buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
@@ -205,11 +204,10 @@ public class GameScreen extends AbstractScreen {
         button = new TextButton("Pontuacao Atual " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
         button.setPosition(612, 700);
         stage.addActor(button);
-        
+
     }
-    
-    public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao)
-    {
+
+    public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao) {
         font.getData().setScale(1.5f);
         buttonSkin = new Skin();
         buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
@@ -220,50 +218,52 @@ public class GameScreen extends AbstractScreen {
         button = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
         button.setPosition(612, 600);
         stage.addActor(button);
-        
+
     }
-    
-    public void gerar_Treinador()
-    {
-         for (int x = 0; x < 50; x++) {
+
+    public void gerar_Treinador() {
+        for (int x = 0; x < 50; x++) {
             int direcao_face = (int) (Math.random() * 4 + 1);
             int tipo_treinador = (int) (Math.random() * 6 + 1);
             direcao_mapa_x = (int) (Math.random() * 41 + 0);
             direcao_mapa_y = (int) (Math.random() * 41 + 0);
-            
+
             if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
-                    || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1 ||
-                  posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] != 1
-                    ) {
-                 
-                       if (x == 0) {
-                        posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
-                       }  
-             
-                       if (x > 0) {
-                          while (!getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y)) {
-                            direcao_mapa_x = (int) (Math.random() * 41 + 0);
-                            direcao_mapa_y = (int) (Math.random() * 41 + 0);
-                          }
-                         posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
-                       } 
-            
-                      if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
-                          || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1 ||
-                           posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] != 1
-                         ) {  
-                             treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
-                             sprites_treinador.add(treinador);     
-                      } else {
-                        posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
-                        x--;
-                       }
-            }else {
+                    || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1
+                    || posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] != 1) {
+
+                if (x == 0) {
+                    posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
+                }
+
+                if (x > 0) {
+                    while (!getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                        direcao_mapa_x = (int) (Math.random() * 41 + 0);
+                        direcao_mapa_y = (int) (Math.random() * 41 + 0);
+                    }
+                    posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
+                }
+
+                if (getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) 
+                {
+                    treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
+                    sprites_treinador.add(treinador);
+                } else {
+                    posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
+                    x--;
+                }
+            } else {
                 x--;
             }
         }
     }
-   
+
     public void gerar_pokemons() {
 
         for (int x = 0; x < 150; x++) {
@@ -278,15 +278,20 @@ public class GameScreen extends AbstractScreen {
                 }
 
                 if (x > 0) {
-                    while (!getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                    while (!getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
                         direcao_mapa_x = (int) (Math.random() * 41 + 0);
                         direcao_mapa_y = (int) (Math.random() * 41 + 0);
                     }
                     posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] = 1;
                 }
 
-                if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
-                        || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
+                if (getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y) ||
+                        getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y))                              
+                {
                     pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
                             nomes_pokemons.get(x));
                     sprites_pokemons.add(pokemon);
@@ -312,7 +317,8 @@ public class GameScreen extends AbstractScreen {
                 }
 
                 if (x > 0) {
-                    while (!getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                    while (!getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                            || !getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
                         direcao_mapa_x = (int) (Math.random() * 41 + 0);
                         direcao_mapa_y = (int) (Math.random() * 41 + 0);
                     }
@@ -342,7 +348,10 @@ public class GameScreen extends AbstractScreen {
             }
 
             if (x > 0) {
-                while (!getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                while (!getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y)
+                        || !getposicao_pokemon_ocupada(direcao_mapa_x, direcao_mapa_y)
+                        || !getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
+                        || !getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) {
                     direcao_mapa_x = (int) (Math.random() * 41 + 0);
                     direcao_mapa_y = (int) (Math.random() * 41 + 0);
                 }
@@ -389,7 +398,7 @@ public class GameScreen extends AbstractScreen {
 
         return true;
     }
-    
+
     public boolean getposicao_treinador_ocupada(int x, int y) {
         for (int l = 0; l < 42; l++) {
             for (int c = 0; c < 42; c++) {
@@ -401,8 +410,6 @@ public class GameScreen extends AbstractScreen {
 
         return true;
     }
-    
-    
 
     public void adicionar_nomes_pokemon() {
         nomes_pokemons.add("abra-psiquico;N");
@@ -561,7 +568,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(controller);
-             
+
     }
 
     @Override
@@ -569,24 +576,21 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
 
         player.update(delta);
-        
+
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
-        System.out.println(map.getTerrenos(player.getX(), player.getY()+1).getTipo_Objeto());
+        System.out.println(map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
 
-        
         String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
-             
-        if(objeto.equals("treinador"))
-        {
-           map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
-        }
-        else
-        {
+
+        if (objeto.equals("treinador")) {
+            map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
+        } else if (objeto.equals("pokemon")) {
+            map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
+        } else {
             objeto = "null";
         }
 
-        
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
         batch.begin();
@@ -634,17 +638,15 @@ public class GameScreen extends AbstractScreen {
 
         //Desenha os treinadores na tela 
         for (Treinador trainer : sprites_treinador) {
-            if(trainer.isVisibilidade())
-            {    
+            if (trainer.isVisibilidade()) {
                 batch.draw(trainer.getSprite(),
-                    worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
-                    worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
-                    Settings.SCALED_TILE_SIZE,
-                    Settings.SCALED_TILE_SIZE * 1.5f);
-           }
-           else
-           {
-               switch (map.getTerrenos(trainer.getX(), trainer.getY()).getTerrain()) {
+                        worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
+                        worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE * 1.5f);
+            } else {
+                switch (map.getTerrenos(trainer.getX(), trainer.getY()).getTerrain()) 
+                {
                     case GRASS_2:
                         render = grass2;
                         break;
@@ -661,15 +663,15 @@ public class GameScreen extends AbstractScreen {
                         render = vulcao;
                         break;
                     default:
-                        break;
-                }       
+                        break;                        
+                }
                 
                 batch.draw(render,
                         worldStartX + trainer.getX() * Settings.SCALED_TILE_SIZE,
                         worldStartY + trainer.getY() * Settings.SCALED_TILE_SIZE,
                         Settings.SCALED_TILE_SIZE,
-                        Settings.SCALED_TILE_SIZE);          
-           }     
+                        Settings.SCALED_TILE_SIZE);
+            }
         }
 
         //Desenha os centros pokemon na tela 
@@ -694,18 +696,46 @@ public class GameScreen extends AbstractScreen {
 
         //Desenha os Pokemons na tela 
         for (Pokemon pokemon : sprites_pokemons) {
-            batch.draw(pokemon.getSprite(),
-                    worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
-                    worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
-                    Settings.SCALED_TILE_SIZE,
-                    Settings.SCALED_TILE_SIZE * 1.5f
-            );
+            if(pokemon.isVisibilidade()){
+                batch.draw(pokemon.getSprite(),
+                        worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
+                        worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE * 1.5f
+                );
+            }else {
+                switch (map.getTerrenos(pokemon.getX(), pokemon.getY()).getTerrain()) 
+                {
+                    case GRASS_2:
+                        render = grass2;
+                        break;
+                    case MONTANHA:
+                        render = montanha;
+                        break;
+                    case CAVERNA:
+                        render = caverna;
+                        break;
+                    case AGUA:
+                        render = agua;
+                        break;
+                    case VULCAO:
+                        render = vulcao;
+                        break;
+                    default:
+                        break;                        
+                }
+                
+                batch.draw(render,
+                        worldStartX + pokemon.getX() * Settings.SCALED_TILE_SIZE,
+                        worldStartY + pokemon.getY() * Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE);
+            }
         }
 
-      
         batch.end();
-         
-        stage.draw();                
+
+        stage.draw();
     }
 
     @Override

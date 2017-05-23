@@ -16,7 +16,7 @@ public class Pokemon {
    
    private String nome;
    private String[] tipo = new String[2];
-   private boolean visibilidade;
+   private boolean visibilidade=true;
 
   
     public Pokemon(TileMap map, int x, int y, String info_pokemon) {
