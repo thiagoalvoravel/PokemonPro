@@ -74,6 +74,7 @@ public class GameScreen extends AbstractScreen {
     private int[][] posicoes_ocupadas_pokemons = new int[42][42];
     private int[][] posicoes_ocupadas_PM = new int[42][42];
     private int[][] posicoes_ocupadas_PC = new int[42][42];
+    private int[][] posicoes_ocupadas_Treinador = new int[42][42];
 
     private int direcao_mapa_x;
     private int direcao_mapa_y;
@@ -144,17 +145,7 @@ public class GameScreen extends AbstractScreen {
         player = new Actor(map, 24, 22, animations);
         pontuacao = new Pontuacao(0);
 
-        //Gera treinadores aleatórios e guarda as instâncias deles   
-        for (int x = 0; x < 50; x++) {
-            int direcao_face = (int) (Math.random() * 4 + 1);
-            int tipo_treinador = (int) (Math.random() * 6 + 1);
-            direcao_mapa_x = (int) (Math.random() * 41 + 0);
-            direcao_mapa_y = (int) (Math.random() * 41 + 0);
-            treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
-
-            sprites_treinador.add(treinador);
-        }
-
+        
         //Gera as instâncias dos centros pokemon
         gerar_centros_pokemon();
 
@@ -167,6 +158,8 @@ public class GameScreen extends AbstractScreen {
         //Gera Pokémons aleatórios e guarda as instâncias deles
         gerar_pokemons();
 
+        //Gera treinadores aleatórios e guarda as instâncias deles   
+        gerar_Treinador();
         
         //Atualizar a pontuacao com base nas ações 
        //Recebe objeto Pontuacao para mostrar o valor da Pontuacao
@@ -229,6 +222,47 @@ public class GameScreen extends AbstractScreen {
         stage.addActor(button);
         
     }
+    
+    public void gerar_Treinador()
+    {
+         for (int x = 0; x < 50; x++) {
+            int direcao_face = (int) (Math.random() * 4 + 1);
+            int tipo_treinador = (int) (Math.random() * 6 + 1);
+            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+            
+            if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
+                    || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1 ||
+                  posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] != 1
+                    ) {
+                 
+                       if (x == 0) {
+                        posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
+                       }  
+             
+                       if (x > 0) {
+                          while (!getposicao_treinador_ocupada(direcao_mapa_x, direcao_mapa_y)) {
+                            direcao_mapa_x = (int) (Math.random() * 41 + 0);
+                            direcao_mapa_y = (int) (Math.random() * 41 + 0);
+                          }
+                         posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 1;
+                       } 
+            
+                      if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
+                          || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1 ||
+                           posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] != 1
+                         ) {  
+                             treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
+                             sprites_treinador.add(treinador);     
+                      } else {
+                        posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
+                        x--;
+                       }
+            }else {
+                x--;
+            }
+        }
+    }
    
     public void gerar_pokemons() {
 
@@ -237,7 +271,7 @@ public class GameScreen extends AbstractScreen {
             direcao_mapa_y = (int) (Math.random() * 41 + 0);
 
             if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
-                    && posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
+                    || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
 
                 if (x == 0) {
                     posicoes_ocupadas_pokemons[direcao_mapa_x][direcao_mapa_y] = 1;
@@ -252,7 +286,7 @@ public class GameScreen extends AbstractScreen {
                 }
 
                 if (posicoes_usadasPC[direcao_mapa_x][direcao_mapa_y] != 1
-                        && posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
+                        || posicoes_usadasPM[direcao_mapa_x][direcao_mapa_y] != 1) {
                     pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
                             nomes_pokemons.get(x));
                     sprites_pokemons.add(pokemon);
@@ -355,6 +389,20 @@ public class GameScreen extends AbstractScreen {
 
         return true;
     }
+    
+    public boolean getposicao_treinador_ocupada(int x, int y) {
+        for (int l = 0; l < 42; l++) {
+            for (int c = 0; c < 42; c++) {
+                if (posicoes_ocupadas_Treinador[x][y] == 1) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    
+    
 
     public void adicionar_nomes_pokemon() {
         nomes_pokemons.add("abra-psiquico;N");
@@ -521,11 +569,23 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
 
         player.update(delta);
-             
+        
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
-        System.out.println(map.getTerrenos(player.getX(), player.getY()+1).getTipo_Objeto()); 
+        System.out.println(map.getTerrenos(player.getX(), player.getY()+1).getTipo_Objeto());
+
         
+        String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
+             
+        if(objeto.equals("treinador"))
+        {
+           map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
+        }
+        else
+        {
+            objeto = "null";
+        }
+
         
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
@@ -574,11 +634,42 @@ public class GameScreen extends AbstractScreen {
 
         //Desenha os treinadores na tela 
         for (Treinador trainer : sprites_treinador) {
-            batch.draw(trainer.getSprite(),
+            if(trainer.isVisibilidade())
+            {    
+                batch.draw(trainer.getSprite(),
                     worldStartX + trainer.getWorldX() * Settings.SCALED_TILE_SIZE,
                     worldStartY + trainer.getWorldY() * Settings.SCALED_TILE_SIZE,
                     Settings.SCALED_TILE_SIZE,
                     Settings.SCALED_TILE_SIZE * 1.5f);
+           }
+           else
+           {
+               switch (map.getTerrenos(trainer.getX(), trainer.getY()).getTerrain()) {
+                    case GRASS_2:
+                        render = grass2;
+                        break;
+                    case MONTANHA:
+                        render = montanha;
+                        break;
+                    case CAVERNA:
+                        render = caverna;
+                        break;
+                    case AGUA:
+                        render = agua;
+                        break;
+                    case VULCAO:
+                        render = vulcao;
+                        break;
+                    default:
+                        break;
+                }       
+                
+                batch.draw(render,
+                        worldStartX + trainer.getX() * Settings.SCALED_TILE_SIZE,
+                        worldStartY + trainer.getY() * Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE,
+                        Settings.SCALED_TILE_SIZE);          
+           }     
         }
 
         //Desenha os centros pokemon na tela 

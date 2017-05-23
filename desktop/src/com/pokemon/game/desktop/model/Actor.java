@@ -124,7 +124,6 @@ public class Actor {
         this.srcY = 0;
         this.destX = 0;
         this.destY = 0;
-
     }
 
     public int getX() {

@@ -16,6 +16,7 @@ public class Pokemon {
    
    private String nome;
    private String[] tipo = new String[2];
+   private boolean visibilidade;
 
   
     public Pokemon(TileMap map, int x, int y, String info_pokemon) {
@@ -32,6 +33,14 @@ public class Pokemon {
         sprite = new Texture("Pokemons/"+getNome()+".png");
                   
         map.getTerrenos(x, y).setPokemon(this);
+    }
+    
+    public boolean isVisibilidade() {
+        return visibilidade;
+    }
+
+    public void setVisibilidade(boolean visibilidade) {
+        this.visibilidade = visibilidade;
     }
     
     public String getNome() {

@@ -16,8 +16,9 @@ public class Treinador {
    private int direcao;
    
    private float worldX, worldY;
-   
+   private boolean visibilidade=true;
 
+   
     public Treinador(TileMap map, int x, int y, int direcao, int tipo_treinador) {
         this.map = map;
         this.x = x;
@@ -138,6 +139,14 @@ public class Treinador {
       } 
                
        map.getTerrenos(x, y).setTreinador(this);   
+    }
+    
+    public boolean isVisibilidade() {
+        return visibilidade;
+    }
+
+    public void setVisibilidade(boolean visibilidade) {
+        this.visibilidade = visibilidade;
     }
     
     public int getDirecao()

@@ -8,7 +8,7 @@ public class Tile {
     private CentroPokemon centro_pokemon;
     private LojaPokemon lojaPokemon;
     private Pokemon pokemon;
-    private String tipo_objeto;
+    private String tipo_objeto= "null";
     
     public String getTipo_Objeto()
     {
