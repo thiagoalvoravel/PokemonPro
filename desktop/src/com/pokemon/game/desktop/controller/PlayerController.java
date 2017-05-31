@@ -17,7 +17,7 @@ public class PlayerController extends InputAdapter {
         this.player = p;
     }
 
-    @Override
+    /*@Override
     public boolean keyDown(int keycode) {
         if (keycode == Keys.UP) {
             up = true;
@@ -33,9 +33,9 @@ public class PlayerController extends InputAdapter {
         }
 
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean keyUp(int keycode) {
         if (keycode == Keys.UP) {
             up = false;
@@ -51,10 +51,13 @@ public class PlayerController extends InputAdapter {
         }
 
         return false;
-    }
+    } */
 
-    public void update(float delta) {
-        if (up) {
+    public void update(float delta, String direcao) {
+        
+      if(direcao.equals("up"))  
+      {
+       // if (up) {
             if (this.player.getFacing() == DIRECTION.NORTH) {        
                 player.move(DIRECTION.NORTH);
             }else{
@@ -69,7 +72,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-        if (down) {
+       else if (direcao.equals("down")) {
             if (this.player.getFacing() == DIRECTION.SOUTH) {    
                 
                 player.move(DIRECTION.SOUTH);
@@ -81,7 +84,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-        if (left) {
+       else if (direcao.equals("left")) {
             if (this.player.getFacing() == DIRECTION.WEST) {                 
                 player.move(DIRECTION.WEST);
             }else{
@@ -92,7 +95,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-        if (right) {
+       else if (direcao.equals("right")) {
             if (this.player.getFacing() == DIRECTION.EAST) {                                  
                 player.move(DIRECTION.EAST);
             }else{

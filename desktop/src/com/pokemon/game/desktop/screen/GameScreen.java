@@ -24,6 +24,7 @@ import com.pokemon.game.desktop.Iniciar;
 import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.controller.PlayerController;
 import com.pokemon.game.desktop.model.Actor;
+import com.pokemon.game.desktop.model.BasePokemon;
 import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.CentroPokemon;
 import com.pokemon.game.desktop.model.LojaPokemon;
@@ -112,6 +113,7 @@ public class GameScreen extends AbstractScreen {
     private Skin buttonSkin; //** images are used as skins of the button **//
     private TextButton button;
     private TextButtonStyle textButtonStyle;
+    private BasePokemon agente = new BasePokemon(); 
 
     public GameScreen(Iniciar app) {
         super(app);
@@ -573,7 +575,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        controller.update(delta);
+        String direcao = agente.buscarNaBase();
+        
+        controller.update(delta, direcao);
 
         player.update(delta);
 
