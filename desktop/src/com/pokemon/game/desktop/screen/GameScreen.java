@@ -40,9 +40,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 public class GameScreen extends AbstractScreen {
 
@@ -114,7 +117,15 @@ public class GameScreen extends AbstractScreen {
     private TextButton button;
     private TextButtonStyle textButtonStyle;
     private BasePokemon agente = new BasePokemon(); 
-
+    
+    
+    /*private String nome_arquivo;
+    private Query compilar_arquivo;
+    private String regra;
+    private Query executar_regra;*/
+    private String direcao;
+    //private Map<String, Term> resultado_regra;
+    
     public GameScreen(Iniciar app) {
         super(app);
         redStandingSouth = new Texture("ash_south_stand.png");
@@ -178,7 +189,7 @@ public class GameScreen extends AbstractScreen {
 
         controller = new PlayerController(player);
     }
-
+    
     public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke) {
 
         font.getData().setScale(1.5f);
@@ -566,17 +577,18 @@ public class GameScreen extends AbstractScreen {
         nomes_pokemons.add("zubat-venenoso;voador");
 
     }
-
+    
     @Override
     public void show() {
         Gdx.input.setInputProcessor(controller);
 
     }
-
+    
     @Override
     public void render(float delta) {
-        String direcao = agente.buscarNaBase();
         
+        direcao = agente.buscarNaBase();
+               
         controller.update(delta, direcao);
 
         player.update(delta);

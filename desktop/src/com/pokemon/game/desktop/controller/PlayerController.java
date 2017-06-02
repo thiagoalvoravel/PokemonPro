@@ -7,6 +7,9 @@ import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.DIRECTION;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
+import java.util.Map;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 public class PlayerController extends InputAdapter {
 
@@ -52,7 +55,7 @@ public class PlayerController extends InputAdapter {
 
         return false;
     } */
-
+    
     public void update(float delta, String direcao) {
         
       if(direcao.equals("up"))  
@@ -72,7 +75,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-       else if (direcao.equals("down")) {
+       else if (direcao.equals("sul")) {
             if (this.player.getFacing() == DIRECTION.SOUTH) {    
                 
                 player.move(DIRECTION.SOUTH);
