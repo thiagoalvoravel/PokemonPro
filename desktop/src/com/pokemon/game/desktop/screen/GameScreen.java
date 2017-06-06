@@ -587,7 +587,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         
-        direcao = agente.buscarNaBase();
+        direcao = agente.buscarNaBase(map, player);
                
         controller.update(delta, direcao);
 
@@ -595,7 +595,13 @@ public class GameScreen extends AbstractScreen {
 
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
-        System.out.println(map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
+        
+        if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
+            System.out.println("Norte: " + map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
+            System.out.println("Sul: " + map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto());
+            System.out.println("Leste: " + map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto());
+            System.out.println("Oeste: " + map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto());
+        }
 
         String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
 
@@ -603,6 +609,7 @@ public class GameScreen extends AbstractScreen {
             map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
         } else if (objeto.equals("pokemon")) {
             map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
+            //Atualizar a base de conhecimento
         } else {
             objeto = "null";
         }

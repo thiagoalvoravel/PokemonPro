@@ -58,7 +58,7 @@ public class PlayerController extends InputAdapter {
     
     public void update(float delta, String direcao) {
         
-      if(direcao.equals("up"))  
+      if(direcao.equals("norte"))  
       {
        // if (up) {
             if (this.player.getFacing() == DIRECTION.NORTH) {        
@@ -87,7 +87,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-       else if (direcao.equals("left")) {
+       else if (direcao.equals("oeste")) {
             if (this.player.getFacing() == DIRECTION.WEST) {                 
                 player.move(DIRECTION.WEST);
             }else{
@@ -98,7 +98,7 @@ public class PlayerController extends InputAdapter {
             }
             return;
         }
-       else if (direcao.equals("right")) {
+       else if (direcao.equals("leste")) {
             if (this.player.getFacing() == DIRECTION.EAST) {                                  
                 player.move(DIRECTION.EAST);
             }else{

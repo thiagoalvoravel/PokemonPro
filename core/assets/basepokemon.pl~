@@ -21,4 +21,4 @@ tipop('voador', 'montanha').
 %REGRAS
 andar(Direcao, Coordx, Coordy) :- direcao(Direcao, Coordx, Coordy).
 
-pode_mover(Terreno) :- (tipop(Tipo, Terreno), pokemon(_, Tipo, _, _, _)) ; Terreno =:= terreno('grama').
+pode_mover(Terreno) :- tipop(Tipo, Terreno), pokemon(_, Tipo, _, _, _) ; Terreno =:= terreno('grama').
