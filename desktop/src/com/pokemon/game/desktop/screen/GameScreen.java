@@ -588,10 +588,11 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         
         direcao = agente.buscarNaBase(map, player);
-               
-        controller.update(delta, direcao);
-
-        player.update(delta);
+        
+        if(!direcao.equals("parado")){
+            controller.update(delta, direcao);
+            player.update(delta);
+        }
 
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
