@@ -15,7 +15,9 @@ public class Pokemon {
    private float worldX, worldY;
    
    private String nome;
+   private int numero = 2;
    private String[] tipo = new String[2];
+   private String tipo2;
    private boolean visibilidade=true;
 
   
@@ -28,7 +30,8 @@ public class Pokemon {
         
         String[] dados_pokemon = info_pokemon.split("-");
         this.nome = dados_pokemon[0];
-        tipo = dados_pokemon[1].split(";");
+        //tipo = dados_pokemon[1].split(";");
+        tipo2 = dados_pokemon[1].split(";")[0];
         
         sprite = new Texture("Pokemons/"+getNome()+".png");
                   
@@ -46,6 +49,14 @@ public class Pokemon {
     public String getNome() {
         return nome;
     }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
     
     public String[] getTipo() {
         return tipo;
@@ -55,6 +66,14 @@ public class Pokemon {
         return sprite;
     }
      
+    public String getTipo2(){
+        return tipo2;
+    }
+    
+    public void setTipo2(String tipo2){
+        this.tipo2 = tipo2;
+    }
+    
     public int getX() {
         return x;
     }
