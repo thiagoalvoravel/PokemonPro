@@ -17,8 +17,17 @@ public class Pokemon {
    private String nome;
    private int numero = 2;
    private String[] tipo = new String[2];
-   private String tipo2;
+   //private String tipo2;
    private boolean visibilidade=true;
+   private String energia;
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEnergia(String energia) {
+        this.energia = energia;
+    }
 
   
     public Pokemon(TileMap map, int x, int y, String info_pokemon) {
@@ -30,12 +39,24 @@ public class Pokemon {
         
         String[] dados_pokemon = info_pokemon.split("-");
         this.nome = dados_pokemon[0];
-        //tipo = dados_pokemon[1].split(";");
-        tipo2 = dados_pokemon[1].split(";")[0];
+        tipo = dados_pokemon[1].split(";");
+        //tipo2 = dados_pokemon[1].split(";")[0];
         
         sprite = new Texture("Pokemons/"+getNome()+".png");
                   
         map.getTerrenos(x, y).setPokemon(this);
+    }
+
+    Pokemon() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     
     public boolean isVisibilidade() {
@@ -66,14 +87,6 @@ public class Pokemon {
         return sprite;
     }
      
-    public String getTipo2(){
-        return tipo2;
-    }
-    
-    public void setTipo2(String tipo2){
-        this.tipo2 = tipo2;
-    }
-    
     public int getX() {
         return x;
     }
