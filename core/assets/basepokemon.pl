@@ -10,6 +10,7 @@ direcao('oeste',-1,0).
 
 terreno('grama').
 terreno('montanha').
+
 terreno('agua').
 terreno('vulcao').
 terreno('caverna').
@@ -18,6 +19,9 @@ tipop('voador', 'montanha').
 tipop('fogo', 'vulcao').
 tipop('agua', 'agua').
 tipop('eletrico', 'caverna').
+
+:- dynamic pokemon/3.
+:- dynamic objeto/3.
 
 %pokemon(nome, tipo, numero, coordx, coordy)
 %treinador(resultado_batalha, coordx, coordy)
@@ -32,11 +36,9 @@ tipop('eletrico', 'caverna').
 
 %objeto(33, 35, 'pokemon')
 
-objeto(-1, -1, '').
-pokemon('', 0, '').
-pokemon('e', 1, '').
-
 %REGRAS
+get_pokemon(Pokemon, Numero, Energia) :- pokemon(Pokemon, Numero, Energia).
+
 andar(Direcao, Coordx, Coordy) :- direcao(Direcao, Coordx, Coordy).
 
 tem_pokemon(Nome, Tem) :- pokemon(Nome, _, _) -> Tem = 'sim'
@@ -44,5 +46,6 @@ tem_pokemon(Nome, Tem) :- pokemon(Nome, _, _) -> Tem = 'sim'
 
 pode_mover(Terreno, Pode) :- (tipop(Tipo, Terreno), pokemon(_, Tipo, 1)) -> Pode = 'sim'
 							; (tipop(Tipo, Terreno), pokemon(_, Tipo, 2)) -> Pode = 'sim'
-                       		; Terreno == 'grama' -> Pode = 'sim'
-                       		; Pode = 'parado'.
+				; Terreno == 'grama' -> Pode = 'sim'
+				; Pode = 'parado'.
+

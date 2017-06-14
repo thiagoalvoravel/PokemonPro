@@ -1,8 +1,13 @@
 package com.pokemon.game.desktop.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.jpl7.Atom;
+
+import org.jpl7.Integer;
+
 import org.jpl7.JPLException;
 import org.jpl7.Query;
 import org.jpl7.Term;
@@ -14,6 +19,7 @@ public class BasePokemon {
     private String regra;
     private Query executar_regra;
     private Map<String, Term> resultado_regra;
+    private Map<String, Term> resultado_regra2;
     private String tipo = "";
 
     public BasePokemon() {
@@ -45,12 +51,22 @@ public class BasePokemon {
         return tipo;
     }
     
+    public void inserirObjetoNaBase(String objeto, int coordX, int coordY){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        regra = "assert(objeto("+objeto+", "+coordX+", '"+coordY+"'))";
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+    }
+    
     public void inserirPokemonNaBase(Pokemon pokemon){
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
         
-        regra = "assert(pokemon('"+pokemon.getNome()+"', "+pokemon.getNumero()+", cheia))";
+        regra = "assert(pokemon('"+pokemon.getNome()+"', "+pokemon.getNumero()+", 'cheia'))";
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
@@ -64,11 +80,7 @@ public class BasePokemon {
             resultado_regra = executar_regra.oneSolution();
         }
         
-        String obj = "pokemon";
-        
-        regra = "assert(objeto("+pokemon.getX()+", "+pokemon.getY()+", '"+obj+"'))";
-        executar_regra = new Query(regra);
-        resultado_regra = executar_regra.oneSolution();
+        inserirObjetoNaBase("pokemon", pokemon.getX(), pokemon.getY());
     }
     
     public void atualizarPokemonNaBase(Pokemon pokemon){
@@ -77,28 +89,74 @@ public class BasePokemon {
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
-                
-        regra = "pokemon(Pokemon, Numero, Energia)";
+       
+        regra = "get_pokemon(Pokemon, Numero, Energia)";
         executar_regra = new Query(regra);
         
-        //Map<String, Term> resultado_regra;
+        Integer valor;
+        String nome;
         
-        //resultado_regra = executar_regra.oneSolution();
-        //String direcao = resultado_regra.get("Direcao");
+        int temp, contador = 1;
+        Integer a;
         
         while(executar_regra.hasMoreSolutions()) 
         {
-            resultado_regra = executar_regra.nextSolution();
-            pokemon_aux.setNumero(Integer.parseInt(resultado_regra.get("Numero").name()));
-            pokemon_aux.setNome(resultado_regra.get("Pokemon").name());
-            pokemon_aux.setEnergia(resultado_regra.get("Energia").name());
+            resultado_regra2 = executar_regra.nextSolution();
+            
+            if(!resultado_regra2.isEmpty()){
+                break;
+            }
+            
+            System.out.println(contador+" - "+resultado_regra2.get("Pokemon").name()+" - "+resultado_regra2.get("Numero").intValue());
+            contador++;
+            
+            nome = resultado_regra2.get("Pokemon").name();
+            temp = resultado_regra2.get("Numero").intValue();
+            
+            //System.out.println(resultado_regra.get("Numero").isFloat());
+            //System.out.println(at.intValue());
+            //break;
+            pokemon_aux.setNumero(temp);
+            pokemon_aux.setNome(nome);
             
             pokemons_base.add(pokemon_aux);
         } 
         
-        regra = "retractall(pokemon(_ , _, _))";
+        regra = "retractall(pokemon(_ , _, 'cheia'))";
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
+        
+        Iterator it = pokemons_base.iterator();
+        int count=1;
+        while (it.hasNext()){
+            Pokemon p =(Pokemon) it.next();
+            
+            regra = "assert(pokemon('"+p.getNome()+"', "+p.getNumero()+", 'vazia'))";
+            executar_regra = new Query(regra);
+            resultado_regra = executar_regra.oneSolution();
+            
+            count++;
+        }    
+        
+        regra = "get_pokemon(Pokemon, Numero, Energia)";
+        executar_regra = new Query(regra);
+        
+        while(executar_regra.hasMoreSolutions()) 
+        {
+            resultado_regra2 = executar_regra.nextSolution();
+            
+            if(!resultado_regra2.isEmpty()){
+                break;
+            }
+            
+            System.out.println("###########################\n"+
+                               resultado_regra2.get("Pokemon").name()+" - "+
+                               resultado_regra2.get("Numero").name()+" - "+
+                               resultado_regra2.get("Energia").name()+
+                               "###########################\n");
+        } 
     }
+    
+    
 
 }

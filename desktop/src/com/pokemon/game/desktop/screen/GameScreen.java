@@ -265,7 +265,7 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) 
                 {
-                    treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
+                    treinador = new Treinador(map, 22, 22, direcao_face, tipo_treinador);
                     sprites_treinador.add(treinador);
                 } else {
                     posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
@@ -305,6 +305,10 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y))                              
                 {
+                    if(nomes_pokemons.get(x).equals("pidgey-normal;voador")){
+                        direcao_mapa_x = 23;
+                        direcao_mapa_y = 22;
+                    }
                     pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
                             nomes_pokemons.get(x));
                     sprites_pokemons.add(pokemon);

@@ -15,7 +15,7 @@ public class Pokemon {
    private float worldX, worldY;
    
    private String nome;
-   private int numero = 2;
+   private Integer numero = 2;
    private String[] tipo = new String[2];
    //private String tipo2;
    private boolean visibilidade=true;
@@ -47,8 +47,7 @@ public class Pokemon {
         map.getTerrenos(x, y).setPokemon(this);
     }
 
-    Pokemon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Pokemon() {
     }
 
     public void setX(int x) {
@@ -71,11 +70,11 @@ public class Pokemon {
         return nome;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
     
