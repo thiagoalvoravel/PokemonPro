@@ -278,7 +278,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void gerar_pokemons() {
-
         for (int x = 0; x < 150; x++) {
             direcao_mapa_x = (int) (Math.random() * 41 + 0);
             direcao_mapa_y = (int) (Math.random() * 41 + 0);
@@ -305,10 +304,10 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y))                              
                 {
-                    if(nomes_pokemons.get(x).equals("pidgey-normal;voador")){
+                    /*if(nomes_pokemons.get(x).equals("pidgey-normal;voador")){
                         direcao_mapa_x = 23;
                         direcao_mapa_y = 22;
-                    }
+                    }*/
                     pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
                             nomes_pokemons.get(x));
                     sprites_pokemons.add(pokemon);
@@ -589,13 +588,6 @@ public class GameScreen extends AbstractScreen {
     
     @Override
     public void render(float delta) {
-        
-        direcao = agente.buscarNaBase(map, player);
-        
-        if(!direcao.equals("parado")){
-            controller.update(delta, direcao);
-            player.update(delta);
-        }
 
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
@@ -610,13 +602,29 @@ public class GameScreen extends AbstractScreen {
         String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
 
         if (objeto.equals("treinador")) {
-            map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
-            agente.atualizarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());
+            System.out.println("######Chamada#####");
+            if(agente.enfrentarTreinador(map.getTerrenos(player.getX(), player.getY()).getTreinador())){
+                map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
+                agente.atualizarPokemonNaBase();
+                agente.inserirTreinadorNaBase(map.getTerrenos(player.getX(), player.getY()).getTreinador());
+                agente.imprimirResultado();
+                agente.listarPokemonsNaBase();
+            }
         } else if (objeto.equals("pokemon")) {
-            map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
-            agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());
+            if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon())){
+                map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
+                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());
+                agente.listarPokemonsNaBase();
+            }
         } else {
             objeto = "null";
+        }
+        
+        direcao = agente.buscarNaBase(map, player);
+        
+        if(!direcao.equals("parado")){
+            controller.update(delta, direcao);
+            player.update(delta);
         }
 
         //Descomente para movimentar a câmera
@@ -724,6 +732,7 @@ public class GameScreen extends AbstractScreen {
 
         //Desenha os Pokemons na tela 
         for (Pokemon pokemon : sprites_pokemons) {
+            
             if(pokemon.isVisibilidade()){
                 batch.draw(pokemon.getSprite(),
                         worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
@@ -760,7 +769,6 @@ public class GameScreen extends AbstractScreen {
                         Settings.SCALED_TILE_SIZE);
             }
         }
-
         batch.end();
 
         stage.draw();
@@ -790,5 +798,5 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
 
     }
-
+    
 }

@@ -15,7 +15,7 @@ public class Pokemon {
    private float worldX, worldY;
    
    private String nome;
-   private Integer numero = 2;
+   private String numero = "2";
    private String[] tipo = new String[2];
    //private String tipo2;
    private boolean visibilidade=true;
@@ -29,7 +29,10 @@ public class Pokemon {
         this.energia = energia;
     }
 
-  
+    public String getEnergia(){
+        return this.energia;
+    }
+    
     public Pokemon(TileMap map, int x, int y, String info_pokemon) {
         this.map = map;
         this.x = x;
@@ -70,11 +73,11 @@ public class Pokemon {
         return nome;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
     

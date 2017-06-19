@@ -34,18 +34,27 @@ tipop('eletrico', 'caverna').
 %pokemon_tipo('sparow', 'normal', 1).
 %pokemon_tipo('sparow', 'voador', 2).
 
-%objeto(33, 35, 'pokemon')
+%objeto('pokemon', 33, 35)
+%objeto('treinador', 20, 21)
 
 %REGRAS
+
+%Ações que faltam
+%Recarregar as pokebolas
+%Curar os pokemons
+%Integrar as ações e tomada de decisão
+
 get_pokemon(Pokemon, Numero, Energia) :- pokemon(Pokemon, Numero, Energia).
 
 andar(Direcao, Coordx, Coordy) :- direcao(Direcao, Coordx, Coordy).
 
 tem_pokemon(Nome, Tem) :- pokemon(Nome, _, _) -> Tem = 'sim'
-						; Tem = 'não'.
+						; Tem = 'nao'.
 
 pode_mover(Terreno, Pode) :- (tipop(Tipo, Terreno), pokemon(_, Tipo, 1)) -> Pode = 'sim'
 							; (tipop(Tipo, Terreno), pokemon(_, Tipo, 2)) -> Pode = 'sim'
-				; Terreno == 'grama' -> Pode = 'sim'
-				; Pode = 'parado'.
+							; Terreno == 'grama' -> Pode = 'sim'
+							; Pode = 'parado'.
 
+verificar_treinador_enfrentado(Objeto, Coordx, Coordy, Luta) :- objeto(Objeto, Coordx, Coordy) -> Luta = 'nao'
+																; Luta = 'sim'.
