@@ -185,6 +185,9 @@ public class GameScreen extends AbstractScreen {
         //Mostrar Pokémons Capturados!
         pontuacao.setPokemons_capturados(15);
         mostrar_Qtd_Pokemons(pontuacao);
+        mostrar_Nome_Pokemons();
+        mostrar_Numero_Pokemons();
+        mostrar_Acao_Agente();
 
         camera = new Camera();
 
@@ -231,6 +234,48 @@ public class GameScreen extends AbstractScreen {
         textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
         button = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
         button.setPosition(612, 600);
+        stage.addActor(button);
+
+    }
+    
+    public void mostrar_Nome_Pokemons() {
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Nome: Kadabra" , textButtonStyle);
+        button.setPosition(612, 400);
+        stage.addActor(button);
+
+    }
+    
+    public void mostrar_Numero_Pokemons() {
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Numero: 150" , textButtonStyle);
+        button.setPosition(612, 300);
+        stage.addActor(button);
+
+    }
+    
+    public void mostrar_Acao_Agente() {
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        button = new TextButton("Batalhar" , textButtonStyle);
+        button.setPosition(612, 200);
         stage.addActor(button);
 
     }
