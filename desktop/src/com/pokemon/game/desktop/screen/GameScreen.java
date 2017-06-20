@@ -158,6 +158,7 @@ public class GameScreen extends AbstractScreen {
         map = new TileMap(42, 42);
         player = new Actor(map, 24, 22, animations);
         pontuacao = new Pontuacao(0);
+        agente.setPokebolas(25);
 
         //Gera as instâncias dos centros pokemon
         gerar_centros_pokemon();
@@ -265,7 +266,7 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) 
                 {
-                    treinador = new Treinador(map, 22, 22, direcao_face, tipo_treinador);
+                    treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
                     sprites_treinador.add(treinador);
                 } else {
                     posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
@@ -305,8 +306,8 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y))                              
                 {
                     /*if(nomes_pokemons.get(x).equals("pidgey-normal;voador")){
-                        direcao_mapa_x = 23;
-                        direcao_mapa_y = 22;
+                        direcao_mapa_x = 24;
+                        direcao_mapa_y = 21;
                     }*/
                     pokemon = new Pokemon(map, direcao_mapa_x, direcao_mapa_y,
                             nomes_pokemons.get(x));
@@ -592,12 +593,12 @@ public class GameScreen extends AbstractScreen {
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
         
-        if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
+        /*if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
             System.out.println("Norte: " + map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
             System.out.println("Sul: " + map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto());
             System.out.println("Leste: " + map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto());
             System.out.println("Oeste: " + map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto());
-        }
+        }*/
 
         String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
 
@@ -607,15 +608,23 @@ public class GameScreen extends AbstractScreen {
                 map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
                 agente.atualizarPokemonNaBase();
                 agente.inserirTreinadorNaBase(map.getTerrenos(player.getX(), player.getY()).getTreinador());
-                agente.imprimirResultado();
                 agente.listarPokemonsNaBase();
             }
         } else if (objeto.equals("pokemon")) {
             if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon())){
                 map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
-                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());
-                agente.listarPokemonsNaBase();
+                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());                
+                //agente.listarPokemonsNaBase();
             }
+        } else if(objeto.equals("loja")){
+            if(agente.verificarLoja(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon())){
+                agente.pegarPokebolas(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
+                agente.inserirLojaNaBase(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
+            }
+        } else if(objeto.equals("centroP")){
+            agente.inserirCentroNaBase(map.getTerrenos(player.getX(), player.getY()).getCentro_pokemon());
+            agente.recuperarPokemons();
+            agente.listarPokemonsNaBase();
         } else {
             objeto = "null";
         }

@@ -3,46 +3,50 @@
 %FATOS
 %objeto(coordx, coordy, tipo)
 
+%Fatos dinâmicos
+:- dynamic pokemon/3.
+:- dynamic objeto/3.
+:- dynamic pokebolas/1.
+
+%Direção que o agente pode andar
 direcao('sul',0,-1).
 direcao('norte',0,1).
 direcao('leste',1,0).
 direcao('oeste',-1,0).
 
+%Terrenos presentes no mapa
 terreno('grama').
 terreno('montanha').
-
 terreno('agua').
 terreno('vulcao').
 terreno('caverna').
 
+%Relação de tipos de pokemon e terrenos que eles podem andar
 tipop('voador', 'montanha').
 tipop('fogo', 'vulcao').
 tipop('agua', 'agua').
 tipop('eletrico', 'caverna').
 
-:- dynamic pokemon/3.
-:- dynamic objeto/3.
+%Estrutura dos fatos
+%pokemon(nome, numero, energia)
+%pokemon_tipo(nome, tipo, numero_tipo)
+%treinador(resultado_batalha)
+%lojap(qtd_pokebolas)
+%objeto(objeto, coordx, coordy)
 
-%pokemon(nome, tipo, numero, coordx, coordy)
-%treinador(resultado_batalha, coordx, coordy)
-%centrop(coordx, coordy)
-%lojap(qtd_pokebolas, coordx, coordy)
-
-%pokemon('sparow', 'voador', 30).
-
-%pokemon('sparow', 30, 'energia').
+%Exemplos de fatos
+%pokemon('sparow', '30', 'cheia').
 %pokemon_tipo('sparow', 'normal', 1).
 %pokemon_tipo('sparow', 'voador', 2).
-
 %objeto('pokemon', 33, 35)
 %objeto('treinador', 20, 21)
+%objeto('centro', 30, 40)
+%pokemon('sparow', '30', 'cheia').
+
 
 %REGRAS
 
-%Ações que faltam
-%Recarregar as pokebolas
-%Curar os pokemons
-%Integrar as ações e tomada de decisão
+get_pokebolas(Quantidade) :- pokebolas(Quantidade).
 
 get_pokemon(Pokemon, Numero, Energia) :- pokemon(Pokemon, Numero, Energia).
 
@@ -58,3 +62,6 @@ pode_mover(Terreno, Pode) :- (tipop(Tipo, Terreno), pokemon(_, Tipo, 1)) -> Pode
 
 verificar_treinador_enfrentado(Objeto, Coordx, Coordy, Luta) :- objeto(Objeto, Coordx, Coordy) -> Luta = 'nao'
 																; Luta = 'sim'.
+
+verificar_loja(Objeto, Coordx, Coordy, Pegar) :- objeto(Objeto, Coordx, Coordy) -> Pegar = 'nao'
+																; Pegar = 'sim'.
