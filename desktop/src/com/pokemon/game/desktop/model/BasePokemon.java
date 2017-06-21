@@ -188,7 +188,7 @@ public class BasePokemon {
      * Verificar se o agente irá batahar contra um determinado treinador
      * @param treinador = Treinador para verificar
      */
-    public boolean enfrentarTreinador(Treinador treinador){
+    public boolean verificarLutaTreinador(Treinador treinador){
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
@@ -206,6 +206,32 @@ public class BasePokemon {
         }else{ 
             return false;
         }        
+        
+    }
+    
+    /**
+     * O agente irá batahar contra um determinado treinador
+     */
+    public boolean enfrentarTreinador(){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "enfrentar_treinador(Resultado)";
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        
+        System.out.println("&&&&&&&&&&&&&&&&&&&\n"+resultado_regra.get("Resultado").name()+"\n&&&&&&&&&&&&&&&&&&&");
+        
+        if(resultado_regra.get("Resultado").name().equals("vitoria")){
+            return true;
+        }else{ 
+            return false;
+        } 
         
     }
     

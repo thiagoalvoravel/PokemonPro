@@ -126,6 +126,13 @@ public class GameScreen extends AbstractScreen {
     private String direcao;
     //private Map<String, Term> resultado_regra;
     
+    private TextButton btnQtdPokemons;
+    private TextButton btnScoreTotal;
+    private TextButton btnScoreAtual;
+    private TextButton btnNomePokemon;
+    private TextButton btnNumPokemon;
+    private TextButton btnAcaoAtual;
+    
     public GameScreen(Iniciar app) {
         super(app);
         redStandingSouth = new Texture("ash_south_stand.png");
@@ -139,8 +146,13 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
 
         stage = new Stage(new StretchViewport(800, 800));
-        font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
-                Gdx.files.internal("fontes/small_letters_font.png"), false);
+        /*font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
+                Gdx.files.internal("fontes/small_letters_font.png"), false);*/
+        
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fontes/pkmnrsi.ttf")); 
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = 12; 
+        BitmapFont font = generator.generateFont(parameter); // font size 12 pixels generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
         TextureAtlas atlas = app.getAssetManager().get("packed/textures.atlas", TextureAtlas.class);
 
@@ -177,13 +189,20 @@ public class GameScreen extends AbstractScreen {
         
         //Atualizar a pontuacao com base nas ações 
         //Recebe objeto Pontuacao para mostrar o valor da Pontuacao
-        pontuacao.ganharBatalha();
-        pontuacao.recuprarPokemons();
+        
+        font.getData().setScale(1.5f);
+        buttonSkin = new Skin();
+        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
+        buttonSkin.addRegions(buttonsAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
+        
         mostrar_Pontuacao_Atual(pontuacao);
         mostrar_Pontuacao_Total(pontuacao);
 
         //Mostrar Pokémons Capturados!
-        pontuacao.setPokemons_capturados(15);
+        player.setPokemons_capturados(0);
         mostrar_Qtd_Pokemons(pontuacao);
         mostrar_Nome_Pokemons();
         mostrar_Numero_Pokemons();
@@ -195,88 +214,44 @@ public class GameScreen extends AbstractScreen {
     }
     
     public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke) {
-
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Capturados " + pontuacao_poke.getPokemons_capturados(), textButtonStyle);
-        button.setPosition(612, 500);
-        stage.addActor(button);
+        btnQtdPokemons = new TextButton("Capturados " + player.getPokemons_capturados(), textButtonStyle);
+        btnQtdPokemons.setPosition(612, 500);
+        stage.addActor(btnQtdPokemons);
 
     }
 
     public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual) {
-
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Pontuacao Atual " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
-        button.setPosition(612, 700);
-        stage.addActor(button);
+        btnScoreAtual = new TextButton("Custo da Acao " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
+        btnScoreAtual.setPosition(612, 700);
+        stage.addActor(btnScoreAtual);
 
     }
 
     public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao) {
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
-        button.setPosition(612, 600);
-        stage.addActor(button);
+        btnScoreTotal = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
+        btnScoreTotal.setPosition(612, 600);
+        stage.addActor(btnScoreTotal);
 
     }
     
     public void mostrar_Nome_Pokemons() {
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Nome: Kadabra" , textButtonStyle);
-        button.setPosition(612, 400);
-        stage.addActor(button);
+        btnNomePokemon = new TextButton("Nome: Kadabra" , textButtonStyle);
+        btnNomePokemon.setPosition(612, 400);
+        stage.addActor(btnNomePokemon);
 
     }
     
     public void mostrar_Numero_Pokemons() {
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Numero: 150" , textButtonStyle);
-        button.setPosition(612, 300);
-        stage.addActor(button);
+        btnNumPokemon = new TextButton("Numero: 150" , textButtonStyle);
+        btnNumPokemon.setPosition(612, 300);
+        stage.addActor(btnNumPokemon);
 
     }
     
     public void mostrar_Acao_Agente() {
-        font.getData().setScale(1.5f);
-        buttonSkin = new Skin();
-        buttonsAtlas = new TextureAtlas(Gdx.files.internal("packed2/uipack.atlas"));
-        buttonSkin.addRegions(buttonsAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
-        button = new TextButton("Batalhar" , textButtonStyle);
-        button.setPosition(612, 200);
-        stage.addActor(button);
+        btnAcaoAtual = new TextButton("Acao: " , textButtonStyle);
+        btnAcaoAtual.setPosition(612, 200);
+        stage.addActor(btnAcaoAtual);
 
     }
 
@@ -649,17 +624,30 @@ public class GameScreen extends AbstractScreen {
 
         if (objeto.equals("treinador")) {
             System.out.println("######Chamada#####");
-            if(agente.enfrentarTreinador(map.getTerrenos(player.getX(), player.getY()).getTreinador())){
+            if(agente.verificarLutaTreinador(map.getTerrenos(player.getX(), player.getY()).getTreinador())){
                 map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
-                agente.atualizarPokemonNaBase();
                 agente.inserirTreinadorNaBase(map.getTerrenos(player.getX(), player.getY()).getTreinador());
-                agente.listarPokemonsNaBase();
+                if(agente.enfrentarTreinador()){
+                    pontuacao.ganharBatalha();
+                    btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
+                    btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());
+                    btnAcaoAtual.setText("Acao: Lutar - Vitoria");
+                }else{
+                    pontuacao.perderBatalha();                    
+                    btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
+                    btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());
+                    btnAcaoAtual.setText("Acao: Lutar - Derrota");
+                }
+                agente.atualizarPokemonNaBase();
+                //agente.listarPokemonsNaBase();
             }
         } else if (objeto.equals("pokemon")) {
             if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon())){
                 map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
-                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());                
-                //agente.listarPokemonsNaBase();
+                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());  
+                player.setPokemons_capturados(1);
+                btnQtdPokemons.setText("Capturados " + player.getPokemons_capturados());
+                agente.listarPokemonsNaBase();
             }
         } else if(objeto.equals("loja")){
             if(agente.verificarLoja(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon())){
@@ -669,7 +657,7 @@ public class GameScreen extends AbstractScreen {
         } else if(objeto.equals("centroP")){
             agente.inserirCentroNaBase(map.getTerrenos(player.getX(), player.getY()).getCentro_pokemon());
             agente.recuperarPokemons();
-            agente.listarPokemonsNaBase();
+            //agente.listarPokemonsNaBase();
         } else {
             objeto = "null";
         }

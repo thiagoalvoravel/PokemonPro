@@ -23,6 +23,7 @@ public class Actor {
     private ACTOR_STATE state;
 
     private AnimationSet animations;
+    private int pokemons_capturados;
 
     public Actor(TileMap map, int x, int y, AnimationSet animations) {
         this.map = map;
@@ -198,4 +199,12 @@ public class Actor {
         return map;
     }
 
+    public int getPokemons_capturados() {
+        return pokemons_capturados;
+    }
+
+    public void setPokemons_capturados(int pokemons_capturados) {
+        this.pokemons_capturados += pokemons_capturados;
+    }
+     
 }

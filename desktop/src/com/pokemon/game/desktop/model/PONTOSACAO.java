@@ -9,7 +9,7 @@ public enum PONTOSACAO {
     PEGAR_POKEBOLAS(-10),
     RECUPERAR_POKEMONS(-100),
     DERROTAR_TREINADOR(150),
-    PERDER_TREINADOR(-1000);
+    PERDER_TREINADOR(-2000);
 
     private int custo;
 

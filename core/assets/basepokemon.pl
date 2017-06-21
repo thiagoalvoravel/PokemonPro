@@ -65,3 +65,6 @@ verificar_treinador_enfrentado(Objeto, Coordx, Coordy, Luta) :- objeto(Objeto, C
 
 verificar_loja(Objeto, Coordx, Coordy, Pegar) :- objeto(Objeto, Coordx, Coordy) -> Pegar = 'nao'
 																; Pegar = 'sim'.
+
+enfrentar_treinador(Resultado) :- pokemon(_, _, 'vazia') -> Resultado = 'derrota'
+								  ; Resultado = 'vitoria'.
