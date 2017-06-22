@@ -219,42 +219,42 @@ public class GameScreen extends AbstractScreen {
     }
     
     public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke) {
-        btnQtdPokemons = new TextButton("Capturados " + player.getPokemons_capturados(), textButtonStyle);
+        btnQtdPokemons = new TextButton("Capturados: " + player.getPokemons_capturados(), textButtonStyle);
         btnQtdPokemons.setPosition(612, 500);
         stage.addActor(btnQtdPokemons);
 
     }
 
     public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual) {
-        btnScoreAtual = new TextButton("Custo da Acao " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
+        btnScoreAtual = new TextButton("Custo da Acao: " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
         btnScoreAtual.setPosition(612, 700);
         stage.addActor(btnScoreAtual);
 
     }
 
     public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao) {
-        btnScoreTotal = new TextButton("Pontuacao Total " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
+        btnScoreTotal = new TextButton("Pontuacao Total: " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
         btnScoreTotal.setPosition(612, 600);
         stage.addActor(btnScoreTotal);
 
     }
     
     public void mostrar_Nome_Pokemons() {
-        btnNomePokemon = new TextButton("Nome: Kadabra" , textButtonStyle);
+        btnNomePokemon = new TextButton("Nome: " , textButtonStyle);
         btnNomePokemon.setPosition(612, 400);
         stage.addActor(btnNomePokemon);
 
     }
     
     public void mostrar_Numero_Pokemons() {
-        btnNumPokemon = new TextButton("Numero: 150" , textButtonStyle);
+        btnNumPokemon = new TextButton("Numero: " , textButtonStyle);
         btnNumPokemon.setPosition(612, 300);
         stage.addActor(btnNumPokemon);
 
     }
     
     public void mostrar_Acao_Agente() {
-        btnAcaoAtual = new TextButton("Acao- " , textButtonStyle);
+        btnAcaoAtual = new TextButton("Acao: " , textButtonStyle);
         btnAcaoAtual.setPosition(612, 200);
         stage.addActor(btnAcaoAtual);
 
@@ -454,156 +454,156 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void adicionar_nomes_pokemon() {
-        nomes_pokemons.add("abra-psiquico;N");
-        nomes_pokemons.add("alakazam-psiquico;N");
-        nomes_pokemons.add("aerodactyl-pedra;voador");
-        nomes_pokemons.add("arbok-venenoso;N");
-        nomes_pokemons.add("arcanine-fogo;N");
-        nomes_pokemons.add("articuno-gelo;voador");
-        nomes_pokemons.add("beedrill-inseto;voador");
-        nomes_pokemons.add("bellsprout-grama;venenoso");
-        nomes_pokemons.add("blastoise-agua;N");
-        nomes_pokemons.add("bulbasaur-grama;venenoso");
-        nomes_pokemons.add("butterfree-inseto;voador");
-        nomes_pokemons.add("caterpie-inseto;N");
-        nomes_pokemons.add("chansey-normal;N");
-        nomes_pokemons.add("charizard-fogo;voador");
-        nomes_pokemons.add("charmander-fogo;N");
-        nomes_pokemons.add("charmeleon-fogo;N");
-        nomes_pokemons.add("clefable-fada;N");
-        nomes_pokemons.add("clefairy-fada;N");
-        nomes_pokemons.add("cloyster-agua;gelo");
-        nomes_pokemons.add("cubone-terra;N");
-        nomes_pokemons.add("dewgong-agua;gelo");
-        nomes_pokemons.add("diglett-terra;N");
-        nomes_pokemons.add("ditto-normal;N");
-        nomes_pokemons.add("dodrio-normal;voador");
-        nomes_pokemons.add("doduo-normal;voador");
-        nomes_pokemons.add("dragonair-dragao;N");
-        nomes_pokemons.add("dragonite-dragao;voador");
-        nomes_pokemons.add("dratini-dragao;N");
-        nomes_pokemons.add("drowzee-psiquico;N");
-        nomes_pokemons.add("dugtrio-terra;N");
-        nomes_pokemons.add("eevee-normal;N");
-        nomes_pokemons.add("ekans-venenoso;N");
-        nomes_pokemons.add("electabuzz-eletrico;N");
-        nomes_pokemons.add("electrode-eletrico;N");
-        nomes_pokemons.add("exeggcute-grama;psiquico");
-        nomes_pokemons.add("exeggutor-grama;psiquico");
-        nomes_pokemons.add("farfetchd-normal;voador");
-        nomes_pokemons.add("fearow-normal;voador");
-        nomes_pokemons.add("flareon-fogo;N");
-        nomes_pokemons.add("gastly-fantasma;venenoso");
-        nomes_pokemons.add("gengar-fantasma;venenoso");
-        nomes_pokemons.add("geodude-pedra;terra");
-        nomes_pokemons.add("gloom-grama;venenoso");
-        nomes_pokemons.add("golbat-venenoso;voador");
-        nomes_pokemons.add("goldeen-agua;N");
-        nomes_pokemons.add("golduck-agua;N");
-        nomes_pokemons.add("golem-pedra;terra");
-        nomes_pokemons.add("graveler-pedra;terra");
-        nomes_pokemons.add("grimer-venenoso;N");
-        nomes_pokemons.add("growlithe-fogo;N");
-        nomes_pokemons.add("gyarados-agua;voador");
-        nomes_pokemons.add("haunter-fantasma;venenoso");
-        nomes_pokemons.add("hitmonchan-lutador;N");
-        nomes_pokemons.add("hitmonlee-lutador;N");
-        nomes_pokemons.add("horsea-agua;N");
-        nomes_pokemons.add("hypno-psiquico;N");
-        nomes_pokemons.add("ivysaur-grama;venenoso");
-        nomes_pokemons.add("jigglypuff-normal;fada");
-        nomes_pokemons.add("jolteon-eletrico;N");
-        nomes_pokemons.add("jynx-gelo;psiquico");
-        nomes_pokemons.add("kabuto-pedra;agua");
-        nomes_pokemons.add("kabutops-pedra;agua");
-        nomes_pokemons.add("kadabra-psiquico;N");
-        nomes_pokemons.add("kakuna-inseto;venenoso");
-        nomes_pokemons.add("kangaskhan-normal;N");
-        nomes_pokemons.add("kingler-agua;N");
-        nomes_pokemons.add("koffing-venenoso;N");
-        nomes_pokemons.add("krabby-agua;N");
-        nomes_pokemons.add("lapras-agua;gelo");
-        nomes_pokemons.add("lickitung-normal;N");
-        nomes_pokemons.add("machamp-lutador;N");
-        nomes_pokemons.add("machoke-lutador;N");
-        nomes_pokemons.add("machop-lutador;N");
-        nomes_pokemons.add("magikarp-agua;N");
-        nomes_pokemons.add("magmar-fogo;N");
-        nomes_pokemons.add("magnemite-eletrico;aco");
-        nomes_pokemons.add("magneton-eletrico;aco");
-        nomes_pokemons.add("mankey-lutador;N");
-        nomes_pokemons.add("marowak-terra;N");
-        nomes_pokemons.add("meowth-normal;N");
-        nomes_pokemons.add("metapod-inseto;N");
-        nomes_pokemons.add("mewtwo-psiquico;N");
-        nomes_pokemons.add("moltres-fogo;voador");
-        nomes_pokemons.add("mrMime-psiquico;fada");
-        nomes_pokemons.add("muk-venenoso;N");
-        nomes_pokemons.add("nidoking-venenoso;terra");
-        nomes_pokemons.add("nidoqueen-venenoso;terra");
-        nomes_pokemons.add("nidoranf-venenoso;N");
-        nomes_pokemons.add("nidoranm-venenoso;N");
-        nomes_pokemons.add("nidorina-venenoso;N");
-        nomes_pokemons.add("nidorino-venenoso;N");
-        nomes_pokemons.add("ninetales-fogo;N");
-        nomes_pokemons.add("oddish-grama;venenoso");
-        nomes_pokemons.add("omanyte-pedra;agua");
-        nomes_pokemons.add("omastar-pedra;agua");
-        nomes_pokemons.add("onix-pedra;terra");
-        nomes_pokemons.add("paras-inseto;grama");
-        nomes_pokemons.add("parasect-inseto;grama");
-        nomes_pokemons.add("persian-normal;N");
-        nomes_pokemons.add("pidgeot-normal;voador");
-        nomes_pokemons.add("pidgeotto-normal;voador");
-        nomes_pokemons.add("pidgey-normal;voador");
-        nomes_pokemons.add("pikachu-eletrico;N");
-        nomes_pokemons.add("pinsir-inseto;N");
-        nomes_pokemons.add("poliwag-agua;N");
-        nomes_pokemons.add("poliwhirl-agua;N");
-        nomes_pokemons.add("poliwrath-agua;lutador");
-        nomes_pokemons.add("ponyta-fogo;N");
-        nomes_pokemons.add("porygon-normal;N");
-        nomes_pokemons.add("primeape-lutador;N");
-        nomes_pokemons.add("psyduck-agua;N");
-        nomes_pokemons.add("raichu-eletrico;N");
-        nomes_pokemons.add("rapidash-fogo;N");
-        nomes_pokemons.add("raticate-normal;N");
-        nomes_pokemons.add("rattata-normal;N");
-        nomes_pokemons.add("rhydon-terra;pedra");
-        nomes_pokemons.add("rhyhorn-terra;pedra");
-        nomes_pokemons.add("sandshrew-terra;N");
-        nomes_pokemons.add("sandslash-terra;N");
-        nomes_pokemons.add("scyther-inseto;voador");
-        nomes_pokemons.add("seadra-agua;N");
-        nomes_pokemons.add("seaking-agua;N");
-        nomes_pokemons.add("seel-agua;N");
-        nomes_pokemons.add("shellder-agua;N");
-        nomes_pokemons.add("slowbro-agua;psiquico");
-        nomes_pokemons.add("slowpoke-agua;psiquico");
-        nomes_pokemons.add("snorlax-normal;N");
-        nomes_pokemons.add("spearow-normal;voador");
-        nomes_pokemons.add("squirtle-agua;N");
-        nomes_pokemons.add("starmie-agua;psiquico");
-        nomes_pokemons.add("staryu-agua;N");
-        nomes_pokemons.add("tangela-grama;N");
-        nomes_pokemons.add("tauros-normal;N");
-        nomes_pokemons.add("tentacool-agua;venenoso");
-        nomes_pokemons.add("tentacruel-agua;venenoso");
-        nomes_pokemons.add("vaporeon-agua;N");
-        nomes_pokemons.add("venomoth-inseto;venenoso");
-        nomes_pokemons.add("venonat-inseto;venenoso");
-        nomes_pokemons.add("venusaur-grama;venenoso");
-        nomes_pokemons.add("victreebel-grama;venenoso");
-        nomes_pokemons.add("vileplume-grama;venenoso");
-        nomes_pokemons.add("voltorb-eletrico;N");
-        nomes_pokemons.add("vulpix-fogo;N");
-        nomes_pokemons.add("wartortle-agua;N");
-        nomes_pokemons.add("weedle-inseto;venenoso");
-        nomes_pokemons.add("weepinbell-grama;venenoso");
-        nomes_pokemons.add("weezing-venenoso;N");
-        nomes_pokemons.add("wigglytuff-normal;fada");
-        nomes_pokemons.add("zapdos-eletrico;voador");
-        nomes_pokemons.add("zubat-venenoso;voador");
+        nomes_pokemons.add("abra-psiquico;N-63");
+        nomes_pokemons.add("alakazam-psiquico;N-65");
+        nomes_pokemons.add("aerodactyl-pedra;voador-142");
+        nomes_pokemons.add("arbok-venenoso;N-24");
+        nomes_pokemons.add("arcanine-fogo;N-59");
+        nomes_pokemons.add("articuno-gelo;voador-144");
+        nomes_pokemons.add("beedrill-inseto;voador-15");
+        nomes_pokemons.add("bellsprout-grama;venenoso-69");
+        nomes_pokemons.add("blastoise-agua;N-9");
+        nomes_pokemons.add("bulbasaur-grama;venenoso-1");
+        nomes_pokemons.add("butterfree-inseto;voador-12");
+        nomes_pokemons.add("caterpie-inseto;N-10");
+        nomes_pokemons.add("chansey-normal;N-113");
+        nomes_pokemons.add("charizard-fogo;voador-6");
+        nomes_pokemons.add("charmander-fogo;N-4");
+        nomes_pokemons.add("charmeleon-fogo;N-5");
+        nomes_pokemons.add("clefable-normal;N-36");
+        nomes_pokemons.add("clefairy-normal;N-35");
+        nomes_pokemons.add("cloyster-agua;gelo-91");
+        nomes_pokemons.add("cubone-terra;N-104");
+        nomes_pokemons.add("dewgong-agua;gelo-87");
+        nomes_pokemons.add("diglett-terra;N-50");
+        nomes_pokemons.add("ditto-normal;N-132");
+        nomes_pokemons.add("dodrio-normal;voador-85");
+        nomes_pokemons.add("doduo-normal;voador-84");
+        nomes_pokemons.add("dragonair-dragao;N-148");
+        nomes_pokemons.add("dragonite-dragao;voador-149");
+        nomes_pokemons.add("dratini-dragao;N-147");
+        nomes_pokemons.add("drowzee-psiquico;N-96");
+        nomes_pokemons.add("dugtrio-terra;N-51");
+        nomes_pokemons.add("eevee-normal;N-133");
+        nomes_pokemons.add("ekans-venenoso;N-23");
+        nomes_pokemons.add("electabuzz-eletrico;N-125");
+        nomes_pokemons.add("electrode-eletrico;N-101");
+        nomes_pokemons.add("exeggcute-grama;psiquico-102");
+        nomes_pokemons.add("exeggutor-grama;psiquico-103");
+        nomes_pokemons.add("farfetchd-normal;voador-83");
+        nomes_pokemons.add("fearow-normal;voador-22");
+        nomes_pokemons.add("flareon-fogo;N-136");
+        nomes_pokemons.add("gastly-fantasma;venenoso-92");
+        nomes_pokemons.add("gengar-fantasma;venenoso-94");
+        nomes_pokemons.add("geodude-pedra;terra-74");
+        nomes_pokemons.add("gloom-grama;venenoso-44");
+        nomes_pokemons.add("golbat-venenoso;voador-42");
+        nomes_pokemons.add("goldeen-agua;N-118");
+        nomes_pokemons.add("golduck-agua;N-55");
+        nomes_pokemons.add("golem-pedra;terra-76");
+        nomes_pokemons.add("graveler-pedra;terra-75");
+        nomes_pokemons.add("grimer-venenoso;N-88");
+        nomes_pokemons.add("growlithe-fogo;N-58");
+        nomes_pokemons.add("gyarados-agua;voador-130");
+        nomes_pokemons.add("haunter-fantasma;venenoso-93");
+        nomes_pokemons.add("hitmonchan-lutador;N-107");
+        nomes_pokemons.add("hitmonlee-lutador;N-106");
+        nomes_pokemons.add("horsea-agua;N-116");
+        nomes_pokemons.add("hypno-psiquico;N-97");
+        nomes_pokemons.add("ivysaur-grama;venenoso-2");
+        nomes_pokemons.add("jigglypuff-normal;N-39");
+        nomes_pokemons.add("jolteon-eletrico;N-135");
+        nomes_pokemons.add("jynx-gelo;psiquico-124");
+        nomes_pokemons.add("kabuto-pedra;agua-140");
+        nomes_pokemons.add("kabutops-pedra;agua-141");
+        nomes_pokemons.add("kadabra-psiquico;N-64");
+        nomes_pokemons.add("kakuna-inseto;venenoso-14");
+        nomes_pokemons.add("kangaskhan-normal;N-115");
+        nomes_pokemons.add("kingler-agua;N-99");
+        nomes_pokemons.add("koffing-venenoso;N-109");
+        nomes_pokemons.add("krabby-agua;N-98");
+        nomes_pokemons.add("lapras-agua;gelo-131");
+        nomes_pokemons.add("lickitung-normal;N-108");
+        nomes_pokemons.add("machamp-lutador;N-68");
+        nomes_pokemons.add("machoke-lutador;N-67");
+        nomes_pokemons.add("machop-lutador;N-66");
+        nomes_pokemons.add("magikarp-agua;N-129");
+        nomes_pokemons.add("magmar-fogo;N-126");
+        nomes_pokemons.add("magnemite-eletrico;aco-81");
+        nomes_pokemons.add("magneton-eletrico;aco-82");
+        nomes_pokemons.add("mankey-lutador;N-56");
+        nomes_pokemons.add("marowak-terra;N-105");
+        nomes_pokemons.add("meowth-normal;N-52");
+        nomes_pokemons.add("metapod-inseto;N-11");
+        nomes_pokemons.add("mewtwo-psiquico;N-150");
+        nomes_pokemons.add("moltres-fogo;voador-146");
+        nomes_pokemons.add("mrMime-psiquico;N-122");
+        nomes_pokemons.add("muk-venenoso;N-89");
+        nomes_pokemons.add("nidoking-venenoso;terra-34");
+        nomes_pokemons.add("nidoqueen-venenoso;terra-31");
+        nomes_pokemons.add("nidoranf-venenoso;N-29");
+        nomes_pokemons.add("nidoranm-venenoso;N-32");
+        nomes_pokemons.add("nidorina-venenoso;N-30");
+        nomes_pokemons.add("nidorino-venenoso;N-33");
+        nomes_pokemons.add("ninetales-fogo;N-38");
+        nomes_pokemons.add("oddish-grama;venenoso-43");
+        nomes_pokemons.add("omanyte-pedra;agua-138");
+        nomes_pokemons.add("omastar-pedra;agua-139");
+        nomes_pokemons.add("onix-pedra;terra-95");
+        nomes_pokemons.add("paras-inseto;grama-46");
+        nomes_pokemons.add("parasect-inseto;grama-47");
+        nomes_pokemons.add("persian-normal;N-53");
+        nomes_pokemons.add("pidgeot-normal;voador-18");
+        nomes_pokemons.add("pidgeotto-normal;voador-17");
+        nomes_pokemons.add("pidgey-normal;voador-16");
+        nomes_pokemons.add("pikachu-eletrico;N-25");
+        nomes_pokemons.add("pinsir-inseto;N-127");
+        nomes_pokemons.add("poliwag-agua;N-60");
+        nomes_pokemons.add("poliwhirl-agua;N-61");
+        nomes_pokemons.add("poliwrath-agua;lutador-62");
+        nomes_pokemons.add("ponyta-fogo;N-77");
+        nomes_pokemons.add("porygon-normal;N-137");
+        nomes_pokemons.add("primeape-lutador;N-57");
+        nomes_pokemons.add("psyduck-agua;N-54");
+        nomes_pokemons.add("raichu-eletrico;N-26");
+        nomes_pokemons.add("rapidash-fogo;N-78");
+        nomes_pokemons.add("raticate-normal;N-20");
+        nomes_pokemons.add("rattata-normal;N-19");
+        nomes_pokemons.add("rhydon-terra;pedra-112");
+        nomes_pokemons.add("rhyhorn-terra;pedra-111");
+        nomes_pokemons.add("sandshrew-terra;N-27");
+        nomes_pokemons.add("sandslash-terra;N-28");
+        nomes_pokemons.add("scyther-inseto;voador-123");
+        nomes_pokemons.add("seadra-agua;N-117");
+        nomes_pokemons.add("seaking-agua;N-119");
+        nomes_pokemons.add("seel-agua;N-86");
+        nomes_pokemons.add("shellder-agua;N-90");
+        nomes_pokemons.add("slowbro-agua;psiquico-80");
+        nomes_pokemons.add("slowpoke-agua;psiquico-79");
+        nomes_pokemons.add("snorlax-normal;N-143");
+        nomes_pokemons.add("spearow-normal;voador-21");
+        nomes_pokemons.add("squirtle-agua;N-7");
+        nomes_pokemons.add("starmie-agua;psiquico-121");
+        nomes_pokemons.add("staryu-agua;N-120");
+        nomes_pokemons.add("tangela-grama;N-114");
+        nomes_pokemons.add("tauros-normal;N-128");
+        nomes_pokemons.add("tentacool-agua;venenoso-72");
+        nomes_pokemons.add("tentacruel-agua;venenoso-73");
+        nomes_pokemons.add("vaporeon-agua;N-134");
+        nomes_pokemons.add("venomoth-inseto;venenoso-49");
+        nomes_pokemons.add("venonat-inseto;venenoso-48");
+        nomes_pokemons.add("venusaur-grama;venenoso-3");
+        nomes_pokemons.add("victreebel-grama;venenoso-71");
+        nomes_pokemons.add("vileplume-grama;venenoso-45");
+        nomes_pokemons.add("voltorb-eletrico;N-100");
+        nomes_pokemons.add("vulpix-fogo;N-37");
+        nomes_pokemons.add("wartortle-agua;N-8");
+        nomes_pokemons.add("weedle-inseto;venenoso-13");
+        nomes_pokemons.add("weepinbell-grama;venenoso-70");
+        nomes_pokemons.add("weezing-venenoso;N-110");
+        nomes_pokemons.add("wigglytuff-normal;N-40");
+        nomes_pokemons.add("zapdos-eletrico;voador-145");
+        nomes_pokemons.add("zubat-venenoso;voador-41");
     }
     
     @Override
@@ -634,26 +634,30 @@ public class GameScreen extends AbstractScreen {
                 agente.inserirTreinadorNaBase(map.getTerrenos(player.getX(), player.getY()).getTreinador());
                 if(agente.enfrentarTreinador()){
                     pontuacao.ganharBatalha();
-                    btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
-                    
-                     btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());                  
-                    btnAcaoAtual.setText("Acao-Lutar - Vitoria");
+                    btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+                    btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());                  
+                    btnAcaoAtual.setText("Acao: Lutar - Vitoria");
                 }else{
                     pontuacao.perderBatalha();                    
-                    btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
-                    btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());
+                    btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+                    btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
                  
-                    btnAcaoAtual.setText("Acao-Lutar - Derrota");                 
+                    btnAcaoAtual.setText("Acao: Lutar - Derrota");                 
                 }
                 agente.atualizarPokemonNaBase();
                 //agente.listarPokemonsNaBase();
             }
         } else if (objeto.equals("pokemon")) {
             if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon())){
+                Pokemon pokemon = new Pokemon();
+                pokemon = map.getTerrenos(player.getX(), player.getY()).getPokemon();
                 map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
-                agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());  
+                //agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());  
+                agente.inserirPokemonNaBase(pokemon);  
                 player.setPokemons_capturados(1);
-                btnQtdPokemons.setText("Capturados " + player.getPokemons_capturados());
+                btnQtdPokemons.setText("Capturados: " + player.getPokemons_capturados());
+                btnNomePokemon.setText("Nome: " + pokemon.getNome());
+                btnNumPokemon.setText("Numero: " + pokemon.getNumero());
                 agente.listarPokemonsNaBase();
             }
         } else if(objeto.equals("loja")){
