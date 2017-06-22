@@ -27,6 +27,7 @@ import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.BasePokemon;
 import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.CentroPokemon;
+import com.pokemon.game.desktop.model.LogPokemon;
 import com.pokemon.game.desktop.model.LojaPokemon;
 import com.pokemon.game.desktop.model.PONTOSACAO;
 import com.pokemon.game.desktop.model.Pokemon;
@@ -117,8 +118,7 @@ public class GameScreen extends AbstractScreen {
     private TextButton button;
     private TextButtonStyle textButtonStyle;
     private BasePokemon agente = new BasePokemon(); 
-    
-    
+   
     /*private String nome_arquivo;
     private Query compilar_arquivo;
     private String regra;
@@ -133,8 +133,8 @@ public class GameScreen extends AbstractScreen {
     private TextButton btnNumPokemon;
     private TextButton btnAcaoAtual;
     
-    public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
-    
+    //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
+      
     public GameScreen(Iniciar app) {
         super(app);
         redStandingSouth = new Texture("ash_south_stand.png");
@@ -150,6 +150,7 @@ public class GameScreen extends AbstractScreen {
         stage = new Stage(new StretchViewport(800, 800));
          font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
                 Gdx.files.internal("fontes/small_letters_font.png"), false);
+         
         
         /*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fontes/pkmnrsi.ttf")); 
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -636,8 +637,8 @@ public class GameScreen extends AbstractScreen {
                     pontuacao.ganharBatalha();
                     btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
                     btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());                  
-                    btnAcaoAtual.setText("Acao: Lutar - Vitoria");
-                    System.out.println("Ganhar Batalha");
+                    btnAcaoAtual.setText("Acao: Lutar - Vitoria");                                      
+                    //System.out.println("Ganhar Batalha");
                 }else{
                     pontuacao.perderBatalha();
                     btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());

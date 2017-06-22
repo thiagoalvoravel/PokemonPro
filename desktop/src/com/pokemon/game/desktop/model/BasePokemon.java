@@ -23,9 +23,10 @@ public class BasePokemon {
     private Map<String, Term> resultado_regra2;
     private Map<String, Term> resultado_regra3;*/
     private String tipo = "";
+    private LogPokemon logs;
 
     public BasePokemon() {
-        
+        logs = new LogPokemon();
     }
     
     /**
@@ -43,15 +44,20 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "pode_mover('" + map.getTerrenos(player.getX(), player.getY()).getTerrain().getNome() + "', Pode)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         if(resultado_regra.get("Pode").name().equals("sim")){            
+            logs.writeLogs("Resultado da Consulta: " + "sim");
             regra = "andar(Direcao, 0, -1)";
+            logs.writeLogs("Consulta: " + regra); 
             executar_regra = new Query(regra);
             resultado_regra = executar_regra.oneSolution();
             tipo = resultado_regra.get("Direcao").name();
+            logs.writeLogs("Resultado da Consulta: " + tipo);
         }else{
+            logs.writeLogs("Resultado da Consulta: " + "nao");
             //tipo = resultado_regra.get("Pode").name();
             tipo = "oeste";
         }
@@ -74,6 +80,7 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "assert(objeto('"+objeto+"', '"+coordX+"', '"+coordY+"'))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
     }
@@ -92,15 +99,18 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "assert(pokemon('"+pokemon.getNome()+"', '"+pokemon.getNumero()+"', 'cheia'))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         regra = "assert(pokemon_tipo('"+pokemon.getNome()+"', '"+pokemon.getTipo()[0]+"', 1))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         if(!pokemon.getTipo()[1].equals("N")){
             regra = "assert(pokemon_tipo('"+pokemon.getNome()+"', '"+pokemon.getTipo()[1]+"', 2))";
+            logs.writeLogs("Inserir fato: " + regra);
             executar_regra = new Query(regra);
             resultado_regra = executar_regra.oneSolution();
         }
@@ -132,6 +142,7 @@ public class BasePokemon {
         //Integer a;
         
         regra = "get_pokemon(Pokemon, Numero, 'cheia')";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         
         while(executar_regra.hasMoreSolutions()) 
@@ -148,6 +159,8 @@ public class BasePokemon {
             nome = resultado_regra2.get("Pokemon").name();
             temp = resultado_regra2.get("Numero").name();
             
+            logs.writeLogs(" Resultado da Consulta: " + nome + "-" + temp + " cheia ");
+            
             Pokemon pokemon_aux = new Pokemon();
             
             pokemon_aux.setNumero(temp);
@@ -157,6 +170,7 @@ public class BasePokemon {
         } 
         
         regra = "retractall(pokemon(_ , _, 'cheia'))";
+        logs.writeLogs("Remover fato: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
@@ -168,6 +182,7 @@ public class BasePokemon {
             Pokemon p = pokemons_base.get(i);
             //System.out.println("&Interator\n\n\n\n\n");
             regra = "assert(pokemon('"+p.getNome()+"', '"+p.getNumero()+"', 'vazia'))";
+            logs.writeLogs("Inserir fato: " + regra);
             executar_regra2 = new Query(regra);
             resultado_regra3 = executar_regra2.oneSolution();
         }    
@@ -198,12 +213,15 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "verificar_treinador_enfrentado('treinador', '"+treinador.getX()+"', '"+treinador.getY()+"', Luta)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         if(resultado_regra.get("Luta").name().equals("sim")){
+            logs.writeLogs("Resultado da Consulta: sim");
             return true;
         }else{ 
+            logs.writeLogs("Resultado da Consulta: nao");
             return false;
         }        
         
@@ -222,14 +240,17 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "enfrentar_treinador(Resultado)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         System.out.println("&&&&&&&&&&&&&&&&&&&\n"+resultado_regra.get("Resultado").name()+"\n&&&&&&&&&&&&&&&&&&&");
         
         if(resultado_regra.get("Resultado").name().equals("vitoria")){
+            logs.writeLogs("Resultado da Consulta: vitoria");
             return true;
         }else{ 
+            logs.writeLogs("Resultado da Consulta: derrota");
             return false;
         } 
         
@@ -251,18 +272,22 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "get_pokebolas(Quantidade)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         qtdPokebolas = resultado_regra.get("Quantidade").intValue();
+        logs.writeLogs("Resultado da Consulta: " + qtdPokebolas);
         
         regra = "retractall(pokebolas(_))";
+        logs.writeLogs("Remocao do fato: " + regra);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
         
         qtdPokebolas += loja.getQtdPokebolas();
         
         regra = "assert(pokebolas("+qtdPokebolas+"))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
         
@@ -283,18 +308,22 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "get_pokebolas(Quantidade)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         qtdPokebolas = resultado_regra.get("Quantidade").intValue();
+        logs.writeLogs("Resultado da Consulta: " + qtdPokebolas);
         
         regra = "retractall(pokebolas(_))";
+        logs.writeLogs("Remoção do fato: " + qtdPokebolas);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
         
         qtdPokebolas--;
         
         regra = "assert(pokebolas("+qtdPokebolas+"))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
     }
@@ -313,12 +342,15 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "verificar_loja('loja', '"+loja.getX()+"', '"+loja.getY()+"', Pegar)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         if(resultado_regra.get("Pegar").name().equals("sim")){
+            logs.writeLogs("Resultado da Consulta: sim");
             return true;
         }else{ 
+            logs.writeLogs("Resultado da Consulta: nao");
             return false;
         } 
         
@@ -383,13 +415,16 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "tem_pokemon('"+pokemon.getNome()+"', Tem)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
         if(resultado_regra.get("Tem").name().equals("nao")){
+            logs.writeLogs("Resultado da Consulta: nao");
             return false;
         }
         else{
+            logs.writeLogs("Resultado da Consulta: sim");
             return true;
         }
     }
@@ -407,9 +442,11 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "get_pokebolas(Quantidade)";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Quantidade").intValue());
         return resultado_regra.get("Quantidade").intValue();
         
     }
@@ -428,6 +465,7 @@ public class BasePokemon {
         Map<String, Term> resultado_regra;
         
         regra = "assert(pokebolas("+qtdInicial+"))";
+        logs.writeLogs("Inserir fato: " + regra);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
         
@@ -458,6 +496,7 @@ public class BasePokemon {
         String nome, temp;
         
         regra = "get_pokemon(Pokemon, Numero, 'vazia')";
+        logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
         
         while(executar_regra.hasMoreSolutions()) 
@@ -471,6 +510,9 @@ public class BasePokemon {
             nome = resultado_regra2.get("Pokemon").name();
             temp = resultado_regra2.get("Numero").name();
             
+            logs.writeLogs("Resultado da Consulta: " + nome + "-" + temp + " - vazia");
+            
+            
             Pokemon pokemon_aux = new Pokemon();
             
             pokemon_aux.setNumero(temp);
@@ -480,6 +522,7 @@ public class BasePokemon {
         } 
         
         regra = "retractall(pokemon(_ , _, 'vazia'))";
+        logs.writeLogs("Remocao do fato: " + regra);
         executar_regra = new Query(regra);
         executar_regra.oneSolution();
         
@@ -488,6 +531,7 @@ public class BasePokemon {
         for(int i = 0; i < pokemons_base.size(); i++){
             Pokemon p = pokemons_base.get(i);
             regra = "assert(pokemon('"+p.getNome()+"', '"+p.getNumero()+"', 'cheia'))";
+            logs.writeLogs("Inserir fato: " + regra);
             executar_regra2 = new Query(regra);
             executar_regra2.oneSolution();
         }
