@@ -133,6 +133,8 @@ public class GameScreen extends AbstractScreen {
     private TextButton btnNumPokemon;
     private TextButton btnAcaoAtual;
     
+    public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
+    
     public GameScreen(Iniciar app) {
         super(app);
         redStandingSouth = new Texture("ash_south_stand.png");
@@ -146,14 +148,17 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
 
         stage = new Stage(new StretchViewport(800, 800));
-        /*font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
-                Gdx.files.internal("fontes/small_letters_font.png"), false);*/
+         font = new BitmapFont(Gdx.files.internal("fontes/small_letters_font.fnt"),
+                Gdx.files.internal("fontes/small_letters_font.png"), false);
         
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fontes/pkmnrsi.ttf")); 
+        /*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fontes/pkmnrsi.ttf")); 
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = 12; 
-        BitmapFont font = generator.generateFont(parameter); // font size 12 pixels generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
+        BitmapFont font = generator.generateFont(parameter); // font size 12 pixels generator.dispose(); // don't forget to dispose to avoid memory leaks!*/
+        
+        
+        
+        
         TextureAtlas atlas = app.getAssetManager().get("packed/textures.atlas", TextureAtlas.class);
 
         AnimationSet animations = new AnimationSet(
@@ -249,7 +254,7 @@ public class GameScreen extends AbstractScreen {
     }
     
     public void mostrar_Acao_Agente() {
-        btnAcaoAtual = new TextButton("Acao: " , textButtonStyle);
+        btnAcaoAtual = new TextButton("Acao- " , textButtonStyle);
         btnAcaoAtual.setPosition(612, 200);
         stage.addActor(btnAcaoAtual);
 
@@ -630,13 +635,15 @@ public class GameScreen extends AbstractScreen {
                 if(agente.enfrentarTreinador()){
                     pontuacao.ganharBatalha();
                     btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
-                    btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());
-                    btnAcaoAtual.setText("Acao: Lutar - Vitoria");
+                    
+                     btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());                  
+                    btnAcaoAtual.setText("Acao-Lutar - Vitoria");
                 }else{
                     pontuacao.perderBatalha();                    
                     btnScoreTotal.setText("Pontuacao Total " + pontuacao.getPontuacaoTotal());
                     btnScoreAtual.setText("Custo da Acao " + pontuacao.getPontuacaoAtual());
-                    btnAcaoAtual.setText("Acao: Lutar - Derrota");
+                 
+                    btnAcaoAtual.setText("Acao-Lutar - Derrota");                 
                 }
                 agente.atualizarPokemonNaBase();
                 //agente.listarPokemonsNaBase();
