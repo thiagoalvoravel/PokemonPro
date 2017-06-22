@@ -55,6 +55,8 @@ andar(Direcao, Coordx, Coordy) :- direcao(Direcao, Coordx, Coordy).
 tem_pokemon(Nome, Tem) :- pokemon(Nome, _, _) -> Tem = 'sim'
 						; Tem = 'nao'.
 
+total_pokemon(Count) :- aggregate_all(count, pokemon(_, _, _), Count).
+
 pode_mover(Terreno, Pode) :- (tipop(Tipo, Terreno), pokemon(_, Tipo, 1)) -> Pode = 'sim'
 							; (tipop(Tipo, Terreno), pokemon(_, Tipo, 2)) -> Pode = 'sim'
 							; Terreno == 'grama' -> Pode = 'sim'
@@ -66,5 +68,6 @@ verificar_treinador_enfrentado(Objeto, Coordx, Coordy, Luta) :- objeto(Objeto, C
 verificar_loja(Objeto, Coordx, Coordy, Pegar) :- objeto(Objeto, Coordx, Coordy) -> Pegar = 'nao'
 																; Pegar = 'sim'.
 
-enfrentar_treinador(Resultado) :- pokemon(_, _, 'vazia') -> Resultado = 'derrota'
+enfrentar_treinador(Resultado) :- total_pokemon(Total), Total =< 0 -> Resultado = 'derrota'
+								  ; pokemon(_, _, 'vazia') -> Resultado = 'derrota'
 								  ; Resultado = 'vitoria'.
