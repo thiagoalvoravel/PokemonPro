@@ -637,12 +637,13 @@ public class GameScreen extends AbstractScreen {
                     btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
                     btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());                  
                     btnAcaoAtual.setText("Acao: Lutar - Vitoria");
+                    System.out.println("Ganhar Batalha");
                 }else{
-                    pontuacao.perderBatalha();                    
+                    pontuacao.perderBatalha();
                     btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
                     btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
-                 
-                    btnAcaoAtual.setText("Acao: Lutar - Derrota");                 
+                    btnAcaoAtual.setText("Acao: Lutar - Derrota");                
+                    System.out.println("Perder Batalha");                    
                 }
                 agente.atualizarPokemonNaBase();
                 //agente.listarPokemonsNaBase();
@@ -655,20 +656,31 @@ public class GameScreen extends AbstractScreen {
                 //agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());  
                 agente.inserirPokemonNaBase(pokemon);  
                 player.setPokemons_capturados(1);
+                pontuacao.usarPokebola();
+                btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+                btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
                 btnQtdPokemons.setText("Capturados: " + player.getPokemons_capturados());
                 btnNomePokemon.setText("Nome: " + pokemon.getNome());
                 btnNumPokemon.setText("Numero: " + pokemon.getNumero());
-                agente.listarPokemonsNaBase();
+                //agente.listarPokemonsNaBase();
+                Gdx.app.log("Pokemon", "Capturar pokemon");
             }
         } else if(objeto.equals("loja")){
             if(agente.verificarLoja(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon())){
+                pontuacao.pegarPokebola();
+                btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+                btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
                 agente.pegarPokebolas(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
                 agente.inserirLojaNaBase(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
+                System.out.println("Recuperar pokebolas");
             }
         } else if(objeto.equals("centroP")){
             agente.inserirCentroNaBase(map.getTerrenos(player.getX(), player.getY()).getCentro_pokemon());
             agente.recuperarPokemons();
-            //agente.listarPokemonsNaBase();
+            pontuacao.recuprarPokemons();
+            btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+            btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
+            System.out.println("Recuperar energia dos pokemons");
         } else {
             objeto = "null";
         }
@@ -678,6 +690,12 @@ public class GameScreen extends AbstractScreen {
         if(!direcao.equals("parado")){
             controller.update(delta, direcao);
             player.update(delta);
+            pontuacao.mover();
+            btnAcaoAtual.setText("Acao: Andando");
+            System.out.println("Andar");
+        }else{
+            pontuacao.virarDireita();
+            btnAcaoAtual.setText("Acao: Virar");
         }
 
         //Descomente para movimentar a câmera

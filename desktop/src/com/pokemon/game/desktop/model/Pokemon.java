@@ -41,7 +41,7 @@ public class Pokemon {
         this.worldY = y;
         
         String[] dados_pokemon = info_pokemon.split("-");
-        this.nome = dados_pokemon[0].toUpperCase();
+        this.nome = dados_pokemon[0].substring(0, 1).toUpperCase() + dados_pokemon[0].substring(1);
         this.tipo = dados_pokemon[1].split(";");
         this.numero = dados_pokemon[2];
         //tipo2 = dados_pokemon[1].split(";")[0];
