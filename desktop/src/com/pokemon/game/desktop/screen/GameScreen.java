@@ -616,6 +616,10 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
 
+        player.setX(20);
+        controller.irParaObjetivo(player, 10, 10);
+        
+        
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
         
@@ -650,7 +654,8 @@ public class GameScreen extends AbstractScreen {
                 //agente.listarPokemonsNaBase();
             }
         } else if (objeto.equals("pokemon")) {
-            if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon())){
+            if(!agente.verificarPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon()) &&
+               agente.qtdPokebolas() > 0){
                 Pokemon pokemon = new Pokemon();
                 pokemon = map.getTerrenos(player.getX(), player.getY()).getPokemon();
                 map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);

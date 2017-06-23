@@ -111,4 +111,35 @@ public class PlayerController extends InputAdapter {
         }
     }
     
+    /**
+     * Fazer o agente ir para determinado local no mapa
+     * @param coordX
+     * @param coordY 
+     */
+    public void irParaObjetivo(Actor player, int coordX, int coordY){
+        
+        //player = 20 e centro = 30 -> temp = -10
+        //player = 20 e centro = 10 -> temp = 10
+        Integer temp = player.getX() - coordX;
+        
+        //System.out.println(player.getX() + " - " + temp + "\n");
+        int i = (int) Math.signum(temp);
+
+        System.out.println("@@@@@@#################$$$$$$");
+        System.out.println( (-temp + i) + "\n");
+        
+        for(i = (int) Math.signum(temp); (-temp + i) <= 0; temp--){            
+            player.setX(player.getX() - i);
+            System.out.println(player.getX() + "\n");
+        }
+        
+        System.out.println("@@@@@@#################$$$$$$");
+        
+        //player = 20 e temp = -10 -> temp = 30
+        //player = 20 e temp = 10 -> temp = 10
+        //Integer direcao = player.getX() - temp;
+        
+        //for(player.getX(); )
+    }
+    
 }
