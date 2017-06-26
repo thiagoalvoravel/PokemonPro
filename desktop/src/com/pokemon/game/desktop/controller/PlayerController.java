@@ -4,9 +4,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.pokemon.game.desktop.model.Actor;
+import com.pokemon.game.desktop.model.BasePokemon;
 import com.pokemon.game.desktop.model.DIRECTION;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
+import java.util.ArrayList;
 import java.util.Map;
 import org.jpl7.Query;
 import org.jpl7.Term;
@@ -113,33 +115,72 @@ public class PlayerController extends InputAdapter {
     
     /**
      * Fazer o agente ir para determinado local no mapa
-     * @param coordX
-     * @param coordY 
+     * @param player Personagem
+     * @param coordX coordenada X do objeto
+     * @param coordY coordenada Y do objeto
      */
-    public void irParaObjetivo(Actor player, int coordX, int coordY){
+    public void irParaObjetivo(TileMap map, Actor player, int coordX, int coordY){
         
-        //player = 20 e centro = 30 -> temp = -10
-        //player = 20 e centro = 10 -> temp = 10
-        Integer temp = player.getX() - coordX;
+        int intervalo = Math.abs(coordX - player.getX());
+        int count = 1;
+        int temp = 0;
+        int intervalo2 = Math.abs(player.getY() - coordY);
+        int count2 = 1;
         
-        //System.out.println(player.getX() + " - " + temp + "\n");
-        int i = (int) Math.signum(temp);
-
-        System.out.println("@@@@@@#################$$$$$$");
-        System.out.println( (-temp + i) + "\n");
+        BasePokemon basePokemon = new BasePokemon();
         
-        for(i = (int) Math.signum(temp); (-temp + i) <= 0; temp--){            
-            player.setX(player.getX() - i);
-            System.out.println(player.getX() + "\n");
+        for(int x = player.getX(); count <= intervalo; count++){
+            if(basePokemon.podeMover(map, player).equals("sim")){
+                if(coordX > player.getX()){
+                    temp = intervalo + count;
+                }else{
+                    temp = intervalo - count;
+                }
+            }else{
+                if(coordY > player.getY()){
+                    if(basePokemon.podeMoverDirecao(map, player, "norte").equals("sim")){
+                        
+                    }
+                }else{
+                    if(basePokemon.podeMoverDirecao(map, player, "sul").equals("sim")){
+                        
+                    }
+                }
+            }
+            int novaPosicao = temp + intervalo;
+            player.setX(novaPosicao);
+            System.out.println(player.getX());
         }
         
-        System.out.println("@@@@@@#################$$$$$$");
+        for(int y = player.getY(); count2 <= intervalo2; count2++){
+            if(coordY > player.getY()){
+                player.setY(player.getY()+1);
+            }else{
+                player.setY(player.getY()-1);
+            }
+            System.out.println(player.getY());
+        }
         
-        //player = 20 e temp = -10 -> temp = 30
-        //player = 20 e temp = 10 -> temp = 10
-        //Integer direcao = player.getX() - temp;
-        
-        //for(player.getX(); )
     }
+    //Teste
+    /*public static void getPaths(int[][]A, int i, int j, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
+        int n = A.length;
+        if (i>=n || j>=n) return;
+
+        path.add(A[i][j]);
+
+        if (i==n-1 && j==n-1) {
+            allPaths.add(path);
+            return;
+        }
+        getPaths(A, i, j+1, path, allPaths);
+        getPaths(A, i+1, j, path, allPaths);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<>();
+        getPaths(new int[][] { {1,2,3},{4,5,6},{7,8,9}}, 0,0, new ArrayList<Integer>(), allPaths );
+        System.out.println(allPaths);
+    }*/
     
 }

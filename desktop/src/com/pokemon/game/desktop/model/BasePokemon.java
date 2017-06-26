@@ -537,5 +537,58 @@ public class BasePokemon {
         }
     }
     
-
+    /**
+     * Verifica se o personagem pode se mover no terreno
+     * @param map Mapa
+     * @param player Personagem
+     * @return 
+     */
+    public String podeMover(TileMap map, Actor player){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "pode_mover('" + map.getTerrenos(player.getX(), player.getY()).getTerrain().getNome() + "', Pode)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Pode").name());
+        
+        return resultado_regra.get("Pode").name();
+    }
+    
+    /**
+     * Verifica se o personagem pode se mover para o terreno em uma determinada posição adjacente
+     * @param map Mapa
+     * @param player Personagem
+     * @param direcao Direcao a verificar
+     * @return 
+     */
+    public String podeMoverDirecao(TileMap map, Actor player, String direcao){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        if(direcao.equals("norte")) player.setY(player.getY() + 1);
+        else if(direcao.equals("sul")) player.setY(player.getY() - 1);
+        else if(direcao.equals("leste")) player.setX(player.getX() + 1);
+        else if(direcao.equals("oeste")) player.setX(player.getX() - 1);
+        
+        regra = "pode_mover('" + map.getTerrenos(player.getX(), player.getY()).getTerrain().getNome() + "', Pode)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Pode").name());
+        
+        return resultado_regra.get("Pode").name();
+    }
+    
 }
