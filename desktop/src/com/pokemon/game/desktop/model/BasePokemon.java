@@ -591,4 +591,87 @@ public class BasePokemon {
         return resultado_regra.get("Pode").name();
     }
     
+    
+    /**
+     * Buscar caminho para objetivo
+     * @param map Mapa
+     * @param player Agente
+     */
+    
+    public void irParaObjetivo(TileMap map, Actor player){
+        int quadradoJogador = 0;
+        int quadradoObjetivo = 0;
+        
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        //Pegar qual quadrado no mapa está o jogador
+        regra = "get_quadrado(Quadrado, " + player.getX()+ ", " + player.getY() + ")";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        quadradoJogador = resultado_regra.get("Quadrado").intValue();
+        logs.writeLogs("Resultado da Consulta: " + quadradoJogador);        
+        
+        //Pegar as coordenadas do objetivo
+        regra = "get_objeto('centroP', Coordx, Coordy)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        //##############Escrever Log##################
+        //logs.writeLogs("Resultado da Consulta: " + quadradoJogador);
+        int objetivoCoordX = resultado_regra.get("Coordx").intValue();
+        int objetivoCoordY = resultado_regra.get("Coordy").intValue();
+        
+        //Pegar qual quadrado no mapa está o objetivo
+        regra = "get_quadrado(Quadrado, " + objetivoCoordX + ", " + objetivoCoordY + ")";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        quadradoObjetivo = resultado_regra.get("Quadrado").intValue();
+        logs.writeLogs("Resultado da Consulta: " + quadradoObjetivo);
+        
+        regra = "path(" + quadradoJogador + ", " + quadradoObjetivo + ", Caminho)";
+        //logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        
+        //String caminho;
+        resultado_regra = executar_regra.getSolution();
+        System.out.println(resultado_regra);
+        
+        /*while(executar_regra.hasMoreSolutions()) {
+            resultado_regra = executar_regra.nextSolution();            
+            caminho = resultado_regra.get("[V]").name();
+            System.out.println(caminho);
+        }*/
+        
+        //##############Escrever Log##################
+        //logs.writeLogs("Resultado da Consulta: " + quadradoJogador);
+        
+    }
+    
+    public void salvarPosicoes(){
+        int contador = 1;
+        
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        for(int i = 0; i < 42; i++){
+            for(int j = 0; j < 42; j++){
+                System.out.println ("quadrado("+contador+", "+i+", "+j+").");
+                contador++;
+            }
+        }
+    }
+    
 }

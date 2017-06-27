@@ -616,9 +616,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
 
-        player.setX(20);
-        player.setY(15);
-        controller.irParaObjetivo(map, player, 30, 29);
+        player.setX(10);
+        player.setY(11);
+        agente.salvarPosicoes();
+        //controller.irParaObjetivo(map, player, 30, 29);
+        //agente.irParaObjetivo(map, player);
         
         
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    

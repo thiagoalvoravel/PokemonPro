@@ -121,7 +121,7 @@ public class PlayerController extends InputAdapter {
      */
     public void irParaObjetivo(TileMap map, Actor player, int coordX, int coordY){
         
-        int intervalo = Math.abs(coordX - player.getX());
+        /*int intervalo = Math.abs(coordX - player.getX());
         int count = 1;
         int temp = 0;
         int intervalo2 = Math.abs(player.getY() - coordY);
@@ -159,7 +159,11 @@ public class PlayerController extends InputAdapter {
                 player.setY(player.getY()-1);
             }
             System.out.println(player.getY());
-        }
+        }*/
+        
+        
+        
+        
         
     }
     //Teste
