@@ -1,16 +1,43 @@
 Inserir fato: assert(pokebolas(25))
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: sim
+Inserir fato: assert(objeto('treinador', '10', '11'))
+Consulta: enfrentar_treinador(Resultado)
+Resultado da Consulta: vitoria
+Consulta: get_pokemon(Pokemon, Numero, 'cheia')
+ Resultado da Consulta: sparow-30 cheia 
+Remover fato: retractall(pokemon(_ , _, 'cheia'))
+Inserir fato: assert(pokemon('sparow', '30', 'vazia'))
 Consulta: pode_mover('grama', Pode)
 Resultado da Consulta: sim
 Consulta: andar(Direcao, 0, -1)
 Resultado da Consulta: sul
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: nao
 Consulta: pode_mover('grama', Pode)
 Resultado da Consulta: sim
 Consulta: andar(Direcao, 0, -1)
 Resultado da Consulta: sul
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: nao
 Consulta: pode_mover('grama', Pode)
 Resultado da Consulta: sim
 Consulta: andar(Direcao, 0, -1)
 Resultado da Consulta: sul
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: nao
+Consulta: pode_mover('grama', Pode)
+Resultado da Consulta: sim
+Consulta: andar(Direcao, 0, -1)
+Resultado da Consulta: sul
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: nao
+Consulta: pode_mover('grama', Pode)
+Resultado da Consulta: sim
+Consulta: andar(Direcao, 0, -1)
+Resultado da Consulta: sul
+Consulta: verificar_treinador_enfrentado('treinador', '10', '11', Luta)
+Resultado da Consulta: nao
 Consulta: pode_mover('grama', Pode)
 Resultado da Consulta: sim
 Consulta: andar(Direcao, 0, -1)

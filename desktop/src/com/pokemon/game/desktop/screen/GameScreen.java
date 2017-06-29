@@ -174,6 +174,7 @@ public class GameScreen extends AbstractScreen {
         );
 
         map = new TileMap(42, 42);
+        agente.salvarPosicoes(map);
         player = new Actor(map, 24, 22, animations);
         pontuacao = new Pontuacao(0);
         agente.setPokebolas(25);
@@ -618,7 +619,7 @@ public class GameScreen extends AbstractScreen {
 
         player.setX(10);
         player.setY(11);
-        agente.salvarPosicoes();
+        //agente.salvarPosicoes();
         //controller.irParaObjetivo(map, player, 30, 29);
         //agente.irParaObjetivo(map, player);
         

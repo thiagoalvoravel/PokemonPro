@@ -655,10 +655,7 @@ public class BasePokemon {
         
     }
     
-    public void salvarPosicoes(){
-        int contador = 1;
-        int norte, sul, oeste, leste = 0;
-        
+    public void salvarPosicoes(TileMap map){
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
@@ -667,12 +664,24 @@ public class BasePokemon {
         Query executar_regra;
         Map<String, Term> resultado_regra;
         
+        regra = "astar(3, 5, C, P, Caminho)";        
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        Term[] lista = resultado_regra.get("Caminho").args();
+        
+        for(int i = 0; i < lista.length; i++){
+            System.out.println(lista[i]);
+        }
+        
         //caminho(1,2).
         //caminho(1,3).
         
-        for(int i = 0; i < 42; i++){
+        /*for(int i = 0; i < 42; i++){
             for(int j = 0; j < 42; j++){
-                regra = "get_quadrados_adjacentes("+contador+", Norte, Sul, Leste, Oeste)";
+                terreno = map.getTerrenos(i, j).getTerrain().getNome();
+                regra = "quadrado("+contador+", "+i+", "+j+", '"+terreno+"').";
+                System.out.println(regra);
+                /*regra = "get_quadrados_adjacentes("+contador+", Norte, Sul, Leste, Oeste)";
                 executar_regra = new Query(regra);
                 resultado_regra = executar_regra.oneSolution();
                 
@@ -690,7 +699,7 @@ public class BasePokemon {
                 
                 contador++;
             }
-        }
+        }*/
     }
     
 }
