@@ -174,7 +174,7 @@ public class GameScreen extends AbstractScreen {
         );
 
         map = new TileMap(42, 42);
-        agente.salvarPosicoes(map);
+        //agente.salvarPosicoes(map);
         player = new Actor(map, 24, 22, animations);
         pontuacao = new Pontuacao(0);
         agente.setPokebolas(25);
@@ -617,10 +617,10 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
 
-        player.setX(10);
-        player.setY(11);
+        player.setX(0);
+        player.setY(2);
         //agente.salvarPosicoes();
-        //controller.irParaObjetivo(map, player, 30, 29);
+        
         //agente.irParaObjetivo(map, player);
         
         
@@ -711,7 +711,8 @@ public class GameScreen extends AbstractScreen {
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
         batch.begin();
-
+        controller.irParaObjetivo(map, player, agente, delta, batch, camera);
+        
         float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
         float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
 
@@ -879,5 +880,7 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
 
     }
+    
+    
     
 }

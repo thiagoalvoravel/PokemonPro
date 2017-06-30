@@ -1,14 +1,19 @@
 package com.pokemon.game.desktop.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.model.Actor;
 import com.pokemon.game.desktop.model.BasePokemon;
+import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.DIRECTION;
 import com.pokemon.game.desktop.model.Tile;
 import com.pokemon.game.desktop.model.TileMap;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.jpl7.Query;
 import org.jpl7.Term;
@@ -116,10 +121,59 @@ public class PlayerController extends InputAdapter {
     /**
      * Fazer o agente ir para determinado local no mapa
      * @param player Personagem
-     * @param coordX coordenada X do objeto
-     * @param coordY coordenada Y do objeto
+     * @param map coordenada X do objeto
+     * @param agente coordenada Y do objeto
      */
-    public void irParaObjetivo(TileMap map, Actor player, int coordX, int coordY){
+    public void irParaObjetivo(TileMap map, Actor player2, BasePokemon agente, float delta, SpriteBatch batch, Camera camera){
+        
+        /*
+        pegar quadrado do jogador
+        pegar lista de quadrados pra andar
+        verificar qual a direção do quadrado em relação ao jogador
+        andar para ele
+        */
+        this.player = player2;
+        int posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+        int posicaoObjetivo = agente.getCentroPokemon();
+        List<java.lang.Integer> listaPosicoes = agente.definirRota(posicaoAtual, posicaoObjetivo);
+        listaPosicoes.remove(0);
+        String direcao = "";
+        DIRECTION facing = DIRECTION.SOUTH;
+        
+        try {
+
+            for (int i = 0; i < listaPosicoes.size(); i++) {
+                direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(i));
+
+                if (direcao.equals("norte")) {
+                    facing = DIRECTION.NORTH;
+                } else if (direcao.equals("leste")) {
+                    facing = DIRECTION.EAST;
+                } else if (direcao.equals("sul")) {
+                    facing = DIRECTION.SOUTH;
+                } else if (direcao.equals("oeste")) {
+                    facing = DIRECTION.WEST;
+                }
+
+                if (this.player.getFacing() != facing) {
+                    this.player.setState(Actor.ACTOR_STATE.STANDING);
+                    this.player.setFacing(facing);
+                    this.right = false;
+                }
+                this.update(0, direcao);
+                player.update(delta);
+                //System.out.println(listaPosicoes.get(i));
+                player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(i)));
+                player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(i)));
+
+                this.drawBatch(batch, camera);
+                posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+
+            }
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
         
         /*int intervalo = Math.abs(coordX - player.getX());
         int count = 1;
@@ -186,5 +240,15 @@ public class PlayerController extends InputAdapter {
         getPaths(new int[][] { {1,2,3},{4,5,6},{7,8,9}}, 0,0, new ArrayList<Integer>(), allPaths );
         System.out.println(allPaths);
     }*/
-    
+    public void drawBatch(SpriteBatch batch, Camera camera){
+        float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
+        float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
+        
+        batch.draw(player.getSprite(),
+                worldStartX + this.player.getWorldX() * Settings.SCALED_TILE_SIZE,
+                worldStartY + this.player.getWorldY() * Settings.SCALED_TILE_SIZE,
+                Settings.SCALED_TILE_SIZE,
+                Settings.SCALED_TILE_SIZE * 1.5f);
+        
+    }
 }

@@ -655,23 +655,45 @@ public class BasePokemon {
         
     }
     
-    public void salvarPosicoes(TileMap map){
+    /**
+     * Traça uma rota para o agente ir para uma determinada posicao
+     * @param posicaoAtual 
+     * @param posicaoObjetivo 
+     */
+    public List<java.lang.Integer> definirRota(int posicaoAtual, int posicaoObjetivo){
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
         
+        List<java.lang.Integer> listaPosicoes = new ArrayList<java.lang.Integer>();
+        String teste = "";
         String regra;
         Query executar_regra;
         Map<String, Term> resultado_regra;
         
-        regra = "astar(3, 5, C, P, Caminho)";        
+        regra = "astar("+posicaoAtual+", "+posicaoObjetivo+", C, P, Caminho)";        
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
         Term[] lista = resultado_regra.get("Caminho").args();
         
         for(int i = 0; i < lista.length; i++){
-            System.out.println(lista[i]);
+            teste += lista[i];
         }
+        
+        //String teste2 = teste.replaceAll("[\\[\\]|',(){} ]","");
+        String teste2 = teste.replaceAll("[\\[\\]|',){} ]","");
+        String[] temp = teste2.split("\\(");
+        
+        for(int i = 0; i < temp.length; i++){
+            listaPosicoes.add(java.lang.Integer.valueOf(temp[i]));
+            //System.out.println(listaPosicoes.get(i));
+        }
+        
+        return listaPosicoes;
+        
+        /*for(int i = 0; i < listaPosicoes.size(); i++){
+            System.out.println(listaPosicoes.get(i));
+        }*/
         
         //caminho(1,2).
         //caminho(1,3).
@@ -700,6 +722,110 @@ public class BasePokemon {
                 contador++;
             }
         }*/
+    }
+    
+    public int getQuadrado(int coordX, int coordY){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "get_quadrados(Quadrado, "+coordX+", "+coordY+", _)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Quadrado").intValue());
+        
+        return resultado_regra.get("Quadrado").intValue();
+    }
+    
+    public int getQuadradoCoordenadaX(int quadrado){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "get_quadrados("+quadrado+", Coordx, _, _)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Coordx").intValue());
+        
+        return resultado_regra.get("Coordx").intValue();
+    }
+    
+    public int getQuadradoCoordenadaY(int quadrado){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "get_quadrados("+quadrado+", _, Coordy, _)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Coordy").intValue());
+        
+        return resultado_regra.get("Coordy").intValue();
+    }
+    
+    /**
+     * Retorna a posicao de um centro pokemon da base do agente
+     * @return 
+     */
+    public int getCentroPokemon(){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "get_quadrado_centro_pokemon(Quadrado)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Quadrado").intValue());
+        
+        return resultado_regra.get("Quadrado").intValue();
+    }
+    
+    /**
+     * Retorna a direcao que o quadrado está em relação ao outro
+     * @param quadrado1 Quadrado 1
+     * @param quadrado2 Quadrado 2
+     * @return direcao Direcao do Quadrado 2 em relação ao Quadrado 1
+     */
+    public String getDirecaoEntreQuadrados(int quadrado1, int quadrado2){
+        String direcao;
+        
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "get_direcao_entre_quadrado("+quadrado1+", "+quadrado2+", Direcao)";
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Direcao").name());
+        
+        direcao = resultado_regra.get("Direcao").name();
+        
+        return direcao;
     }
     
 }

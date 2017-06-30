@@ -15,7 +15,7 @@ pokemon('sparow', '30', 'cheia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 11, 9).
+objeto('centroP', 7, 5).
 
 %Direções que o agente pode andar
 direcao('sul',0,-1).
@@ -53,8 +53,30 @@ tipop('eletrico', 'caverna').
 
 %Criar regra para verificar pokebolas antes de capturar pokemons
 
+get_direcao_entre_quadrado(Quadrado1, Quadrado2, Direcao) :- 	get_quadrados(Quadrado1, Coordx1, Coordy1, _) ,
+																Coordx2 is Coordx1 + 1 ,
+																get_quadrados(Quadrado2, Coordx2, Coordy1, _) -> Direcao = 'leste' ;
+
+																get_quadrados(Quadrado1, Coordx1, Coordy1, _) ,
+																Coordx2 is Coordx1 - 1 ,
+																get_quadrados(Quadrado2, Coordx2, Coordy1, _) -> Direcao = 'oeste' ;
+
+																get_quadrados(Quadrado1, Coordx1, Coordy1, _) ,
+																Coordy2 is Coordy1 + 1 ,
+																get_quadrados(Quadrado2, Coordx1, Coordy2, _) -> Direcao = 'norte' ;
+
+																get_quadrados(Quadrado1, Coordx1, Coordy1, _) ,
+																Coordy2 is Coordy1 -1 ,
+																get_quadrados(Quadrado2, Coordx1, Coordy2, _) -> Direcao = 'sul' ;
+
+																Direcao = 'nao' .
+
+%Retorna o quadrado do centro pokemon que está na base
+get_quadrado_centro_pokemon(Quadrado) :- objeto('centroP', Coordx, Coordy),
+										 get_quadrados(Quadrado, Coordx, Coordy, _).
+
 %Retorna o quadrado do mapa
-get_quadrado(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
+%get_quadrado(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
 
 %Retorna quantidade de pokebolas
 get_pokebolas(Quantidade) :- pokebolas(Quantidade).
@@ -122,7 +144,6 @@ get_quadrados_adjacentes(QuadradoAtual, Norte, Sul, Leste, Oeste) :- 	get_quadra
 																		get_quadrado_leste(QuadradoAtual, _, Leste, _).
 
 get_terreno(Quadrado, Terreno) :- quadrado(Quadrado, _, _, Terreno).
-
 
 astar(Start,Final,_,Tp, Caminho):-	estimation(Start,Final,E),
       								astar1([(E,E,0,[Start])],Final,_,Tp,Caminho).
