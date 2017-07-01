@@ -143,10 +143,10 @@ astar1([(_,_,Tp,[Final|R])|_],Final,[Final|R],Tp,Caminho):- 	reverse([Final|R],L
 																write(L3),
 																Caminho = L3.
 
-astar1([(_,_,P,[X|R1])|R2],Final,C,Tp,Caminho):-	findall(
-														(NewSum,E1,NP,[Z,X|R1]),
+astar1([(_,_,_,[X|R1])|R2],Final,C,Tp,Caminho):-	findall(
+														(NewSum,E1,_,[Z,X|R1]),
 															(
-																caminho(X,Z,V),
+																caminho(X,Z,_),
 																get_terreno(Z, TerrenoZ) ,
 																pode_mover(TerrenoZ, Pode) , Pode = 'sim' ,
 												               	not(member(Z,R1)),
