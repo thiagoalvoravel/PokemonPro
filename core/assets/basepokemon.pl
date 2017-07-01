@@ -1,7 +1,6 @@
 % Autores: Fillipe Campos e Thiago Alvoravel
 
-%FATOS
-%objeto(coordx, coordy, tipo)
+%################# FATOS #################
 
 %Fatos dinâmicos
 :- dynamic pokemon/3.
@@ -9,50 +8,54 @@
 :- dynamic objeto/3.
 :- dynamic pokebolas/1.
 :- dynamic quadrado/4.
-:- dynamic first_n/3.
+%:- dynamic first_n/3.
 
+%# Estrutura dos fatos
+%pokemon(nome, numero, energia).
+%pokemon_tipo(nome, tipo, numero_tipo).
+%objeto(objeto, coordx, coordy).
+%pokebolas(quantidade).
+%quadrado(identificador, coordx, coordy, terreno).
+%caminho(quadrado1, quadrado2, custo).
+
+%# %Verificar se será removida por falta de uso
+%treinador(resultado_batalha).
+%lojap(qtd_pokebolas).
+
+%# Exemplos de fatos para testes - INÍCIO
+%objeto('treinador', 20, 21).
+%objeto('centro', 30, 40).
 pokemon('sparow', '30', 'cheia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 0, 12).
+objeto('centroP', 5, 12).
+pokebolas(10).
+%# Exemplos de fatos para testes - FIM
 
-%Direções que o agente pode andar
+%# Direções que o agente pode andar
 direcao('sul',0,-1).
 direcao('norte',0,1).
 direcao('leste',1,0).
 direcao('oeste',-1,0).
 
-%Terrenos presentes no mapa
+%# Terrenos presentes no mapa
 terreno('grama').
 terreno('montanha').
 terreno('agua').
 terreno('vulcao').
 terreno('caverna').
 
-%Relação de tipos de pokemon e terrenos que eles podem andar
+%# Relação de tipos de pokemon e terrenos que eles podem andar
 tipop('voador', 'montanha').
 tipop('fogo', 'vulcao').
 tipop('agua', 'agua').
 tipop('eletrico', 'caverna').
 
-%Estrutura dos fatos
-%pokemon(nome, numero, energia).
-%pokemon_tipo(nome, tipo, numero_tipo).
-%treinador(resultado_batalha).
-%lojap(qtd_pokebolas).
-%objeto(objeto, coordx, coordy).
 
-%Exemplos de fatos
-%objeto('treinador', 20, 21).
-%objeto('centro', 30, 40).
-%pokemon('sparow', '30', 'cheia').
+%################# REGRAS %#################
 
-
-%REGRAS
-
-%Criar regra para verificar pokebolas antes de capturar pokemons
-
+%# Retorna a direção (norte, sul, leste ou oeste) de uma posição em relação a outra
 get_direcao_entre_quadrado(Quadrado1, Quadrado2, Direcao) :- 	get_quadrados(Quadrado1, Coordx1, Coordy1, _) ,
 																Coordx2 is Coordx1 + 1 ,
 																get_quadrados(Quadrado2, Coordx2, Coordy1, _) -> Direcao = 'leste' ;
@@ -71,80 +74,67 @@ get_direcao_entre_quadrado(Quadrado1, Quadrado2, Direcao) :- 	get_quadrados(Quad
 
 																Direcao = 'nao' .
 
-%Retorna o quadrado do centro pokemon que está na base
+%# Retorna o quadrado do centro pokemon que está na base
 get_quadrado_centro_pokemon(Quadrado) :- objeto('centroP', Coordx, Coordy),
 										 get_quadrados(Quadrado, Coordx, Coordy, _).
 
-%Retorna o quadrado do mapa
+%# Retorna o quadrado do mapa
 %get_quadrado(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
 
-%Retorna quantidade de pokebolas
+%# Retorna quantidade de pokebolas
 get_pokebolas(Quantidade) :- pokebolas(Quantidade).
 
-%Retorna pokemon
+%# Retorna pokemon
 get_pokemon(Pokemon, Numero, Energia) :- pokemon(Pokemon, Numero, Energia).
 
-%Retorna o objeto presente em uma posição
+%# Retorna o objeto presente em uma posição
 get_objeto(Objeto, Coordx, Coordy) :- objeto(Objeto, Coordx, Coordy).
 
-%Andar para uma determinada direção
+%# Andar para uma determinada direção
 andar(Direcao, Coordx, Coordy) :- direcao(Direcao, Coordx, Coordy).
 
-%Verificar se tem um pokemon pelo nome
+%# Verificar se tem um pokemon pelo nome
 tem_pokemon(Nome, Tem) :- pokemon(Nome, _, _) -> Tem = 'sim'
 						; Tem = 'nao'.
 
-%Contar total de pokemons capturados
+%# Contar total de pokemons capturados
 total_pokemon(Count) :- aggregate_all(count, pokemon(_, _, _), Count).
 
-%Verificar se o agente pode se mover em um determinado terreno
+%# Verificar se o agente pode se mover em um determinado terreno
 pode_mover(Terreno, Pode) :- (tipop(Tipo, Terreno), pokemon_tipo(_, Tipo, 1)) -> Pode = 'sim'
 							; (tipop(Tipo, Terreno), pokemon_tipo(_, Tipo, 2)) -> Pode = 'sim'
 							; Terreno == 'grama' -> Pode = 'sim'
 							; Pode = 'parado'.
 
-%Verificar se o agente já batalhou com um determinado treinador
+%# Verificar se o agente já batalhou com um determinado treinador
 verificar_treinador_enfrentado(Objeto, Coordx, Coordy, Luta) :- objeto(Objeto, Coordx, Coordy) -> Luta = 'nao'
 																; Luta = 'sim'.
 
-%Verificar se o agente já pegou as pokebolas de uma determinada loja
+%# Verificar se o agente já pegou as pokebolas de uma determinada loja
 verificar_loja(Objeto, Coordx, Coordy, Pegar) :- objeto(Objeto, Coordx, Coordy) -> Pegar = 'nao'
 																; Pegar = 'sim'.
 
-%Batalhar com um treinador
+%# Batalhar com um treinador
 enfrentar_treinador(Resultado) :- total_pokemon(Total), Total =< 0 -> Resultado = 'derrota'
 								  ; pokemon(_, _, 'vazia') -> Resultado = 'derrota'
 								  ; Resultado = 'vitoria'.
 
+%# Retorna uma direcao aleatória
+get_direcao_aleatoria(Direcao) :- 	Index is random(4) ,
+									(
+										Index = 0 -> Direcao = 'norte' ;
+										Index = 1 -> Direcao = 'sul' ;
+										Index = 2 -> Direcao = 'oeste' ;
+										Index = 3 -> Direcao = 'leste' 
+									) .
+
+%# Retorna o quadrado
 get_quadrados(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
 
-get_quadrado_norte(Quadrado, Norte, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Xnovo is Coordx + 1 ,
-														quadrado(Norte, Xnovo, Coordy, _) -> Resultado is Norte ;
-														Resultado is 0.
-
-get_quadrado_sul(Quadrado, Sul, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-													Xnovo is Coordx - 1 ,
-													quadrado(Sul, Xnovo, Coordy, _) -> Resultado is Sul ;
-													Resultado is 0.
-
-get_quadrado_leste(Quadrado, Leste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Ynovo is Coordy + 1 ,
-														quadrado(Leste, Coordx, Ynovo, _) -> Resultado is Leste ;
-														Resultado is 0.
-
-get_quadrado_oeste(Quadrado, Oeste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Ynovo is Coordy - 1 ,
-														quadrado(Oeste, Coordx, Ynovo, _) -> Resultado is Oeste ;
-														Resultado is 0.
-
-get_quadrados_adjacentes(QuadradoAtual, Norte, Sul, Leste, Oeste) :- 	get_quadrado_norte(QuadradoAtual, _, Norte, _) ,
-																		get_quadrado_sul(QuadradoAtual, _, Sul, _) ,
-																		get_quadrado_oeste(QuadradoAtual, _, Oeste, _) ,
-																		get_quadrado_leste(QuadradoAtual, _, Leste, _).
-
+%# Retorna o terreno de um quadrado específico
 get_terreno(Quadrado, Terreno) :- quadrado(Quadrado, _, _, Terreno).
 
+%# Código para traçar a rota entre duas posições
 astar(Start,Final,_,Tp, Caminho):-	estimation(Start,Final,E),
       								astar1([(E,E,0,[Start])],Final,_,Tp,Caminho).
 
@@ -175,7 +165,92 @@ estimation(C1,C2,Est):- 	quadrado(C1,X1,Y1, _),
 							DY is Y1-Y2, 
 	                     	Est is sqrt(DX*DX+DY*DY).
 
+/*
+- Conhecimento do agente -
+O terreno ao redor
+Pokemons capturados
+Quantidade pokebolas
+A energia dos pokemons
+Quantidade de pokemons
 
+- Prioridades -
+1 - Quantos pokemons eu tenho? 
+         150 = Termina o jogo
+         < 150 = Continua jogando  
+
+2 - Qual direção posso prosseguir?
+         Norte? Sul? Leste? Oeste?
+
+3 - Como tá a energia dos meus pokémons?
+         Cheia = Prosseguir Jornada Pokémon
+         Vazia = Ir ao Centro Pokémon
+
+4 - Quantas pokébolas eu tenho?
+         Se (quantidade de pokébolas + quantidade de pokémons >= 150)  Não Priorizar Carregar
+         Senão se (Quantidade_Pokebolas > 0 e Tem pokémon nas posições adjacentes?) Capturar Pokémon
+         Senão se (Quantidade_Pokebolas == 0) Recarrega
+         Senão Explorar      
+*/
+
+/*
+# Regra para tomada de decisão principal
+# Direcao - Direção (norte, sul, leste ou oeste)
+# Caminho - Rota traçada para o agente seguir
+# PosicaoJogador - Posicao (quadrado) que o jogador se encontra
+# ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste - Os objetos (treinador, pokemon, centro pokemon ou loja) das posições adjacentes ao jogador
+*/
+regra_geral(
+				Direcao, Caminho, PosicaoJogador,
+				ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste
+			) :- 
+			
+			%# Verifica se todos os pokemon já foram capturados
+			total_pokemon(TotalPokemons), TotalPokemons >= 150 -> Direcao = 'fim' ;
+
+			%# Verifica se é necessário ir ao centro pokemon
+			get_pokemon(_, _, 'vazia') ,
+			get_quadrado_centro_pokemon(PosicaoCentroPokemon) ,
+			astar(PosicaoJogador, PosicaoCentroPokemon, _, _, CaminhoParaCentro) -> Caminho = CaminhoParaCentro ;
+
+			%# Verifica se há pokemon nas posições adjacentes do jogador e se ele tem pokebolas
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoNorte = 'pokemon' -> Direcao = 'norte' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoSul = 'pokemon' -> Direcao = 'sul' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoOeste = 'pokemon' -> Direcao = 'oeste' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoLeste = 'pokemon' -> Direcao = 'leste' ;
+
+			%# Se não houver prioridade escolhe uma direção aleatória para andar
+			get_direcao_aleatoria(DirecaoEscolhida) -> Direcao = DirecaoEscolhida.
+
+/*
+%# Regras para verificar se serão excluídas
+get_quadrado_norte(Quadrado, Norte, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
+														Xnovo is Coordx + 1 ,
+														quadrado(Norte, Xnovo, Coordy, _) -> Resultado is Norte ;
+														Resultado is 0.
+
+get_quadrado_sul(Quadrado, Sul, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
+													Xnovo is Coordx - 1 ,
+													quadrado(Sul, Xnovo, Coordy, _) -> Resultado is Sul ;
+													Resultado is 0.
+
+get_quadrado_leste(Quadrado, Leste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
+														Ynovo is Coordy + 1 ,
+														quadrado(Leste, Coordx, Ynovo, _) -> Resultado is Leste ;
+														Resultado is 0.
+
+get_quadrado_oeste(Quadrado, Oeste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
+														Ynovo is Coordy - 1 ,
+														quadrado(Oeste, Coordx, Ynovo, _) -> Resultado is Oeste ;
+														Resultado is 0.
+
+get_quadrados_adjacentes(QuadradoAtual, Norte, Sul, Leste, Oeste) :- 	get_quadrado_norte(QuadradoAtual, _, Norte, _) ,
+																		get_quadrado_sul(QuadradoAtual, _, Sul, _) ,
+																		get_quadrado_oeste(QuadradoAtual, _, Oeste, _) ,
+																		get_quadrado_leste(QuadradoAtual, _, Leste, _).
+*/
+
+%################# Fatos relacionados ao mapa #################
+%# Posições do mapa, aqui chamados de quadrados
 quadrado(1, 0, 0, 'montanha').
 quadrado(2, 0, 1, 'montanha').
 quadrado(3, 0, 2, 'montanha').
@@ -1941,6 +2016,7 @@ quadrado(1762, 41, 39, 'grama').
 quadrado(1763, 41, 40, 'grama').
 quadrado(1764, 41, 41, 'grama').
 
+%# Caminhos possíveis para ir de um quadrado ao outro
 caminho(1, 43, 1). caminho(1, 2, 1). 
 caminho(2, 44, 1). caminho(2, 1, 1). caminho(2, 3, 1). 
 caminho(3, 45, 1). caminho(3, 2, 1). caminho(3, 4, 1). 
