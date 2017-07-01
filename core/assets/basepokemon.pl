@@ -15,7 +15,7 @@ pokemon('sparow', '30', 'cheia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 7, 5).
+objeto('centroP', 0, 12).
 
 %Direções que o agente pode andar
 direcao('sul',0,-1).

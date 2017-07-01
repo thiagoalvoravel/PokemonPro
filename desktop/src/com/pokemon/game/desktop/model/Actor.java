@@ -45,7 +45,7 @@ public class Actor {
     public ACTOR_STATE getState() {
         return state;
     }
-
+    
     public void update(float delta) {   
         if (state == ACTOR_STATE.WALKING) {
             animTimer += delta;

@@ -24,9 +24,11 @@ import com.pokemon.game.desktop.Iniciar;
 import com.pokemon.game.desktop.Settings;
 import com.pokemon.game.desktop.controller.PlayerController;
 import com.pokemon.game.desktop.model.Actor;
+import com.pokemon.game.desktop.model.Actor.ACTOR_STATE;
 import com.pokemon.game.desktop.model.BasePokemon;
 import com.pokemon.game.desktop.model.Camera;
 import com.pokemon.game.desktop.model.CentroPokemon;
+import com.pokemon.game.desktop.model.DIRECTION;
 import com.pokemon.game.desktop.model.LogPokemon;
 import com.pokemon.game.desktop.model.LojaPokemon;
 import com.pokemon.game.desktop.model.PONTOSACAO;
@@ -111,6 +113,9 @@ public class GameScreen extends AbstractScreen {
     public static final int CAVERNA = 3;
     public static final int AGUA = 4;
     public static final int VULCAO = 5;
+    
+    public static int temp=-1;
+    public static int x;
 
     private BitmapFont font;
     private TextureAtlas buttonsAtlas; //** image of buttons **//
@@ -132,6 +137,12 @@ public class GameScreen extends AbstractScreen {
     private TextButton btnNomePokemon;
     private TextButton btnNumPokemon;
     private TextButton btnAcaoAtual;
+    
+    DIRECTION facing = DIRECTION.SOUTH;
+    List<java.lang.Integer> listaPosicoes = new ArrayList<java.lang.Integer>();
+    ACTOR_STATE estado;
+    
+    public int posicaoAtual=0;
     
     //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
       
@@ -175,7 +186,8 @@ public class GameScreen extends AbstractScreen {
 
         map = new TileMap(42, 42);
         //agente.salvarPosicoes(map);
-        player = new Actor(map, 24, 22, animations);
+        //player = new Actor(map, 24, 22, animations);
+        player = new Actor(map, 0, 2, animations);
         pontuacao = new Pontuacao(0);
         agente.setPokebolas(25);
 
@@ -617,13 +629,24 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
 
-        player.setX(0);
-        player.setY(2);
+        //player.setX(0);
+        //player.setY(2);
         //agente.salvarPosicoes();
+        batch.begin();
         
         //agente.irParaObjetivo(map, player);
-        
-        
+        //controller.irParaObjetivo(map, player, agente, delta, facing, listaPosicoes);
+        if(temp == -1){
+           posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+           int posicaoObjetivo = agente.getCentroPokemon();
+           listaPosicoes = agente.definirRota(posicaoAtual, posicaoObjetivo);
+           //listaPosicoes.remove(0);
+           int tamanho = listaPosicoes.size();
+           temp = tamanho;
+           x = 0;
+        }
+        String direcao = "";
+                 
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
         
@@ -695,7 +718,7 @@ public class GameScreen extends AbstractScreen {
             objeto = "null";
         }
         
-        direcao = agente.buscarNaBase(map, player);
+        /*direcao = agente.buscarNaBase(map, player);
         
         if(!direcao.equals("parado")){
             controller.update(delta, direcao);
@@ -706,12 +729,12 @@ public class GameScreen extends AbstractScreen {
         }else{
             pontuacao.virarDireita();
             btnAcaoAtual.setText("Acao: Virar");
-        }
+        }*/
 
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
-        batch.begin();
-        controller.irParaObjetivo(map, player, agente, delta, batch, camera);
+        
+        
         
         float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
         float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
@@ -747,8 +770,32 @@ public class GameScreen extends AbstractScreen {
             }
 
         }
+         //#########################################################################################  
+           //for (int i = 0; i < listaPosicoes.size(); i++) { 
+                 if(temp > 0){ 
+                  direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
+                  estado = ACTOR_STATE.WALKING;
+                  
+                  player.setState(estado);
+                  controller.update(delta, direcao);
+                  player.update(delta);
+                  //System.out.println(listaPosicoes.get(i));
+                  player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
+                  player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
+                  posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+                  temp--;
+                  x++;
+                 }
+                 if(temp == 0) {
+                     x = 0;
+                     estado = ACTOR_STATE.STANDING;
+                     player.update(delta);
+                 }
+                                  
+          //########################################################################################        
+        
 
-        batch.draw(player.getSprite(),
+             batch.draw(player.getSprite(),
                 worldStartX + player.getWorldX() * Settings.SCALED_TILE_SIZE,
                 worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE,
@@ -851,6 +898,10 @@ public class GameScreen extends AbstractScreen {
                         Settings.SCALED_TILE_SIZE);
             }
         }
+        
+        
+          //this.drawBatch(batch, camera);
+        //}
         batch.end();
 
         stage.draw();

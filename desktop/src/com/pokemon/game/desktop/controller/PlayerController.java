@@ -124,7 +124,7 @@ public class PlayerController extends InputAdapter {
      * @param map coordenada X do objeto
      * @param agente coordenada Y do objeto
      */
-    public void irParaObjetivo(TileMap map, Actor player2, BasePokemon agente, float delta, SpriteBatch batch, Camera camera){
+    public void irParaObjetivo(TileMap map, Actor player2, BasePokemon agente, float delta, DIRECTION facing, List<java.lang.Integer> listaPosicoes ){
         
         /*
         pegar quadrado do jogador
@@ -135,12 +135,11 @@ public class PlayerController extends InputAdapter {
         this.player = player2;
         int posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
         int posicaoObjetivo = agente.getCentroPokemon();
-        List<java.lang.Integer> listaPosicoes = agente.definirRota(posicaoAtual, posicaoObjetivo);
+        listaPosicoes = agente.definirRota(posicaoAtual, posicaoObjetivo);
         listaPosicoes.remove(0);
         String direcao = "";
-        DIRECTION facing = DIRECTION.SOUTH;
         
-        try {
+        /*try {
 
             for (int i = 0; i < listaPosicoes.size(); i++) {
                 direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(i));
@@ -166,14 +165,14 @@ public class PlayerController extends InputAdapter {
                 player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(i)));
                 player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(i)));
 
-                this.drawBatch(batch, camera);
+                //this.drawBatch(batch, camera);
                 posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
 
             }
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
-        }
+        }* /
         
         /*int intervalo = Math.abs(coordX - player.getX());
         int count = 1;
@@ -240,7 +239,7 @@ public class PlayerController extends InputAdapter {
         getPaths(new int[][] { {1,2,3},{4,5,6},{7,8,9}}, 0,0, new ArrayList<Integer>(), allPaths );
         System.out.println(allPaths);
     }*/
-    public void drawBatch(SpriteBatch batch, Camera camera){
+    /*public void drawBatch(SpriteBatch batch, Camera camera){
         float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
         float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
         
@@ -250,5 +249,5 @@ public class PlayerController extends InputAdapter {
                 Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE * 1.5f);
         
-    }
+    }*/
 }

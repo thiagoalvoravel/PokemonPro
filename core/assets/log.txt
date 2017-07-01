@@ -1,108 +1,29 @@
 Inserir fato: assert(pokebolas(25))
-Consulta: pode_mover('montanha', Pode)
-Resultado da Consulta: sim
-Consulta: andar(Direcao, 0, -1)
-Resultado da Consulta: sul
-Consulta: get_quadrados(Quadrado, 0, 1, _)
-Resultado da Consulta: 2
+Consulta: get_quadrados(Quadrado, 0, 2, _)
+Resultado da Consulta: 3
 Consulta: get_quadrado_centro_pokemon(Quadrado)
-Resultado da Consulta: 300
-Consulta: get_direcao_entre_quadrado(2, 3, Direcao)
-Resultado da Consulta: norte
+Resultado da Consulta: 13
+Consulta: tem_pokemon('Diglett', Tem)
+Resultado da Consulta: nao
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 25
+Inserir fato: assert(pokemon('Diglett', '50', 'cheia'))
+Inserir fato: assert(pokemon_tipo('Diglett', 'terra', 1))
+Inserir fato: assert(objeto('pokemon', '0', '2'))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 25
+Remoção do fato: 25
+Inserir fato: assert(pokebolas(24))
+Consulta: get_direcao_entre_quadrado(3, 3, Direcao)
+Resultado da Consulta: nao
 Consulta: get_quadrados(3, Coordx, _, _)
 Resultado da Consulta: 0
 Consulta: get_quadrados(3, _, Coordy, _)
 Resultado da Consulta: 2
 Consulta: get_quadrados(Quadrado, 0, 2, _)
 Resultado da Consulta: 3
-Consulta: get_direcao_entre_quadrado(3, 4, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(4, Coordx, _, _)
-Resultado da Consulta: 0
-Consulta: get_quadrados(4, _, Coordy, _)
-Resultado da Consulta: 3
-Consulta: get_quadrados(Quadrado, 0, 3, _)
-Resultado da Consulta: 4
-Consulta: get_direcao_entre_quadrado(4, 5, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(5, Coordx, _, _)
-Resultado da Consulta: 0
-Consulta: get_quadrados(5, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 0, 4, _)
-Resultado da Consulta: 5
-Consulta: get_direcao_entre_quadrado(5, 47, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(47, Coordx, _, _)
-Resultado da Consulta: 1
-Consulta: get_quadrados(47, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 1, 4, _)
-Resultado da Consulta: 47
-Consulta: get_direcao_entre_quadrado(47, 89, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(89, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(89, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 2, 4, _)
-Resultado da Consulta: 89
-Consulta: get_direcao_entre_quadrado(89, 131, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(131, Coordx, _, _)
-Resultado da Consulta: 3
-Consulta: get_quadrados(131, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 3, 4, _)
-Resultado da Consulta: 131
-Consulta: get_direcao_entre_quadrado(131, 173, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(173, Coordx, _, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(173, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 4, 4, _)
-Resultado da Consulta: 173
-Consulta: get_direcao_entre_quadrado(173, 215, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(215, Coordx, _, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(215, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 5, 4, _)
-Resultado da Consulta: 215
-Consulta: get_direcao_entre_quadrado(215, 257, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(257, Coordx, _, _)
-Resultado da Consulta: 6
-Consulta: get_quadrados(257, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 6, 4, _)
-Resultado da Consulta: 257
-Consulta: get_direcao_entre_quadrado(257, 258, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(258, Coordx, _, _)
-Resultado da Consulta: 6
-Consulta: get_quadrados(258, _, Coordy, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(Quadrado, 6, 5, _)
-Resultado da Consulta: 258
-Consulta: get_direcao_entre_quadrado(258, 300, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(300, Coordx, _, _)
-Resultado da Consulta: 7
-Consulta: get_quadrados(300, _, Coordy, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(Quadrado, 7, 5, _)
-Resultado da Consulta: 300
-Consulta: pode_mover('montanha', Pode)
+Consulta: tem_pokemon('Diglett', Tem)
 Resultado da Consulta: sim
-Consulta: andar(Direcao, 0, -1)
-Resultado da Consulta: sul
-Consulta: get_quadrados(Quadrado, 0, 2, _)
-Resultado da Consulta: 3
-Consulta: get_quadrado_centro_pokemon(Quadrado)
-Resultado da Consulta: 300
 Consulta: get_direcao_entre_quadrado(3, 4, Direcao)
 Resultado da Consulta: norte
 Consulta: get_quadrados(4, Coordx, _, _)
@@ -119,67 +40,78 @@ Consulta: get_quadrados(5, _, Coordy, _)
 Resultado da Consulta: 4
 Consulta: get_quadrados(Quadrado, 0, 4, _)
 Resultado da Consulta: 5
-Consulta: get_direcao_entre_quadrado(5, 47, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(47, Coordx, _, _)
-Resultado da Consulta: 1
-Consulta: get_quadrados(47, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 1, 4, _)
-Resultado da Consulta: 47
-Consulta: get_direcao_entre_quadrado(47, 89, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(89, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(89, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 2, 4, _)
-Resultado da Consulta: 89
-Consulta: get_direcao_entre_quadrado(89, 131, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(131, Coordx, _, _)
-Resultado da Consulta: 3
-Consulta: get_quadrados(131, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 3, 4, _)
-Resultado da Consulta: 131
-Consulta: get_direcao_entre_quadrado(131, 173, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(173, Coordx, _, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(173, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 4, 4, _)
-Resultado da Consulta: 173
-Consulta: get_direcao_entre_quadrado(173, 215, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(215, Coordx, _, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(215, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 5, 4, _)
-Resultado da Consulta: 215
-Consulta: get_direcao_entre_quadrado(215, 257, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(257, Coordx, _, _)
-Resultado da Consulta: 6
-Consulta: get_quadrados(257, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 6, 4, _)
-Resultado da Consulta: 257
-Consulta: get_direcao_entre_quadrado(257, 258, Direcao)
+Consulta: get_direcao_entre_quadrado(5, 6, Direcao)
 Resultado da Consulta: norte
-Consulta: get_quadrados(258, Coordx, _, _)
+Consulta: get_quadrados(6, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(6, _, Coordy, _)
+Resultado da Consulta: 5
+Consulta: get_quadrados(Quadrado, 0, 5, _)
 Resultado da Consulta: 6
-Consulta: get_quadrados(258, _, Coordy, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(Quadrado, 6, 5, _)
-Resultado da Consulta: 258
-Consulta: get_direcao_entre_quadrado(258, 300, Direcao)
-Resultado da Consulta: leste
-Consulta: get_quadrados(300, Coordx, _, _)
+Consulta: get_direcao_entre_quadrado(6, 7, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(7, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(7, _, Coordy, _)
+Resultado da Consulta: 6
+Consulta: get_quadrados(Quadrado, 0, 6, _)
 Resultado da Consulta: 7
-Consulta: get_quadrados(300, _, Coordy, _)
-Resultado da Consulta: 5
-Consulta: get_quadrados(Quadrado, 7, 5, _)
-Resultado da Consulta: 300
+Consulta: get_direcao_entre_quadrado(7, 8, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(8, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(8, _, Coordy, _)
+Resultado da Consulta: 7
+Consulta: get_quadrados(Quadrado, 0, 7, _)
+Resultado da Consulta: 8
+Consulta: get_direcao_entre_quadrado(8, 9, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(9, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(9, _, Coordy, _)
+Resultado da Consulta: 8
+Consulta: get_quadrados(Quadrado, 0, 8, _)
+Resultado da Consulta: 9
+Consulta: get_direcao_entre_quadrado(9, 10, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(10, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(10, _, Coordy, _)
+Resultado da Consulta: 9
+Consulta: get_quadrados(Quadrado, 0, 9, _)
+Resultado da Consulta: 10
+Consulta: get_direcao_entre_quadrado(10, 11, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(11, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(11, _, Coordy, _)
+Resultado da Consulta: 10
+Consulta: get_quadrados(Quadrado, 0, 10, _)
+Resultado da Consulta: 11
+Consulta: get_direcao_entre_quadrado(11, 12, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(12, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(12, _, Coordy, _)
+Resultado da Consulta: 11
+Consulta: get_quadrados(Quadrado, 0, 11, _)
+Resultado da Consulta: 12
+Consulta: verificar_treinador_enfrentado('treinador', '0', '11', Luta)
+Resultado da Consulta: sim
+Inserir fato: assert(objeto('treinador', '0', '11'))
+Consulta: enfrentar_treinador(Resultado)
+Resultado da Consulta: vitoria
+Consulta: get_pokemon(Pokemon, Numero, 'cheia')
+ Resultado da Consulta: sparow-30 cheia 
+ Resultado da Consulta: Diglett-50 cheia 
+Remover fato: retractall(pokemon(_ , _, 'cheia'))
+Inserir fato: assert(pokemon('sparow', '30', 'vazia'))
+Inserir fato: assert(pokemon('Diglett', '50', 'vazia'))
+Consulta: get_direcao_entre_quadrado(12, 13, Direcao)
+Resultado da Consulta: norte
+Consulta: get_quadrados(13, Coordx, _, _)
+Resultado da Consulta: 0
+Consulta: get_quadrados(13, _, Coordy, _)
+Resultado da Consulta: 12
+Consulta: get_quadrados(Quadrado, 0, 12, _)
+Resultado da Consulta: 13
