@@ -25,11 +25,11 @@
 %# Exemplos de fatos para testes - INÍCIO
 %objeto('treinador', 20, 21).
 %objeto('centro', 30, 40).
-pokemon('sparow', '30', 'cheia').
+pokemon('sparow', '30', 'vazia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 5, 12).
+objeto('centroP', 6, 12).
 pokebolas(10).
 %# Exemplos de fatos para testes - FIM
 
@@ -150,9 +150,10 @@ astar1([(_,_,P,[X|R1])|R2],Final,C,Tp,Caminho):-	findall(
 																get_terreno(Z, TerrenoZ) ,
 																pode_mover(TerrenoZ, Pode) , Pode = 'sim' ,
 												               	not(member(Z,R1)),
-												               	NP is P+V,
+												               	%NP is P+V,
 												               	estimation(Z,Final,E1),
-												               	NewSum is E1+NP
+												               	%NewSum is E1+NP
+												               	NewSum is 20
 												            ),
 												        L),
 													append(R2,L,R3),
@@ -163,7 +164,7 @@ estimation(C1,C2,Est):- 	quadrado(C1,X1,Y1, _),
 							quadrado(C2,X2,Y2, _), 
 							DX is X1-X2,
 							DY is Y1-Y2, 
-	                     	Est is sqrt(DX*DX+DY*DY).
+	                        Est is sqrt(DX*DX+DY*DY).
 
 /*
 - Conhecimento do agente -
