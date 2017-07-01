@@ -774,9 +774,9 @@ public class GameScreen extends AbstractScreen {
            //for (int i = 0; i < listaPosicoes.size(); i++) { 
                  if(temp > 0){ 
                   direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
-                  estado = ACTOR_STATE.WALKING;
+                  //estado = ACTOR_STATE.WALKING;
                   
-                  player.setState(estado);
+                  //player.setState(estado);
                   controller.update(delta, direcao);
                   player.update(delta);
                   //System.out.println(listaPosicoes.get(i));
@@ -790,6 +790,8 @@ public class GameScreen extends AbstractScreen {
                      x = 0;
                      estado = ACTOR_STATE.STANDING;
                      player.update(delta);
+                     temp=-1;
+
                  }
                                   
           //########################################################################################        
