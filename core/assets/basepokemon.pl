@@ -29,7 +29,7 @@ pokemon('sparow', '30', 'vazia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 6, 12).
+%objeto('centroP', 6, 12).
 pokebolas(10).
 %# Exemplos de fatos para testes - FIM
 
@@ -209,7 +209,9 @@ regra_geral(
 			total_pokemon(TotalPokemons), TotalPokemons >= 150 -> Direcao = 'fim' ;
 
 			%# Verifica se é necessário ir ao centro pokemon
+			%# Só é traçada uma rota para um centro pokemon se houver algum na base
 			get_pokemon(_, _, 'vazia') ,
+			get_objeto('centroP', _, _) ,
 			get_quadrado_centro_pokemon(PosicaoCentroPokemon) ,
 			astar(PosicaoJogador, PosicaoCentroPokemon, _, _, CaminhoParaCentro) -> Caminho = CaminhoParaCentro ;
 
