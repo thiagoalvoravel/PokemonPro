@@ -215,11 +215,24 @@ regra_geral(
 			get_quadrado_centro_pokemon(PosicaoCentroPokemon) ,
 			astar(PosicaoJogador, PosicaoCentroPokemon, _, _, CaminhoParaCentro) -> Caminho = CaminhoParaCentro ;
 
+			%# Verifica se precisa ir ao centro pokemon e se há um nas posições adjacentes do jogador
+			get_pokemon(_, _, 'vazia') ,
+			ObjetoNorte = 'centroP' -> Direcao = 'norte' ;
+			ObjetoSul = 'centroP' -> Direcao = 'sul' ;
+			ObjetoOeste = 'centroP' -> Direcao = 'oeste' ;
+			ObjetoLeste = 'centroP' -> Direcao = 'leste' ;
+
 			%# Verifica se há pokemon nas posições adjacentes do jogador e se ele tem pokebolas
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoNorte = 'pokemon' -> Direcao = 'norte' ;
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoSul = 'pokemon' -> Direcao = 'sul' ;
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoOeste = 'pokemon' -> Direcao = 'oeste' ;
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoLeste = 'pokemon' -> Direcao = 'leste' ;
+
+			%# Verifica se há lojas nas posições adjacentes do jogandor
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoNorte = 'loja' -> Direcao = 'norte' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoSul = 'loja' -> Direcao = 'sul' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoOeste = 'loja' -> Direcao = 'oeste' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoLeste = 'loja' -> Direcao = 'leste' ;
 
 			%# Se não houver prioridade escolhe uma direção aleatória para andar
 			get_direcao_aleatoria(DirecaoEscolhida) -> Direcao = DirecaoEscolhida.
