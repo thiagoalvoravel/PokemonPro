@@ -187,7 +187,7 @@ public class GameScreen extends AbstractScreen {
         map = new TileMap(42, 42);
         //agente.salvarPosicoes(map);
         //player = new Actor(map, 24, 22, animations);
-        player = new Actor(map, 0, 2, animations);
+        player = new Actor(map, 1, 0, animations);
         pontuacao = new Pontuacao(0);
         agente.setPokebolas(25);
 
@@ -774,9 +774,9 @@ public class GameScreen extends AbstractScreen {
            //for (int i = 0; i < listaPosicoes.size(); i++) { 
                  if(temp > 0){ 
                   direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
-                  //estado = ACTOR_STATE.WALKING;
+                  estado = ACTOR_STATE.WALKING;
                   
-                  //player.setState(estado);
+                  player.setState(estado);
                   controller.update(delta, direcao);
                   player.update(delta);
                   //System.out.println(listaPosicoes.get(i));
