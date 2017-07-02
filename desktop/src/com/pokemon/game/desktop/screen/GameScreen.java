@@ -143,6 +143,11 @@ public class GameScreen extends AbstractScreen {
     ACTOR_STATE estado;
     
     public int posicaoAtual=0;
+    public int posicaoObjetivoY=0;
+    public int posicaoObjetivo=0;
+    int tamanho;
+    public static String direcao_personagem;
+    public static String direcao_personagemNova;
     
     //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
       
@@ -641,11 +646,11 @@ public class GameScreen extends AbstractScreen {
            int posicaoObjetivo = agente.getCentroPokemon();
            listaPosicoes = agente.definirRota(posicaoAtual, posicaoObjetivo);
            //listaPosicoes.remove(0);
-           int tamanho = listaPosicoes.size();
+           tamanho = listaPosicoes.size();
            temp = tamanho;
-           x = 0;
+           x = 1;
         }
-        String direcao = "";
+        
                  
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
         System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
@@ -772,36 +777,71 @@ public class GameScreen extends AbstractScreen {
         }
          //#########################################################################################  
            //for (int i = 0; i < listaPosicoes.size(); i++) { 
-                 if(temp > 0){ 
-                  direcao = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
-                  estado = ACTOR_STATE.WALKING;
+            
+         
+               if(temp > 1){ 
+               
+                  direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
+                  //direcao_personagem = "oeste";
                   
-                  player.setState(estado);
-                  controller.update(delta, direcao);
+                  if(x != (tamanho-1) && temp > 1){
+                    estado = ACTOR_STATE.WALKING;
+                  
+                    player.setState(estado);
+                  }
+                  controller.update(delta, direcao_personagem);
                   player.update(delta);
-                  //System.out.println(listaPosicoes.get(i));
-                  player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
-                  player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
-                  posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
-                  temp--;
-                  x++;
+                  
+                                   
+                  if(x != (tamanho-1) && temp > 1){                     
+                     player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
+                     player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
+                     posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+                     temp--;
+                     x++;
+                  }
+                  
+                  
+             } 
+             else {
+                 //Anda pela última vez
+                 //direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x-1));
+          
+                 //controller.update(delta, direcao_personagem);
+                 //player.update(delta);
+                 
+                // player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
+                // player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
+                // posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
+                 
+                 
+                 //player.update(delta);
+                 //Nova posição (no caso a última)
+                 /*player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x-1)));
+                 posicaoObjetivoY = agente.getQuadradoCoordenadaY(listaPosicoes.get(listaPosicoes.size()-1));
+                 
+                 while(player.getY() != ){
+                   direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
                  }
-                 if(temp == 0) {
-                     x = 0;
-                     estado = ACTOR_STATE.STANDING;
-                     player.update(delta);
-                     temp=-1;
-
-                 }
-                                  
+                 
+                 
+                 player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x-1)));
+                 posicaoAtual = agente.getQuadrado(player.getX(), player.getY());*/
+                 
+                 //x = 1;
+                 //estado = ACTOR_STATE.STANDING;
+                 //player.setState(estado);
+                 //player.update(delta);
+                 //temp = -2;
+             } 
           //########################################################################################        
         
 
-             batch.draw(player.getSprite(),
+                batch.draw(player.getSprite(),
                 worldStartX + player.getWorldX() * Settings.SCALED_TILE_SIZE,
                 worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
                 Settings.SCALED_TILE_SIZE,
-                Settings.SCALED_TILE_SIZE * 1.5f);
+                Settings.SCALED_TILE_SIZE * 1.5f); 
 
         //Desenha os treinadores na tela 
         for (Treinador trainer : sprites_treinador) {
