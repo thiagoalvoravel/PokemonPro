@@ -146,8 +146,10 @@ public class GameScreen extends AbstractScreen {
     public int posicaoObjetivoY=0;
     public int posicaoObjetivo=0;
     int tamanho;
-    public static String direcao_personagem;
+    public String direcao_personagem;
     public static String direcao_personagemNova;
+    public static int ultima_Posicao;
+    
     
     //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
       
@@ -780,60 +782,45 @@ public class GameScreen extends AbstractScreen {
             
          
                if(temp > 1){ 
-               
+                   
                   direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
-                  //direcao_personagem = "oeste";
+                    //direcao_personagem = "oeste";
                   
-                  if(x != (tamanho-1) && temp > 1){
+                  ultima_Posicao = posicaoAtual;  
+                  
+                  if(x < (tamanho-1) && temp > 1){
                     estado = ACTOR_STATE.WALKING;
                   
                     player.setState(estado);
-                  }
-                  controller.update(delta, direcao_personagem);
-                  player.update(delta);
                   
+                  }
+                    controller.update(delta, direcao_personagem);
+                    player.update(delta);
+                    
+                    System.out.println("@@@@@@@@@@@@@@@@@@@\n" + ultima_Posicao + "@@@@@@@@@@@@@@@@@@@");
+                    if(ultima_Posicao == listaPosicoes.get(x)) temp = 1;
+                     
                                    
-                  if(x != (tamanho-1) && temp > 1){                     
+                  if(x < (tamanho-1) && temp > 1)
+                  {                     
                      player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
                      player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
                      posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
                      temp--;
-                     x++;
+                     x++;         
                   }
-                  
-                  
+                  else if( x == (tamanho-1))
+                  {
+                     controller.update(delta, direcao_personagem);
+                     player.update(delta); 
+                       
+                     player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
+                     player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
+                     posicaoAtual = agente.getQuadrado(player.getX(), player.getY()); 
+                  }
              } 
-             else {
-                 //Anda pela última vez
-                 //direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x-1));
-          
-                 //controller.update(delta, direcao_personagem);
-                 //player.update(delta);
-                 
-                // player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x)));
-                // player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x)));
-                // posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
-                 
-                 
-                 //player.update(delta);
-                 //Nova posição (no caso a última)
-                 /*player.setX(agente.getQuadradoCoordenadaX(listaPosicoes.get(x-1)));
-                 posicaoObjetivoY = agente.getQuadradoCoordenadaY(listaPosicoes.get(listaPosicoes.size()-1));
-                 
-                 while(player.getY() != ){
-                   direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
-                 }
-                 
-                 
-                 player.setY(agente.getQuadradoCoordenadaY(listaPosicoes.get(x-1)));
-                 posicaoAtual = agente.getQuadrado(player.getX(), player.getY());*/
-                 
-                 //x = 1;
-                 //estado = ACTOR_STATE.STANDING;
-                 //player.setState(estado);
-                 //player.update(delta);
-                 //temp = -2;
-             } 
+               
+              
           //########################################################################################        
         
 
