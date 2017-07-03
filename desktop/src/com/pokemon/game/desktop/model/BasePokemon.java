@@ -30,11 +30,20 @@ public class BasePokemon {
     }
     
     /**
-     * Verifica para qual direção o agente pode se mover
-     * @param map = Mapa do jogo
-     * @param player = Personagem controlado pela IA
+     * Verifica para qual direção o agente irá se mover
+     * @param map
+     * @param player
+     * @param objetoNorte
+     * @param objetoSul
+     * @param objetoLeste
+     * @param objetoOeste
+     * @param terrenoNorte
+     * @param terrenoSul
+     * @param terrenoLeste
+     * @param terrenoOeste
+     * @return
      */
-    public String buscarNaBase(TileMap map, Actor player) {
+    public String buscarNaBase(TileMap map, Actor player, String objetoNorte, String objetoSul, String objetoLeste, String objetoOeste, String terrenoNorte, String terrenoSul, String terrenoLeste, String terrenoOeste) {
         nome_arquivo = "consult('basepokemon.pl')";
         compilar_arquivo = new Query(nome_arquivo);
         compilar_arquivo.hasSolution();
@@ -43,6 +52,10 @@ public class BasePokemon {
         Query executar_regra;
         Map<String, Term> resultado_regra;
         
+        String direcao;
+        //Term[] lista;
+        int posicaoJogador = getQuadrado(player.getX(), player.getY());
+        /*
         regra = "pode_mover('" + map.getTerrenos(player.getX(), player.getY()).getTerrain().getNome() + "', Pode)";
         logs.writeLogs("Consulta: " + regra);
         executar_regra = new Query(regra);
@@ -62,6 +75,38 @@ public class BasePokemon {
             tipo = "oeste";
         }
         return tipo;
+        */
+        regra = "regra_geral(Direcao, "+posicaoJogador+", NovaPosicao, '"+objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"', '"+terrenoNorte+"', '"+terrenoSul+"', '"+terrenoOeste+"', '"+terrenoLeste+"')";
+                
+        /*regra = "regra_geral("
+                            + "Direcao, Caminho, "+posicaoJogador+", '"
+                            + objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"'"
+                            + terrenoNorte+", "+terrenoSul+", "+terrenoOeste+", "+terrenoLeste+")";*/
+        
+        System.out.print(regra);
+        logs.writeLogs("Consulta: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
+        direcao = resultado_regra.get("Direcao").name();
+        //lista = resultado_regra.get("Caminho").args();
+        
+        if(resultado_regra.get("Direcao").name().equals("fim")){
+            //Parar o jogo
+            logs.writeLogs("Resultado da Consulta: fim");
+            direcao = "fim";
+        }else if(resultado_regra.get("Direcao").name().equals("norte")||
+            resultado_regra.get("Direcao").name().equals("sul")||
+            resultado_regra.get("Direcao").name().equals("leste")||
+            resultado_regra.get("Direcao").name().equals("oeste")){
+            logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Direcao").name());
+            direcao = resultado_regra.get("Direcao").name();
+            direcao += resultado_regra.get("NovaPosicao").intValue();
+            //inserirQuadradoVisitadoNaBase(resultado_regra.get("NovaPosicao").intValue());
+        }/*else if(lista.length > 0){
+            direcao = "norte";
+        }*/
+        
+        return direcao;
     }
     
     /**
@@ -722,6 +767,25 @@ public class BasePokemon {
                 contador++;
             }
         }*/
+    }
+    
+    /**
+     * Inserir uma nova posição visitada no mapa
+     * @param posicao
+     */
+    public void inserirQuadradoVisitadoNaBase(int posicao){
+        nome_arquivo = "consult('basepokemon.pl')";
+        compilar_arquivo = new Query(nome_arquivo);
+        compilar_arquivo.hasSolution();
+        
+        String regra;
+        Query executar_regra;
+        Map<String, Term> resultado_regra;
+        
+        regra = "assert(quadradoVisitado("+posicao+"))";
+        logs.writeLogs("Inserir fato: " + regra);
+        executar_regra = new Query(regra);
+        resultado_regra = executar_regra.oneSolution();
     }
     
     public int getQuadrado(int coordX, int coordY){

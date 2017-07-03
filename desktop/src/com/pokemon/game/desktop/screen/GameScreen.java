@@ -150,6 +150,14 @@ public class GameScreen extends AbstractScreen {
     public static String direcao_personagemNova;
     public static int ultima_Posicao;
     
+    public String objetoNorte = "";
+    public String objetoSul = "";
+    public String objetoLeste = "";
+    public String objetoOeste = "";
+    public String terrenoNorte = "";
+    public String terrenoSul = "";
+    public String terrenoLeste = "";
+    public String terrenoOeste = "";
     
     //public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
       
@@ -193,8 +201,8 @@ public class GameScreen extends AbstractScreen {
 
         map = new TileMap(42, 42);
         //agente.salvarPosicoes(map);
-        //player = new Actor(map, 24, 22, animations);
-        player = new Actor(map, 1, 0, animations);
+        player = new Actor(map, 24, 22, animations);
+        //player = new Actor(map, 1, 0, animations);
         pontuacao = new Pontuacao(0);
         agente.setPokebolas(25);
 
@@ -639,10 +647,14 @@ public class GameScreen extends AbstractScreen {
         //player.setX(0);
         //player.setY(2);
         //agente.salvarPosicoes();
+        
+        
         batch.begin();
         
         //agente.irParaObjetivo(map, player);
         //controller.irParaObjetivo(map, player, agente, delta, facing, listaPosicoes);
+        
+        /*
         if(temp == -1){
            posicaoAtual = agente.getQuadrado(player.getX(), player.getY());
            int posicaoObjetivo = agente.getCentroPokemon();
@@ -652,22 +664,31 @@ public class GameScreen extends AbstractScreen {
            temp = tamanho;
            x = 1;
         }
-        
+        */
                  
         //(LEIA AQUI) Retorna o que tem na posição atual e nas adjacentes    
-        System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
+        //System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
         
-        /*if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
-            System.out.println("Norte: " + map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
-            System.out.println("Sul: " + map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto());
-            System.out.println("Leste: " + map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto());
-            System.out.println("Oeste: " + map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto());
-        }*/
+        if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
+            objetoNorte = map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto();
+            objetoSul = map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto();
+            objetoLeste = map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto();
+            objetoOeste = map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto();
+            terrenoNorte = map.getTerrenos(player.getX(), player.getY() + 1).getTerrain().getNome();
+            terrenoSul = map.getTerrenos(player.getX(), player.getY() -1).getTerrain().getNome();
+            terrenoLeste = map.getTerrenos(player.getX() + 1, player.getY()).getTerrain().getNome();
+            terrenoOeste = map.getTerrenos(player.getX() - 1, player.getY()).getTerrain().getNome();
+            //System.out.println("Norte: " + map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto());
+            //System.out.println("Sul: " + map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto());
+            //System.out.println("Leste: " + map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto());
+            //System.out.println("Oeste: " + map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto());
+        }
 
         String objeto = map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto();
+        String objetoAtual = objeto;
 
         if (objeto.equals("treinador")) {
-            System.out.println("######Chamada#####");
+            //System.out.println("######Chamada#####");
             if(agente.verificarLutaTreinador(map.getTerrenos(player.getX(), player.getY()).getTreinador())){
                 map.getTerrenos(player.getX(), player.getY()).getTreinador().setVisibilidade(false);
                 agente.inserirTreinadorNaBase(map.getTerrenos(player.getX(), player.getY()).getTreinador());
@@ -703,7 +724,7 @@ public class GameScreen extends AbstractScreen {
                 btnNomePokemon.setText("Nome: " + pokemon.getNome());
                 btnNumPokemon.setText("Numero: " + pokemon.getNumero());
                 //agente.listarPokemonsNaBase();
-                Gdx.app.log("Pokemon", "Capturar pokemon");
+                //Gdx.app.log("Pokemon", "Capturar pokemon");
             }
         } else if(objeto.equals("loja")){
             if(agente.verificarLoja(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon())){
@@ -712,7 +733,7 @@ public class GameScreen extends AbstractScreen {
                 btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
                 agente.pegarPokebolas(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
                 agente.inserirLojaNaBase(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
-                System.out.println("Recuperar pokebolas");
+                //System.out.println("Recuperar pokebolas");
             }
         } else if(objeto.equals("centroP")){
             agente.inserirCentroNaBase(map.getTerrenos(player.getX(), player.getY()).getCentro_pokemon());
@@ -720,29 +741,29 @@ public class GameScreen extends AbstractScreen {
             pontuacao.recuprarPokemons();
             btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
             btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
-            System.out.println("Recuperar energia dos pokemons");
+            //System.out.println("Recuperar energia dos pokemons");
         } else {
             objeto = "null";
         }
         
-        /*direcao = agente.buscarNaBase(map, player);
+        direcao = agente.buscarNaBase(map, player, objetoNorte, objetoSul, objetoLeste, objetoOeste, terrenoNorte, terrenoSul, terrenoLeste, terrenoOeste);
+        System.out.println("Resultado regra geral: " + direcao);
         
         if(!direcao.equals("parado")){
             controller.update(delta, direcao);
             player.update(delta);
             pontuacao.mover();
+            //agente.inserirQuadradoVisitadoNaBase(objeto);
             btnAcaoAtual.setText("Acao: Andando");
             System.out.println("Andar");
         }else{
             pontuacao.virarDireita();
             btnAcaoAtual.setText("Acao: Virar");
-        }*/
+        }
 
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
-        
-        
-        
+
         float worldStartX = Gdx.graphics.getWidth() / 14 - camera.getCameraX() * Settings.SCALED_TILE_SIZE;
         float worldStartY = Gdx.graphics.getHeight() / 14 - camera.getCameraY() * Settings.SCALED_TILE_SIZE;
 
@@ -777,10 +798,14 @@ public class GameScreen extends AbstractScreen {
             }
 
         }
+        batch.draw(player.getSprite(),
+                worldStartX + player.getWorldX() * Settings.SCALED_TILE_SIZE,
+                worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
+                Settings.SCALED_TILE_SIZE,
+                Settings.SCALED_TILE_SIZE * 1.5f);
          //#########################################################################################  
            //for (int i = 0; i < listaPosicoes.size(); i++) { 
-            
-         
+            /*
                if(temp > 1){ 
                    
                   direcao_personagem = agente.getDirecaoEntreQuadrados(posicaoAtual, listaPosicoes.get(x));
@@ -819,17 +844,10 @@ public class GameScreen extends AbstractScreen {
                      posicaoAtual = agente.getQuadrado(player.getX(), player.getY()); 
                   }
              } 
-               
+              */ 
               
           //########################################################################################        
         
-
-                batch.draw(player.getSprite(),
-                worldStartX + player.getWorldX() * Settings.SCALED_TILE_SIZE,
-                worldStartY + player.getWorldY() * Settings.SCALED_TILE_SIZE,
-                Settings.SCALED_TILE_SIZE,
-                Settings.SCALED_TILE_SIZE * 1.5f); 
-
         //Desenha os treinadores na tela 
         for (Treinador trainer : sprites_treinador) {
             if (trainer.isVisibilidade()) {

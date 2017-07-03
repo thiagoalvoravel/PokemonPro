@@ -1,53 +1,13 @@
 Inserir fato: assert(pokebolas(25))
-Consulta: get_quadrados(Quadrado, 2, 0, _)
-Resultado da Consulta: 85
-Consulta: get_quadrado_centro_pokemon(Quadrado)
-Resultado da Consulta: 47
-Consulta: get_direcao_entre_quadrado(85, 86, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(86, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(86, _, Coordy, _)
-Resultado da Consulta: 1
-Consulta: get_quadrados(Quadrado, 2, 1, _)
-Resultado da Consulta: 86
-Consulta: get_direcao_entre_quadrado(86, 87, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(87, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(87, _, Coordy, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(Quadrado, 2, 2, _)
-Resultado da Consulta: 87
-Consulta: get_direcao_entre_quadrado(87, 88, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(88, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(88, _, Coordy, _)
-Resultado da Consulta: 3
-Consulta: get_quadrados(Quadrado, 2, 3, _)
-Resultado da Consulta: 88
-Consulta: get_direcao_entre_quadrado(88, 89, Direcao)
-Resultado da Consulta: norte
-Consulta: get_quadrados(89, Coordx, _, _)
-Resultado da Consulta: 2
-Consulta: get_quadrados(89, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 2, 4, _)
-Resultado da Consulta: 89
-Consulta: get_direcao_entre_quadrado(89, 47, Direcao)
-Resultado da Consulta: oeste
-Consulta: get_quadrados(47, Coordx, _, _)
-Resultado da Consulta: 1
-Consulta: get_quadrados(47, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 1, 4, _)
-Resultado da Consulta: 47
-Consulta: get_direcao_entre_quadrado(47, 47, Direcao)
-Resultado da Consulta: nao
-Consulta: get_quadrados(47, Coordx, _, _)
-Resultado da Consulta: 1
-Consulta: get_quadrados(47, _, Coordy, _)
-Resultado da Consulta: 4
-Consulta: get_quadrados(Quadrado, 1, 4, _)
-Resultado da Consulta: 47
+Consulta: get_quadrados(Quadrado, 24, 22, _)
+Resultado da Consulta: 1031
+Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta: get_quadrados(Quadrado, 24, 22, _)
+Resultado da Consulta: 1031
+Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta: get_quadrados(Quadrado, 24, 22, _)
+Resultado da Consulta: 1031
+Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta: get_quadrados(Quadrado, 24, 22, _)
+Resultado da Consulta: 1031
+Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')

@@ -8,6 +8,7 @@
 :- dynamic objeto/3.
 :- dynamic pokebolas/1.
 :- dynamic quadrado/4.
+:- dynamic quadradoVisitado/1.
 %:- dynamic first_n/3.
 
 %# Estrutura dos fatos
@@ -17,6 +18,7 @@
 %pokebolas(quantidade).
 %quadrado(identificador, coordx, coordy, terreno).
 %caminho(quadrado1, quadrado2, custo).
+%quadradoVisitado(quadrado).
 
 %# %Verificar se será removida por falta de uso
 %treinador(resultado_batalha).
@@ -25,12 +27,12 @@
 %# Exemplos de fatos para testes - INÍCIO
 %objeto('treinador', 20, 21).
 %objeto('centro', 30, 40).
-pokemon('sparow', '30', 'vazia').
-pokemon_tipo('sparow', 'voador', 2).
-pokemon_tipo('sparow', 'normal', 1).
-objeto('pokemon', 33, 35).
-objeto('centroP', 12, 0).
-pokebolas(10).
+%pokemon('sparow', '30', 'vazia').
+%pokemon_tipo('sparow', 'voador', 2).
+%pokemon_tipo('sparow', 'normal', 1).
+%objeto('pokemon', 33, 35).
+%objeto('centroP', 0, 4).
+%pokebolas(10).
 %# Exemplos de fatos para testes - FIM
 
 %# Direções que o agente pode andar
@@ -81,6 +83,8 @@ get_quadrado_centro_pokemon(Quadrado) :- objeto('centroP', Coordx, Coordy),
 %# Retorna o quadrado do mapa
 %get_quadrado(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
 
+get_quadrado_visitado(Quadrado) :- quadradoVisitado(Quadrado).
+
 %# Retorna quantidade de pokebolas
 get_pokebolas(Quantidade) :- pokebolas(Quantidade).
 
@@ -120,13 +124,16 @@ enfrentar_treinador(Resultado) :- total_pokemon(Total), Total =< 0 -> Resultado 
 								  ; Resultado = 'vitoria'.
 
 %# Retorna uma direcao aleatória
-get_direcao_aleatoria(Direcao) :- 	Index is random(4) ,
-									(
-										Index = 0 -> Direcao = 'norte' ;
-										Index = 1 -> Direcao = 'sul' ;
-										Index = 2 -> Direcao = 'oeste' ;
-										Index = 3 -> Direcao = 'leste' 
-									) .
+get_direcao_aleatoria(Direcao, PosicaoJogador, NovaPosicao, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) :- 	
+								Index is random(4) ,
+								(
+									Index = 0 , get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado) , pode_mover(TerrenoNorte, Pode) , Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
+									Index = 1 , get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
+									Index = 2 , get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
+									Index = 3 , get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' 
+								) ;
+								Direcao = 'nao'.
+								
 
 %# Retorna o quadrado
 get_quadrados(Quadrado, Coordx, Coordy, Terreno) :- quadrado(Quadrado, Coordx, Coordy, Terreno).
@@ -199,10 +206,12 @@ Quantidade de pokemons
 # Caminho - Rota traçada para o agente seguir
 # PosicaoJogador - Posicao (quadrado) que o jogador se encontra
 # ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste - Os objetos (treinador, pokemon, centro pokemon ou loja) das posições adjacentes ao jogador
+# TerrenoNorte, TerrenoSul, TerrenoOeste, TerrenoLeste - Tipos de terreno das posições adjacentes ao jogadar
 */
 regra_geral(
-				Direcao, Caminho, PosicaoJogador,
-				ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste
+				Direcao, PosicaoJogador, NovaPosicao,
+				ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste,
+				TerrenoNorte, TerrenoSul, TerrenoOeste, TerrenoLeste
 			) :- 
 			
 			%# Verifica se todos os pokemon já foram capturados
@@ -210,60 +219,62 @@ regra_geral(
 
 			%# Verifica se é necessário ir ao centro pokemon
 			%# Só é traçada uma rota para um centro pokemon se houver algum na base
-			get_pokemon(_, _, 'vazia') ,
-			get_objeto('centroP', _, _) ,
-			get_quadrado_centro_pokemon(PosicaoCentroPokemon) ,
-			astar(PosicaoJogador, PosicaoCentroPokemon, _, _, CaminhoParaCentro) -> Caminho = CaminhoParaCentro ;
+			%get_pokemon(_, _, 'vazia') ,
+			%get_objeto('centroP', _, _) ,
+			%get_quadrado_centro_pokemon(PosicaoCentroPokemon) ,
+			%astar(PosicaoJogador, PosicaoCentroPokemon, _, _, CaminhoParaCentro) -> Caminho = CaminhoParaCentro ;
 
 			%# Verifica se precisa ir ao centro pokemon e se há um nas posições adjacentes do jogador
 			get_pokemon(_, _, 'vazia') ,
-			ObjetoNorte = 'centroP' -> Direcao = 'norte' ;
-			ObjetoSul = 'centroP' -> Direcao = 'sul' ;
-			ObjetoOeste = 'centroP' -> Direcao = 'oeste' ;
-			ObjetoLeste = 'centroP' -> Direcao = 'leste' ;
+			ObjetoNorte = 'centroP', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
+			ObjetoSul = 'centroP', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
+			ObjetoOeste = 'centroP', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
+			ObjetoLeste = 'centroP', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
 
 			%# Verifica se há pokemon nas posições adjacentes do jogador e se ele tem pokebolas
-			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoNorte = 'pokemon' -> Direcao = 'norte' ;
-			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoSul = 'pokemon' -> Direcao = 'sul' ;
-			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoOeste = 'pokemon' -> Direcao = 'oeste' ;
-			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoLeste = 'pokemon' -> Direcao = 'leste' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoNorte = 'pokemon', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoSul = 'pokemon', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoOeste = 'pokemon', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
+			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoLeste = 'pokemon', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
 
 			%# Verifica se há lojas nas posições adjacentes do jogandor
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoNorte = 'loja' -> Direcao = 'norte' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoSul = 'loja' -> Direcao = 'sul' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoOeste = 'loja' -> Direcao = 'oeste' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoLeste = 'loja' -> Direcao = 'leste' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoNorte = 'loja', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoSul = 'loja', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoOeste = 'loja', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
+			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoLeste = 'loja', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
 
 			%# Se não houver prioridade escolhe uma direção aleatória para andar
-			get_direcao_aleatoria(DirecaoEscolhida) -> Direcao = DirecaoEscolhida.
+			get_direcao_aleatoria(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) ,
+			DirecaoEscolhida = 'nao' -> get_direcao_aleatoria(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) ;
+			Direcao is DirecaoEscolhida , NovaPosicao is NovaPosicaoTemp .
 
-/*
+
 %# Regras para verificar se serão excluídas
 get_quadrado_norte(Quadrado, Norte, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Xnovo is Coordx + 1 ,
-														quadrado(Norte, Xnovo, Coordy, _) -> Resultado is Norte ;
+														Ynovo is Coordy + 1 ,
+														quadrado(Norte, Coordx, Ynovo, _) -> Resultado is Norte ;
 														Resultado is 0.
 
 get_quadrado_sul(Quadrado, Sul, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-													Xnovo is Coordx - 1 ,
-													quadrado(Sul, Xnovo, Coordy, _) -> Resultado is Sul ;
+													Ynovo is Coordy - 1 ,
+													quadrado(Sul, Coordx, Ynovo, _) -> Resultado is Sul ;
 													Resultado is 0.
 
 get_quadrado_leste(Quadrado, Leste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Ynovo is Coordy + 1 ,
-														quadrado(Leste, Coordx, Ynovo, _) -> Resultado is Leste ;
+														Xnovo is Coordx + 1 ,
+														quadrado(Leste, Xnovo, Coordy, _) -> Resultado is Leste ;
 														Resultado is 0.
 
 get_quadrado_oeste(Quadrado, Oeste, Resultado, _) :- 	quadrado(Quadrado, Coordx, Coordy, _) ,
-														Ynovo is Coordy - 1 ,
-														quadrado(Oeste, Coordx, Ynovo, _) -> Resultado is Oeste ;
+														Xnovo is Coordx - 1 ,
+														quadrado(Oeste, Xnovo, Coordy, _) -> Resultado is Oeste ;
 														Resultado is 0.
 
 get_quadrados_adjacentes(QuadradoAtual, Norte, Sul, Leste, Oeste) :- 	get_quadrado_norte(QuadradoAtual, _, Norte, _) ,
 																		get_quadrado_sul(QuadradoAtual, _, Sul, _) ,
 																		get_quadrado_oeste(QuadradoAtual, _, Oeste, _) ,
 																		get_quadrado_leste(QuadradoAtual, _, Leste, _).
-*/
+
 
 %################# Fatos relacionados ao mapa #################
 %# Posições do mapa, aqui chamados de quadrados
