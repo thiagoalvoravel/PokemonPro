@@ -29,7 +29,7 @@ pokemon('sparow', '30', 'vazia').
 pokemon_tipo('sparow', 'voador', 2).
 pokemon_tipo('sparow', 'normal', 1).
 objeto('pokemon', 33, 35).
-objeto('centroP', 0, 4).
+objeto('centroP', 12, 0).
 pokebolas(10).
 %# Exemplos de fatos para testes - FIM
 
