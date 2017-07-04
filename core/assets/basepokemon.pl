@@ -27,12 +27,13 @@
 %# Exemplos de fatos para testes - INÍCIO
 %objeto('treinador', 20, 21).
 %objeto('centro', 30, 40).
-%pokemon('sparow', '30', 'vazia').
+%pokemon('sparow', '30', 'cheia').
 %pokemon_tipo('sparow', 'voador', 2).
 %pokemon_tipo('sparow', 'normal', 1).
 %objeto('pokemon', 33, 35).
 %objeto('centroP', 0, 4).
 %pokebolas(10).
+%quadradoVisitado(1031).
 %# Exemplos de fatos para testes - FIM
 
 %# Direções que o agente pode andar
@@ -85,6 +86,9 @@ get_quadrado_centro_pokemon(Quadrado) :- objeto('centroP', Coordx, Coordy),
 
 get_quadrado_visitado(Quadrado) :- quadradoVisitado(Quadrado).
 
+get_quadrado_visitado_resultado(Quadrado, Resultado) :- quadradoVisitado(Quadrado) -> Resultado = 'tem' ;
+														Resultado = 'nao'.
+
 %# Retorna quantidade de pokebolas
 get_pokebolas(Quantidade) :- pokebolas(Quantidade).
 
@@ -127,12 +131,34 @@ enfrentar_treinador(Resultado) :- total_pokemon(Total), Total =< 0 -> Resultado 
 get_direcao_aleatoria(Direcao, PosicaoJogador, NovaPosicao, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) :- 	
 								Index is random(4) ,
 								(
-									Index = 0 , get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado) , pode_mover(TerrenoNorte, Pode) , Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
-									Index = 1 , get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
-									Index = 2 , get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
-									Index = 3 , get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , \+get_quadrado_visitado(Resultado), pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' 
-								) ;
-								Direcao = 'nao'.
+									Index = 0 , get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoNorte, Pode) , Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
+									Index = 1 , get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
+									Index = 2 , get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
+									Index = 3 , get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' ;
+									Direcao = 'nao' , NovaPosicao = -1
+
+									%Index = 0  -> Direcao = 'norte' ;
+									%Index = 1 -> Direcao = 'sul' ;
+									%Index = 2 -> Direcao = 'oeste' ;
+									%Index = 3 -> Direcao = 'leste'
+								) .
+
+
+get_direcao_aleatoria_visitada(Direcao, PosicaoJogador, NovaPosicao, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste, RepetirVisitado) :- 	
+								RepetirVisitado = 'sim' ,
+								Index is random(4) ,
+								(
+									Index = 0 , get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , pode_mover(TerrenoNorte, Pode) , Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
+									Index = 1 , get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
+									Index = 2 , get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
+									Index = 3 , get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' ;
+									get_direcao_aleatoria_visitada(Direcao, PosicaoJogador, NovaPosicao, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste, RepetirVisitado)
+
+									%Index = 0  -> Direcao = 'norte' ;
+									%Index = 1 -> Direcao = 'sul' ;
+									%Index = 2 -> Direcao = 'oeste' ;
+									%Index = 3 -> Direcao = 'leste'
+								) .						
 								
 
 %# Retorna o quadrado
@@ -209,7 +235,7 @@ Quantidade de pokemons
 # TerrenoNorte, TerrenoSul, TerrenoOeste, TerrenoLeste - Tipos de terreno das posições adjacentes ao jogadar
 */
 regra_geral(
-				Direcao, PosicaoJogador, NovaPosicao,
+				Direcao, PosicaoJogador, NovaPosicao, RepetirVisitado ,
 				ObjetoNorte, ObjetoSul, ObjetoOeste, ObjetoLeste,
 				TerrenoNorte, TerrenoSul, TerrenoOeste, TerrenoLeste
 			) :- 
@@ -226,10 +252,15 @@ regra_geral(
 
 			%# Verifica se precisa ir ao centro pokemon e se há um nas posições adjacentes do jogador
 			get_pokemon(_, _, 'vazia') ,
-			ObjetoNorte = 'centroP', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
-			ObjetoSul = 'centroP', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
-			ObjetoOeste = 'centroP', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
-			ObjetoLeste = 'centroP', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
+			%ObjetoNorte = 'centroP', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
+			%ObjetoSul = 'centroP', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
+			%ObjetoOeste = 'centroP', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
+			%ObjetoLeste = 'centroP', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
+
+			ObjetoNorte = 'centroP' , get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
+			ObjetoSul = 'centroP' , get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
+			ObjetoOeste = 'centroP' , get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
+			ObjetoLeste = 'centroP' , get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' ;
 
 			%# Verifica se há pokemon nas posições adjacentes do jogador e se ele tem pokebolas
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoNorte = 'pokemon', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
@@ -238,15 +269,23 @@ regra_geral(
 			get_pokebolas(QuantidadePokebolas) , QuantidadePokebolas > 0 , ObjetoLeste = 'pokemon', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
 
 			%# Verifica se há lojas nas posições adjacentes do jogandor
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoNorte = 'loja', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoSul = 'loja', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoOeste = 'loja', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
-			get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoLeste = 'loja', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
+			%get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoNorte = 'loja', pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> Direcao = 'norte' ;
+			%get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoSul = 'loja', pode_mover(TerrenoSul, Pode), Pode = 'sim' -> Direcao = 'sul' ;
+			%get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoOeste = 'loja', pode_mover(TerrenoOeste, Pode), Pode = 'sim' -> Direcao = 'oeste' ;
+			%get_pokebolas(QuantidadePokebolas) , total_pokemon(TotalPokemons) , QuantidadePokebolas + TotalPokemons < 150 , ObjetoLeste = 'loja', pode_mover(TerrenoLeste, Pode), Pode = 'sim' -> Direcao = 'leste' ;
+
+			ObjetoNorte = 'loja', get_quadrado_norte(PosicaoJogador, Norte, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoNorte, Pode), Pode = 'sim' -> NovaPosicao = Resultado , Direcao = 'norte' ;
+			ObjetoSul = 'loja', get_quadrado_sul(PosicaoJogador, Sul, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoSul, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'sul' ;
+			ObjetoOeste = 'loja', get_quadrado_oeste(PosicaoJogador, Oeste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoOeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'oeste' ;
+			ObjetoLeste = 'loja', get_quadrado_leste(PosicaoJogador, Leste, Resultado, _) , Resultado > 0 , get_quadrado_visitado_resultado(Resultado, ResultadoTeste) , ResultadoTeste = 'nao' , pode_mover(TerrenoLeste, Pode) , Pode = 'sim'-> NovaPosicao = Resultado , Direcao = 'leste' ;
 
 			%# Se não houver prioridade escolhe uma direção aleatória para andar
-			get_direcao_aleatoria(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) ,
-			DirecaoEscolhida = 'nao' -> get_direcao_aleatoria(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) ;
-			Direcao is DirecaoEscolhida , NovaPosicao is NovaPosicaoTemp .
+			RepetirVisitado = 'nao' ,
+			get_direcao_aleatoria(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste) -> Direcao = DirecaoEscolhida , NovaPosicao = NovaPosicaoTemp ;
+
+			%# Caso precise passar por posições repetidoas
+			RepetirVisitado = 'sim' ,
+			get_direcao_aleatoria_visitada(DirecaoEscolhida, PosicaoJogador, NovaPosicaoTemp, TerrenoNorte, TerrenoSul, TerrenoLeste, TerrenoOeste, RepetirVisitado) -> Direcao = DirecaoEscolhida , NovaPosicao = NovaPosicaoTemp .
 
 
 %# Regras para verificar se serão excluídas

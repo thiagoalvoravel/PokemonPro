@@ -16,6 +16,9 @@ public class BasePokemon {
 
     private String nome_arquivo;
     private Query compilar_arquivo;
+    private String direcao = "";
+    private int novaPosicao;
+
     /*private String regra;
     private Query executar_regra;
     private Query executar_regra2;
@@ -55,6 +58,7 @@ public class BasePokemon {
         String direcao;
         //Term[] lista;
         int posicaoJogador = getQuadrado(player.getX(), player.getY());
+        int contador = 0;
         /*
         regra = "pode_mover('" + map.getTerrenos(player.getX(), player.getY()).getTerrain().getNome() + "', Pode)";
         logs.writeLogs("Consulta: " + regra);
@@ -76,37 +80,51 @@ public class BasePokemon {
         }
         return tipo;
         */
-        regra = "regra_geral(Direcao, "+posicaoJogador+", NovaPosicao, '"+objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"', '"+terrenoNorte+"', '"+terrenoSul+"', '"+terrenoOeste+"', '"+terrenoLeste+"')";
+        this.setNovaPosicao(posicaoJogador);
+        regra = "regra_geral(Direcao, "+posicaoJogador+", NovaPosicao, 'nao', '"+objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"', '"+terrenoNorte+"', '"+terrenoSul+"', '"+terrenoOeste+"', '"+terrenoLeste+"')";
                 
         /*regra = "regra_geral("
                             + "Direcao, Caminho, "+posicaoJogador+", '"
                             + objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"'"
                             + terrenoNorte+", "+terrenoSul+", "+terrenoOeste+", "+terrenoLeste+")";*/
         
-        System.out.print(regra);
-        logs.writeLogs("Consulta: " + regra);
+        logs.writeLogs("Consulta Regra geral: " + regra);
         executar_regra = new Query(regra);
         resultado_regra = executar_regra.oneSolution();
-        direcao = resultado_regra.get("Direcao").name();
+        //direcao = resultado_regra.get("Direcao").name();
         //lista = resultado_regra.get("Caminho").args();
         
         if(resultado_regra.get("Direcao").name().equals("fim")){
             //Parar o jogo
             logs.writeLogs("Resultado da Consulta: fim");
-            direcao = "fim";
+            this.direcao = "fim";
         }else if(resultado_regra.get("Direcao").name().equals("norte")||
-            resultado_regra.get("Direcao").name().equals("sul")||
-            resultado_regra.get("Direcao").name().equals("leste")||
-            resultado_regra.get("Direcao").name().equals("oeste")){
+                 resultado_regra.get("Direcao").name().equals("sul")||
+                 resultado_regra.get("Direcao").name().equals("leste")||
+                 resultado_regra.get("Direcao").name().equals("oeste") ||
+                 resultado_regra.get("Direcao").name().equals("nao")){
             logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Direcao").name());
-            direcao = resultado_regra.get("Direcao").name();
-            direcao += resultado_regra.get("NovaPosicao").intValue();
-            //inserirQuadradoVisitadoNaBase(resultado_regra.get("NovaPosicao").intValue());
-        }/*else if(lista.length > 0){
-            direcao = "norte";
-        }*/
-        
-        return direcao;
+            this.direcao = resultado_regra.get("Direcao").name();
+            
+            while(this.direcao.equals("nao") || !resultado_regra.get("NovaPosicao").isInteger()){
+                logs.writeLogs("Consulta: " + regra);
+                executar_regra = new Query(regra);
+                resultado_regra = executar_regra.oneSolution();
+                this.direcao = resultado_regra.get("Direcao").name();
+                contador++;
+                if(contador == 10){
+                    regra = "regra_geral(Direcao, "+posicaoJogador+", NovaPosicao, 'sim', '"+objetoNorte+"', '"+objetoSul+"', '"+objetoOeste+"', '"+objetoLeste+"', '"+terrenoNorte+"', '"+terrenoSul+"', '"+terrenoOeste+"', '"+terrenoLeste+"')";
+                    logs.writeLogs("Consulta Regra geral: " + regra);
+                    executar_regra = new Query(regra);
+                    resultado_regra = executar_regra.oneSolution();
+                    logs.writeLogs("Resultado da Consulta: " + resultado_regra.get("Direcao").name());
+                    this.direcao = resultado_regra.get("Direcao").name();
+                    contador = 0;
+                }
+            }
+        }
+        //System.out.println("Resultado regra geral: " + this.direcao);
+        return this.direcao;
     }
     
     /**
@@ -890,6 +908,14 @@ public class BasePokemon {
         direcao = resultado_regra.get("Direcao").name();
         
         return direcao;
+    }
+    
+    public int getNovaPosicao() {
+        return novaPosicao;
+    }
+
+    public void setNovaPosicao(int novaPosicao) {
+        this.novaPosicao = novaPosicao;
     }
     
 }

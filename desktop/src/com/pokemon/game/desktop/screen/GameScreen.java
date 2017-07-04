@@ -132,6 +132,7 @@ public class GameScreen extends AbstractScreen {
     //private Map<String, Term> resultado_regra;
     
     private TextButton btnQtdPokemons;
+    private TextButton btnQtdPokebolas;
     private TextButton btnScoreTotal;
     private TextButton btnScoreAtual;
     private TextButton btnNomePokemon;
@@ -232,6 +233,7 @@ public class GameScreen extends AbstractScreen {
         textButtonStyle.font = font;
         textButtonStyle.up = buttonSkin.getDrawable("dialoguebox");
         
+        mostrar_Acao_Agente();
         mostrar_Pontuacao_Atual(pontuacao);
         mostrar_Pontuacao_Total(pontuacao);
 
@@ -240,7 +242,7 @@ public class GameScreen extends AbstractScreen {
         mostrar_Qtd_Pokemons(pontuacao);
         mostrar_Nome_Pokemons();
         mostrar_Numero_Pokemons();
-        mostrar_Acao_Agente();
+        mostrar_Qtd_Pokebolas();
 
         camera = new Camera();
 
@@ -249,44 +251,48 @@ public class GameScreen extends AbstractScreen {
     
     public void mostrar_Qtd_Pokemons(Pontuacao pontuacao_poke) {
         btnQtdPokemons = new TextButton("Capturados: " + player.getPokemons_capturados(), textButtonStyle);
-        btnQtdPokemons.setPosition(612, 500);
+        btnQtdPokemons.setPosition(612, 400);
         stage.addActor(btnQtdPokemons);
-
     }
 
+    public void mostrar_Qtd_Pokebolas() {
+        btnQtdPokebolas = new TextButton("Pokebolas: " + agente.qtdPokebolas(), textButtonStyle);
+        btnQtdPokebolas.setPosition(612, 100);
+        stage.addActor(btnQtdPokebolas);
+    }
+    
     public void mostrar_Pontuacao_Atual(Pontuacao pontuacao_atual) {
         btnScoreAtual = new TextButton("Custo da Acao: " + pontuacao_atual.getPontuacaoAtual(), textButtonStyle);
-        btnScoreAtual.setPosition(612, 700);
+        btnScoreAtual.setPosition(612, 600);
         stage.addActor(btnScoreAtual);
 
     }
 
     public void mostrar_Pontuacao_Total(Pontuacao valor_Pontuacao) {
         btnScoreTotal = new TextButton("Pontuacao Total: " + valor_Pontuacao.getPontuacaoTotal(), textButtonStyle);
-        btnScoreTotal.setPosition(612, 600);
+        btnScoreTotal.setPosition(612, 500);
         stage.addActor(btnScoreTotal);
 
     }
     
     public void mostrar_Nome_Pokemons() {
         btnNomePokemon = new TextButton("Nome: " , textButtonStyle);
-        btnNomePokemon.setPosition(612, 400);
+        btnNomePokemon.setPosition(612, 300);
         stage.addActor(btnNomePokemon);
 
     }
     
     public void mostrar_Numero_Pokemons() {
         btnNumPokemon = new TextButton("Numero: " , textButtonStyle);
-        btnNumPokemon.setPosition(612, 300);
+        btnNumPokemon.setPosition(612, 200);
         stage.addActor(btnNumPokemon);
 
     }
     
     public void mostrar_Acao_Agente() {
         btnAcaoAtual = new TextButton("Acao: " , textButtonStyle);
-        btnAcaoAtual.setPosition(612, 200);
+        btnAcaoAtual.setPosition(612, 700);
         stage.addActor(btnAcaoAtual);
-
     }
 
     public void gerar_Treinador() {
@@ -320,7 +326,7 @@ public class GameScreen extends AbstractScreen {
                             || getposicao_PC_ocupada(direcao_mapa_x, direcao_mapa_y)
                             || getposicao_PM_ocupada(direcao_mapa_x, direcao_mapa_y)) 
                 {
-                    treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, tipo_treinador);
+                    treinador = new Treinador(map, direcao_mapa_x, direcao_mapa_y, direcao_face, 4);
                     sprites_treinador.add(treinador);
                 } else {
                     posicoes_ocupadas_Treinador[direcao_mapa_x][direcao_mapa_y] = 0;
@@ -670,10 +676,10 @@ public class GameScreen extends AbstractScreen {
         //System.out.println(map.getTerrenos(player.getX(), player.getY()).getTipo_Objeto());
         
         if(player.getY() < 41 && player.getX() < 41 && player.getY() > 0 && player.getX() > 0){
-            objetoNorte = map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto();
-            objetoSul = map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto();
-            objetoLeste = map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto();
-            objetoOeste = map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto();
+            objetoNorte = !map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto().equals("pokemon") ? map.getTerrenos(player.getX(), player.getY() + 1).getTipo_Objeto() : "null";
+            objetoSul = !map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto().equals("pokemon") ? map.getTerrenos(player.getX(), player.getY() -1).getTipo_Objeto() : "null";
+            objetoLeste = !map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto().equals("pokemon") ? map.getTerrenos(player.getX() + 1, player.getY()).getTipo_Objeto() : "null";
+            objetoOeste = !map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto().equals("pokemon") ? map.getTerrenos(player.getX() - 1, player.getY()).getTipo_Objeto() : "null";
             terrenoNorte = map.getTerrenos(player.getX(), player.getY() + 1).getTerrain().getNome();
             terrenoSul = map.getTerrenos(player.getX(), player.getY() -1).getTerrain().getNome();
             terrenoLeste = map.getTerrenos(player.getX() + 1, player.getY()).getTerrain().getNome();
@@ -715,6 +721,7 @@ public class GameScreen extends AbstractScreen {
                 pokemon = map.getTerrenos(player.getX(), player.getY()).getPokemon();
                 map.getTerrenos(player.getX(), player.getY()).getPokemon().setVisibilidade(false);
                 //agente.inserirPokemonNaBase(map.getTerrenos(player.getX(), player.getY()).getPokemon());  
+                btnAcaoAtual.setText("Acao: Capturar");
                 agente.inserirPokemonNaBase(pokemon);  
                 player.setPokemons_capturados(1);
                 pontuacao.usarPokebola();
@@ -723,22 +730,26 @@ public class GameScreen extends AbstractScreen {
                 btnQtdPokemons.setText("Capturados: " + player.getPokemons_capturados());
                 btnNomePokemon.setText("Nome: " + pokemon.getNome());
                 btnNumPokemon.setText("Numero: " + pokemon.getNumero());
+                btnQtdPokebolas.setText("Pokebolas: " + agente.qtdPokebolas());
                 //agente.listarPokemonsNaBase();
                 //Gdx.app.log("Pokemon", "Capturar pokemon");
             }
         } else if(objeto.equals("loja")){
             if(agente.verificarLoja(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon())){
                 pontuacao.pegarPokebola();
+                btnAcaoAtual.setText("Acao: Pegar Pokebolas");
                 btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
                 btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
                 agente.pegarPokebolas(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
                 agente.inserirLojaNaBase(map.getTerrenos(player.getX(), player.getY()).getLojaPokemon());
+                btnQtdPokebolas.setText("Pokebolas: " + agente.qtdPokebolas());
                 //System.out.println("Recuperar pokebolas");
             }
         } else if(objeto.equals("centroP")){
             agente.inserirCentroNaBase(map.getTerrenos(player.getX(), player.getY()).getCentro_pokemon());
             agente.recuperarPokemons();
             pontuacao.recuprarPokemons();
+            btnAcaoAtual.setText("Acao: Recuperar Energia");
             btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
             btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
             //System.out.println("Recuperar energia dos pokemons");
@@ -747,20 +758,22 @@ public class GameScreen extends AbstractScreen {
         }
         
         direcao = agente.buscarNaBase(map, player, objetoNorte, objetoSul, objetoLeste, objetoOeste, terrenoNorte, terrenoSul, terrenoLeste, terrenoOeste);
-        System.out.println("Resultado regra geral: " + direcao);
+        //System.out.println("Resultado regra geral: " + direcao);
         
-        if(!direcao.equals("parado")){
+        //if(!direcao.equals("parado")){
             controller.update(delta, direcao);
             player.update(delta);
             pontuacao.mover();
-            //agente.inserirQuadradoVisitadoNaBase(objeto);
-            btnAcaoAtual.setText("Acao: Andando");
-            System.out.println("Andar");
-        }else{
-            pontuacao.virarDireita();
-            btnAcaoAtual.setText("Acao: Virar");
-        }
-
+            btnScoreTotal.setText("Pontuacao Total: " + pontuacao.getPontuacaoTotal());
+            btnScoreAtual.setText("Custo da Acao: " + pontuacao.getPontuacaoAtual());
+            //agente.inserirQuadradoVisitadoNaBase(agente.getNovaPosicao());
+            //btnAcaoAtual.setText("Acao: Andando");
+            //System.out.println("Andar");
+        //}else{
+        //    pontuacao.virarDireita();
+        //    btnAcaoAtual.setText("Acao: Virar");
+        //}
+        
         //Descomente para movimentar a câmera
         //camera.update(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
 
@@ -914,7 +927,7 @@ public class GameScreen extends AbstractScreen {
                         worldStartX + pokemon.getWorldX() * Settings.SCALED_TILE_SIZE,
                         worldStartY + pokemon.getWorldY() * Settings.SCALED_TILE_SIZE,
                         Settings.SCALED_TILE_SIZE,
-                        Settings.SCALED_TILE_SIZE * 1.5f
+                        Settings.SCALED_TILE_SIZE * 1.7f
                 );
             }else {
                 switch (map.getTerrenos(pokemon.getX(), pokemon.getY()).getTerrain()) 
@@ -950,8 +963,20 @@ public class GameScreen extends AbstractScreen {
           //this.drawBatch(batch, camera);
         //}
         batch.end();
-
+        
+        if(agente.getNovaPosicao() != agente.getQuadrado(player.getX(), player.getY())){
+            agente.inserirQuadradoVisitadoNaBase(agente.getNovaPosicao());
+            btnAcaoAtual.setText("Acao: Andar");
+        }else{
+            btnAcaoAtual.setText("Acao: Rotacionar");
+        }
+        
+        if(direcao.equals("fim")){
+            Gdx.app.exit();
+        }
+        
         stage.draw();
+        
     }
 
     @Override

@@ -1,13 +1,503 @@
 Inserir fato: assert(pokebolas(25))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 25
 Consulta: get_quadrados(Quadrado, 24, 22, _)
 Resultado da Consulta: 1031
-Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
-Consulta: get_quadrados(Quadrado, 24, 22, _)
-Resultado da Consulta: 1031
-Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
-Consulta: get_quadrados(Quadrado, 24, 22, _)
-Resultado da Consulta: 1031
-Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
-Consulta: get_quadrados(Quadrado, 24, 22, _)
-Resultado da Consulta: 1031
-Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta Regra geral: regra_geral(Direcao, 1031, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1031, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta: get_quadrados(Quadrado, 24, 21, _)
+Resultado da Consulta: 1030
+Inserir fato: assert(quadradoVisitado(1031))
+Consulta: get_quadrados(Quadrado, 24, 21, _)
+Resultado da Consulta: 1030
+Consulta Regra geral: regra_geral(Direcao, 1030, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1030, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'agua')
+Consulta: get_quadrados(Quadrado, 24, 20, _)
+Resultado da Consulta: 1029
+Inserir fato: assert(quadradoVisitado(1030))
+Consulta: get_quadrados(Quadrado, 24, 20, _)
+Resultado da Consulta: 1029
+Consulta Regra geral: regra_geral(Direcao, 1029, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1029, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Inserir fato: assert(quadradoVisitado(1029))
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Consulta Regra geral: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Consulta Regra geral: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Consulta: get_quadrados(Quadrado, 24, 19, _)
+Resultado da Consulta: 1028
+Consulta Regra geral: regra_geral(Direcao, 1028, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 24, 18, _)
+Resultado da Consulta: 1027
+Inserir fato: assert(quadradoVisitado(1028))
+Consulta: tem_pokemon('Nidorina', Tem)
+Resultado da Consulta: nao
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 25
+Inserir fato: assert(pokemon('Nidorina', '30', 'cheia'))
+Inserir fato: assert(pokemon_tipo('Nidorina', 'venenoso', 1))
+Inserir fato: assert(objeto('pokemon', '24', '18'))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 25
+Remoção do fato: 25
+Inserir fato: assert(pokebolas(24))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 24
+Consulta: get_quadrados(Quadrado, 24, 18, _)
+Resultado da Consulta: 1027
+Consulta Regra geral: regra_geral(Direcao, 1027, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 24, 17, _)
+Resultado da Consulta: 1026
+Inserir fato: assert(quadradoVisitado(1027))
+Consulta: get_quadrados(Quadrado, 24, 17, _)
+Resultado da Consulta: 1026
+Consulta Regra geral: regra_geral(Direcao, 1026, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1026, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Consulta: get_quadrados(Quadrado, 24, 17, _)
+Resultado da Consulta: 1026
+Consulta: get_quadrados(Quadrado, 24, 17, _)
+Resultado da Consulta: 1026
+Consulta Regra geral: regra_geral(Direcao, 1026, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 25, 17, _)
+Resultado da Consulta: 1068
+Inserir fato: assert(quadradoVisitado(1026))
+Consulta: get_quadrados(Quadrado, 25, 17, _)
+Resultado da Consulta: 1068
+Consulta Regra geral: regra_geral(Direcao, 1068, NovaPosicao, 'nao', 'null', 'null', 'null', 'treinador', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 25, 17, _)
+Resultado da Consulta: 1068
+Consulta: get_quadrados(Quadrado, 25, 17, _)
+Resultado da Consulta: 1068
+Consulta Regra geral: regra_geral(Direcao, 1068, NovaPosicao, 'nao', 'null', 'null', 'null', 'treinador', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1068, NovaPosicao, 'nao', 'null', 'null', 'null', 'treinador', 'montanha', 'grama', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 25, 16, _)
+Resultado da Consulta: 1067
+Inserir fato: assert(quadradoVisitado(1068))
+Consulta: get_quadrados(Quadrado, 25, 16, _)
+Resultado da Consulta: 1067
+Consulta Regra geral: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 25, 16, _)
+Resultado da Consulta: 1067
+Consulta: get_quadrados(Quadrado, 25, 16, _)
+Resultado da Consulta: 1067
+Consulta Regra geral: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 1067, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 24, 16, _)
+Resultado da Consulta: 1025
+Inserir fato: assert(quadradoVisitado(1067))
+Consulta: get_quadrados(Quadrado, 24, 16, _)
+Resultado da Consulta: 1025
+Consulta Regra geral: regra_geral(Direcao, 1025, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Inserir fato: assert(quadradoVisitado(1025))
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Consulta Regra geral: regra_geral(Direcao, 983, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 983, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Consulta Regra geral: regra_geral(Direcao, 983, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Consulta: get_quadrados(Quadrado, 23, 16, _)
+Resultado da Consulta: 983
+Consulta Regra geral: regra_geral(Direcao, 983, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Inserir fato: assert(quadradoVisitado(983))
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Consulta Regra geral: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Consulta Regra geral: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Consulta: get_quadrados(Quadrado, 22, 16, _)
+Resultado da Consulta: 941
+Consulta Regra geral: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 941, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 21, 16, _)
+Resultado da Consulta: 899
+Inserir fato: assert(quadradoVisitado(941))
+Consulta: get_quadrados(Quadrado, 21, 16, _)
+Resultado da Consulta: 899
+Consulta Regra geral: regra_geral(Direcao, 899, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 21, 16, _)
+Resultado da Consulta: 899
+Consulta: get_quadrados(Quadrado, 21, 16, _)
+Resultado da Consulta: 899
+Consulta Regra geral: regra_geral(Direcao, 899, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'grama', 'grama', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 21, 15, _)
+Resultado da Consulta: 898
+Inserir fato: assert(quadradoVisitado(899))
+Consulta: get_quadrados(Quadrado, 21, 15, _)
+Resultado da Consulta: 898
+Consulta Regra geral: regra_geral(Direcao, 898, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 21, 15, _)
+Resultado da Consulta: 898
+Consulta: get_quadrados(Quadrado, 21, 15, _)
+Resultado da Consulta: 898
+Consulta Regra geral: regra_geral(Direcao, 898, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 898, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Consulta: get_quadrados(Quadrado, 22, 15, _)
+Resultado da Consulta: 940
+Inserir fato: assert(quadradoVisitado(898))
+Consulta: get_quadrados(Quadrado, 22, 15, _)
+Resultado da Consulta: 940
+Consulta Regra geral: regra_geral(Direcao, 940, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'grama')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 23, 15, _)
+Resultado da Consulta: 982
+Inserir fato: assert(quadradoVisitado(940))
+Consulta: get_quadrados(Quadrado, 23, 15, _)
+Resultado da Consulta: 982
+Consulta Regra geral: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 15, _)
+Resultado da Consulta: 982
+Consulta: get_quadrados(Quadrado, 23, 15, _)
+Resultado da Consulta: 982
+Consulta Regra geral: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 982, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 14, _)
+Resultado da Consulta: 981
+Inserir fato: assert(quadradoVisitado(982))
+Consulta: get_quadrados(Quadrado, 23, 14, _)
+Resultado da Consulta: 981
+Consulta Regra geral: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 14, _)
+Resultado da Consulta: 981
+Consulta: get_quadrados(Quadrado, 23, 14, _)
+Resultado da Consulta: 981
+Consulta Regra geral: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 981, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 22, 14, _)
+Resultado da Consulta: 939
+Inserir fato: assert(quadradoVisitado(981))
+Consulta: tem_pokemon('Rattata', Tem)
+Resultado da Consulta: nao
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 24
+Inserir fato: assert(pokemon('Rattata', '19', 'cheia'))
+Inserir fato: assert(pokemon_tipo('Rattata', 'normal', 1))
+Inserir fato: assert(objeto('pokemon', '22', '14'))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 24
+Remoção do fato: 24
+Inserir fato: assert(pokebolas(23))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 23
+Consulta: get_quadrados(Quadrado, 22, 14, _)
+Resultado da Consulta: 939
+Consulta Regra geral: regra_geral(Direcao, 939, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 939, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Consulta: regra_geral(Direcao, 939, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Consulta: regra_geral(Direcao, 939, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Consulta: get_quadrados(Quadrado, 22, 14, _)
+Resultado da Consulta: 939
+Consulta: tem_pokemon('Rattata', Tem)
+Resultado da Consulta: sim
+Consulta: get_quadrados(Quadrado, 22, 14, _)
+Resultado da Consulta: 939
+Consulta Regra geral: regra_geral(Direcao, 939, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 22, 13, _)
+Resultado da Consulta: 938
+Inserir fato: assert(quadradoVisitado(939))
+Consulta: get_quadrados(Quadrado, 22, 13, _)
+Resultado da Consulta: 938
+Consulta Regra geral: regra_geral(Direcao, 938, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 22, 12, _)
+Resultado da Consulta: 937
+Inserir fato: assert(quadradoVisitado(938))
+Consulta: get_quadrados(Quadrado, 22, 12, _)
+Resultado da Consulta: 937
+Consulta Regra geral: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 22, 12, _)
+Resultado da Consulta: 937
+Consulta: get_quadrados(Quadrado, 22, 12, _)
+Resultado da Consulta: 937
+Consulta Regra geral: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 937, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 23, 12, _)
+Resultado da Consulta: 979
+Inserir fato: assert(quadradoVisitado(937))
+Consulta: get_quadrados(Quadrado, 23, 12, _)
+Resultado da Consulta: 979
+Consulta Regra geral: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 12, _)
+Resultado da Consulta: 979
+Consulta: get_quadrados(Quadrado, 23, 12, _)
+Resultado da Consulta: 979
+Consulta Regra geral: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 979, NovaPosicao, 'nao', 'null', 'centroP', 'null', 'treinador', 'grama', 'montanha', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 13, _)
+Resultado da Consulta: 980
+Inserir fato: assert(quadradoVisitado(979))
+Consulta: tem_pokemon('Dragonite', Tem)
+Resultado da Consulta: nao
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 23
+Inserir fato: assert(pokemon('Dragonite', '149', 'cheia'))
+Inserir fato: assert(pokemon_tipo('Dragonite', 'dragao', 1))
+Inserir fato: assert(pokemon_tipo('Dragonite', 'voador', 2))
+Inserir fato: assert(objeto('pokemon', '23', '13'))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 23
+Remoção do fato: 23
+Inserir fato: assert(pokebolas(22))
+Consulta: get_pokebolas(Quantidade)
+Resultado da Consulta: 22
+Consulta: get_quadrados(Quadrado, 23, 13, _)
+Resultado da Consulta: 980
+Consulta Regra geral: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 13, _)
+Resultado da Consulta: 980
+Consulta: tem_pokemon('Dragonite', Tem)
+Resultado da Consulta: sim
+Consulta: get_quadrados(Quadrado, 23, 13, _)
+Resultado da Consulta: 980
+Consulta Regra geral: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: regra_geral(Direcao, 980, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'grama', 'montanha')
+Consulta: get_quadrados(Quadrado, 24, 13, _)
+Resultado da Consulta: 1022
+Inserir fato: assert(quadradoVisitado(980))
+Consulta: get_quadrados(Quadrado, 24, 13, _)
+Resultado da Consulta: 1022
+Consulta Regra geral: regra_geral(Direcao, 1022, NovaPosicao, 'nao', 'null', 'treinador', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 24, 13, _)
+Resultado da Consulta: 1022
+Consulta: get_quadrados(Quadrado, 24, 13, _)
+Resultado da Consulta: 1022
+Consulta Regra geral: regra_geral(Direcao, 1022, NovaPosicao, 'nao', 'null', 'treinador', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 24, 12, _)
+Resultado da Consulta: 1021
+Inserir fato: assert(quadradoVisitado(1022))
+Consulta: verificar_treinador_enfrentado('treinador', '24', '12', Luta)
+Resultado da Consulta: sim
+Inserir fato: assert(objeto('treinador', '24', '12'))
+Consulta: enfrentar_treinador(Resultado)
+Resultado da Consulta: vitoria
+Consulta: get_pokemon(Pokemon, Numero, 'cheia')
+ Resultado da Consulta: Nidorina-30 cheia 
+ Resultado da Consulta: Rattata-19 cheia 
+ Resultado da Consulta: Dragonite-149 cheia 
+Remover fato: retractall(pokemon(_ , _, 'cheia'))
+Inserir fato: assert(pokemon('Nidorina', '30', 'vazia'))
+Inserir fato: assert(pokemon('Rattata', '19', 'vazia'))
+Inserir fato: assert(pokemon('Dragonite', '149', 'vazia'))
+Consulta: get_quadrados(Quadrado, 24, 12, _)
+Resultado da Consulta: 1021
+Consulta Regra geral: regra_geral(Direcao, 1021, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1021, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 1021, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 1021, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Consulta: regra_geral(Direcao, 1021, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 24, 11, _)
+Resultado da Consulta: 1020
+Inserir fato: assert(quadradoVisitado(1021))
+Consulta: get_quadrados(Quadrado, 24, 11, _)
+Resultado da Consulta: 1020
+Consulta Regra geral: regra_geral(Direcao, 1020, NovaPosicao, 'nao', 'treinador', 'null', 'centroP', 'null', 'montanha', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 24, 11, _)
+Resultado da Consulta: 1020
+Consulta: get_quadrados(Quadrado, 24, 11, _)
+Resultado da Consulta: 1020
+Consulta Regra geral: regra_geral(Direcao, 1020, NovaPosicao, 'nao', 'treinador', 'null', 'centroP', 'null', 'montanha', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: oeste
+Consulta: get_quadrados(Quadrado, 23, 11, _)
+Resultado da Consulta: 978
+Inserir fato: assert(quadradoVisitado(1020))
+Inserir fato: assert(objeto('centro', '23', '11'))
+Consulta: get_pokemon(Pokemon, Numero, 'vazia')
+Resultado da Consulta: Nidorina-30 - vazia
+Resultado da Consulta: Rattata-19 - vazia
+Resultado da Consulta: Dragonite-149 - vazia
+Remocao do fato: retractall(pokemon(_ , _, 'vazia'))
+Inserir fato: assert(pokemon('Nidorina', '30', 'cheia'))
+Inserir fato: assert(pokemon('Rattata', '19', 'cheia'))
+Inserir fato: assert(pokemon('Dragonite', '149', 'cheia'))
+Consulta: get_quadrados(Quadrado, 23, 11, _)
+Resultado da Consulta: 978
+Consulta Regra geral: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 23, 11, _)
+Resultado da Consulta: 978
+Inserir fato: assert(objeto('centro', '23', '11'))
+Consulta: get_pokemon(Pokemon, Numero, 'vazia')
+Remocao do fato: retractall(pokemon(_ , _, 'vazia'))
+Consulta: get_quadrados(Quadrado, 23, 11, _)
+Resultado da Consulta: 978
+Consulta Regra geral: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: regra_geral(Direcao, 978, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: get_quadrados(Quadrado, 23, 10, _)
+Resultado da Consulta: 977
+Inserir fato: assert(quadradoVisitado(978))
+Consulta: get_quadrados(Quadrado, 23, 10, _)
+Resultado da Consulta: 977
+Consulta Regra geral: regra_geral(Direcao, 977, NovaPosicao, 'nao', 'centroP', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 977, NovaPosicao, 'nao', 'centroP', 'null', 'null', 'null', 'montanha', 'montanha', 'grama', 'grama')
+Consulta: get_quadrados(Quadrado, 23, 9, _)
+Resultado da Consulta: 976
+Inserir fato: assert(quadradoVisitado(977))
+Consulta: get_quadrados(Quadrado, 23, 9, _)
+Resultado da Consulta: 976
+Consulta Regra geral: regra_geral(Direcao, 976, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 23, 9, _)
+Resultado da Consulta: 976
+Consulta: get_quadrados(Quadrado, 23, 9, _)
+Resultado da Consulta: 976
+Consulta Regra geral: regra_geral(Direcao, 976, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 976, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Consulta: get_quadrados(Quadrado, 24, 9, _)
+Resultado da Consulta: 1018
+Inserir fato: assert(quadradoVisitado(976))
+Consulta: get_quadrados(Quadrado, 24, 9, _)
+Resultado da Consulta: 1018
+Consulta Regra geral: regra_geral(Direcao, 1018, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 25, 9, _)
+Resultado da Consulta: 1060
+Inserir fato: assert(quadradoVisitado(1018))
+Consulta: get_quadrados(Quadrado, 25, 9, _)
+Resultado da Consulta: 1060
+Consulta Regra geral: regra_geral(Direcao, 1060, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'grama', 'montanha', 'montanha')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Inserir fato: assert(quadradoVisitado(1060))
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Consulta Regra geral: regra_geral(Direcao, 1102, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Resultado da Consulta: sul
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Consulta Regra geral: regra_geral(Direcao, 1102, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Resultado da Consulta: leste
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Consulta: get_quadrados(Quadrado, 26, 9, _)
+Resultado da Consulta: 1102
+Consulta Regra geral: regra_geral(Direcao, 1102, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Resultado da Consulta: nao
+Consulta: regra_geral(Direcao, 1102, NovaPosicao, 'nao', 'null', 'null', 'null', 'null', 'grama', 'montanha', 'montanha', 'grama')
+Consulta: get_quadrados(Quadrado, 27, 9, _)
+Resultado da Consulta: 1144
+Inserir fato: assert(quadradoVisitado(1102))
